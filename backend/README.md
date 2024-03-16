@@ -1,2 +1,0 @@
-# bancoAurum
-Projeto Banco Aurum

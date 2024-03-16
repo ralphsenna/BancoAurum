@@ -1,7 +1,8 @@
 import mysql from 'mysql2/promise';
 
 // Função que cria a conexão com o banco de dados
-export default async function conectar() {
+export default async function conectar() 
+{
     if (global.poolConexoes) 
     {
         return await global.poolConexoes.getConnection();

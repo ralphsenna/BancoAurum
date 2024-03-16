@@ -25,9 +25,9 @@ app.use(session({
 
 // Rotas para o servidor
 app.use('/login', rotaLogin);
-app.use('/agencia', verificarAcesso, rotaAgencia);
-app.use('/cliente', verificarAcesso, rotaCliente);
-app.use('/produto', verificarAcesso, rotaProduto);
+app.use('/agencia', /*verificarAcesso, */rotaAgencia);
+app.use('/cliente', /* verificarAcesso,  */rotaCliente);
+app.use('/produto', /* verificarAcesso,  */rotaProduto);
 
 // Inicialização do servidor
 const host = '0.0.0.0';
