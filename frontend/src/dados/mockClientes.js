@@ -1,0 +1,53 @@
+var listaClientes = [
+  {
+    cod_cli: 1,
+    nome: 'Pedro Bento',
+    cpf: '12345678900',
+    dataNasc: '01/02/1988',
+    endereco: 'Rua Lambari Azul, nº 445',
+    cidade: 'Assis',
+    uf: 'sp',
+    email: 'pedro@email.com',
+    telefone: '18991234567',
+    cod_ag: 1,
+  },
+  {
+    cod_cli: 2,
+
+    nome: 'Tenório Assunção',
+    cpf: '33344455566',
+    dataNasc: '11/11/2011',
+    endereco: 'Rua das Bromélias, nº 12',
+    cidade: 'Juiz de Fora',
+    uf: 'mg',
+    email: 'tenorio@email.com',
+    telefone: '1890007777',
+    cod_ag: 2,
+  },
+  {
+    cod_cli: 3,
+    nome: 'Jurema Bragança',
+    cpf: '98976754533',
+    dataNasc: '06/07/2008',
+    endereco: 'Travessa do Bambuzal, nº 100, Apto 106',
+    cidade: 'Niterói',
+    uf: 'rj',
+    email: 'jurema@email.com',
+    telefone: '21999995400',
+    cod_ag: 3,
+  },
+  {
+    cod_cli: 4,
+    nome: 'Jamal Lazário de Souza',
+    cpf: '04045598537',
+    dataNasc: '14/12/1985',
+    endereco: 'Rua da Independência, nº 98',
+    cidade: 'Marília',
+    uf: 'sp',
+    email: 'jamal@email.com',
+    telefone: '18965843210',
+    cod_ag: 2,
+  },
+];
+
+export default listaClientes;

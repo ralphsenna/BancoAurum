@@ -1,0 +1,103 @@
+---------------CLIENTES---------------
+{
+    "nome":"Valdir Mascarenhas",
+    "cpf": "37075963813",
+    "dataNasc":"1988-02-01",
+    "endereco":"Rua dos Lambaris nº 558",
+    "cidade":"Cuiabá",
+    "uf":"MT",
+    "email":"valdir@gmail.com",
+    "telefone":"999876655",
+    "cod_ag":"1"
+}
+
+{
+    "nome":"Baltazar Barbosa",
+    "cpf": "99845687412",
+    "dataNasc":"1999-12-03",
+    "endereco":"Avenida Duque de Caxias nº 4",
+    "cidade":"Assis",
+    "uf":"SP",
+    "email":"baltazar@gmail.com",
+    "telefone":"954682245",
+    "cod_ag":"2"
+}
+
+{
+    "nome":"Neide Soares",
+    "cpf": "99845621525",
+    "dataNasc":"1965-05-10",
+    "endereco":"Rua Dom Pedro II nº 1000, Apto 203",
+    "cidade":"São Paulo",
+    "uf":"SP",
+    "email":"neide@gmail.com",
+    "telefone":"955461002",
+    "cod_ag":"2"
+}
+
+{
+    "nome":"Tenório Gonçalves",
+    "cpf": "45266831207",
+    "dataNasc":"1957-12-12",
+    "endereco":"Avenida do Capiau nº 122, Casa 4",
+    "cidade":"Confins",
+    "uf":"MG",
+    "email":"tenorio@gmail.com",
+    "telefone":"997747173",
+    "cod_ag":"3"
+}
+
+---------------AGÊNCIA---------------
+{
+	"endereco":"Rua Princesa Isabel nº 12",
+	"cidade":"Cuiabá",
+	"uf":"MT"
+}
+
+{
+	"endereco":"Avenida Marlim Azul nº 4",
+	"cidade":"São Paulo",
+	"uf":"SP"
+}
+
+{
+	"endereco":"Avenida Roxo Moreira nº 12",
+	"cidade":"Confins",
+	"uf":"MG"
+}
+
+---------------PRODUTO---------------
+{
+	"nome":"Empréstimo abaixo de R$ 5000"
+}
+
+{
+	"nome":"Empréstimo entre R$ 5000 e R$ 25000"
+}
+
+{
+	"nome":"Empréstimo acima de R$ 25000"
+}
+
+{
+	"nome":"Financiamento de casa"
+}
+
+{
+	"nome":"Financiamento de automóvel"
+}
+
+{
+	"nome":"Seguro de vida"
+}
+
+{
+	"nome":"Seguro residencial"
+}
+
+{
+    "nome":"Cartão de crédito"
+}
+
+
+
