@@ -42,7 +42,7 @@ export function verificarAcesso(requisicao, resposta, next)
 		{
 			resposta.status(401).json({
 				"status": false,
-				"mensagem": "Acesso não autorizado. Faça o login na aplicação!"
+				"mensagem": 'Acesso não autorizado. Faça o login na aplicação!'
 			});
 		}
 	} 
@@ -51,7 +51,7 @@ export function verificarAcesso(requisicao, resposta, next)
 		console.log("Erro ao decodificar token");
 		resposta.status(401).json({
 			"status": false,
-			"mensagem": "Acesso não autorizado. Faça o login na aplicação!"
+			"mensagem": 'Acesso não autorizado. Faça o login na aplicação!'
 		});
 	}
 }

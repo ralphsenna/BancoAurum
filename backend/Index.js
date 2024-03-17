@@ -33,5 +33,5 @@ app.use('/produto', /* verificarAcesso,  */rotaProduto);
 const host = '0.0.0.0';
 const porta = '4000';
 app.listen(porta, host, () => {
-	console.log(`Servidor escutando na porta ${host}:${porta}`);
+	console.log('Servidor escutando na porta '+ host +':'+ porta);
 });

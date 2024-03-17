@@ -3,11 +3,11 @@ import Agencia from '../Modelo/Agencia.js';
 
 export default class AgenciaCtrl 
 {
-    //Chama a função cadastrar de Agencia para cadatrar e confirmar o cadastro
-    cadastrar(req, resp) 
+    // Chama a função cadastrarBD de Agencia para cadatrar e confirmar o cadastro
+    cadastrar (req, resp) 
     {
         resp.type('application/json');
-        if (req.method === 'POST' && req.is('application/json')) 
+        if (req.method==='POST' && req.is('application/json')) 
         {
             const dados = req.body;
             const endereco = dados.endereco;
@@ -26,7 +26,7 @@ export default class AgenciaCtrl
                 .catch((erro) => {
                     resp.status(500).json({
                         "status": false,
-                        "msg": "Erro ao cadastrar agência: " + erro.message
+                        "mensagem": 'Erro ao cadastrar agência: ' + erro.message
                     });
                 });
             } 
@@ -34,7 +34,7 @@ export default class AgenciaCtrl
             {
                 resp.status(400).json({
                     "status": false,
-                    "mensagem": "Informe todos os dados da agência: Endereço, Cidade e UF"
+                    "mensagem": 'Informe todos os dados da agência: Endereço, Cidade e UF.'
                 });
             }
         } 
@@ -42,115 +42,120 @@ export default class AgenciaCtrl
         {
             resp.status(400).json({
                 "status": false,
-                "mensagem": "O método POST ou a agência no formato JSON não foram fornecidos. Consulte a documentação do Projeto!"
+                "mensagem": 'O método POST ou a agência no formato JSON não foi fornecido. Consulte a documentação do Projeto!'
             });
         }
     }
 
-    // ---------------------------------LISTAR TODAS AS AGÊNCIAS---------------------------------
-    consultar(req, resp) {
+    // Chama a função consultarBD de Agencia para consultar e mostrar a consulta
+    consultar (req, resp) 
+    {
         resp.type('application/json');
-
-        if (req.method === 'GET') {
+        let paramConsulta = req.body;
+        if (req.method==='GET') 
+        {
             const agencia = new Agencia();
-            // // método assíncrono consultar da camada de persistência
-            agencia
-                .consultarBD()
-                .then((agencias) => {
-                    resp.status(200).json(agencias);
-                })
-                .catch((erro) => {
-                    resp.status(500).json({
-                        status: false,
-                        msg: erro.message,
-                    });
+            agencia.consultarBD(paramConsulta).then((listaAgencias) => {
+                resp.status(200).json({
+                    "status": true,
+                    listaAgencias
                 });
-        } else {
+            })
+            .catch((erro) => {
+                resp.status(500).json({
+                    "status": false,
+                    "mensagem": 'Erro ao obter agências: ' + erro.message
+                });
+            });
+        } 
+        else 
+        {
             resp.status(400).json({
-                status: false,
-                msg: 'O método não é permitido! Consulte a documentação da API!',
+                "status": false,
+                "mensagem": 'Por favor, utilize o método GET para consultar agencias!'
             });
         }
     }
 
-    // ---------------------------------ALTERAR A AGÊNCIA NO BANCO DE DADOS---------------------------------
-    alterar(req, resp) {
+    // Chama a função alterarBD de Agencia para alterar e confirmar a alteração
+    alterar (req, resp) 
+    {
         resp.type('application/json');
-        if (req.method === 'PUT' && req.is('application/json')) {
+        if (req.method==='PUT' && req.is('application/json'))
+        {
             const dados = req.body;
             const cod_ag = dados.cod_ag;
             const endereco = dados.endereco;
-            const cidade = dados.cidade;
-            const uf = dados.uf;
-
-            // if (cod_ag && endereco && cidade && uf) {
-            if (cod_ag && endereco && cidade && uf) {
-                // alterar as informações da agência
-                const agencia = new Agencia(cod_ag, endereco, cidade, uf);
-                // chamando o método assíncrono alterar da camada de persistência
-                agencia
-                    .alterarBD()
-                    .then(() => {
-                        resp.status(200).json({
-                            status: true,
-                            msg: 'Endereço da agência alterado com sucesso!',
-                        });
-                    })
-                    .catch((erro) => {
-                        resp.status(500).json({
-                            status: false,
-                            msg: erro.message,
-                        });
+            if (cod_ag && endereco) 
+            {
+                const agencia = new Agencia(cod_ag, endereco, '', '');
+                agencia.alterarBD().then(() => {
+                    resp.status(200).json({
+                        "status": true,
+                        "mensagem": 'Endereço da agência alterado com sucesso!'
                     });
-            } else {
+                })
+                .catch((erro) => {
+                    resp.status(500).json({
+                        "status": false,
+                        "mensagem": 'Erro ao alterar agência: ' + erro.message
+                    });
+                });
+            } 
+            else 
+            {
                 resp.status(400).json({
-                    status: false,
-                    msg: 'Informe o novo endereço da agência.',
+                    "status": false,
+                    "mensagem": 'Informe o novo endereço da agência!'
                 });
             }
-        } else {
-            // 4xx = 'Client error'
+        } 
+        else 
+        {
             resp.status(400).json({
-                status: false,
-                msg: 'O método não é permitido ou agência no formato JSON não foi fornecida. Consulte a documentação da API!',
+                "status": false,
+                "mensagem": 'O método PUT ou o endereço da agência no formato JSON não foi fornecido. Consulte a documentação do Projeto!'
             });
         }
     }
 
-    // ---------------------------------EXCLUIR A AGÊNCIA DO BANCO DE DADOS---------------------------------
-    excluir(req, resp) {
+    // Chamada a função excluirBD de Agencia para excluir e confirmar a exclusão
+    excluir(req, resp) 
+    {
         resp.type('application/json');
-        if (req.method === 'DELETE' && req.is('application/json')) {
+        if (req.method==='DELETE' && req.is('application/json')) 
+        {
             const dados = req.body;
-            // const codigo = dados.codigo;
-            if (dados.cod_ag) {
-                const agencia = new Agencia();
-                agencia.cod_ag = dados.cod_ag;
-                agencia
-                    .excluirBD()
-                    .then(() => {
-                        resp.status(200).json({
-                            status: true,
-                            msg: 'Agência excluída com sucesso!',
-                        });
-                    })
-                    .catch((erro) => {
-                        resp.status(500).json({
-                            status: false,
-                            msg: erro.message,
-                        });
+            const cod_ag = dados.cod_ag;
+            if (cod_ag) 
+            {
+                const agencia = new Agencia(cod_ag);
+                agencia.excluirBD().then(() => {
+                    resp.status(200).json({
+                        "status": true,
+                        "mensagem": 'Agência excluída com sucesso!',
                     });
-            } else {
+                })
+                .catch((erro) => {
+                    resp.status(500).json({
+                        "status": false,
+                        "mensagem": 'Erro ao excluir agência: ' + erro.message
+                    });
+                });
+            } 
+            else 
+            {
                 resp.status(400).json({
-                    status: false,
-                    msg: 'Informe o código da agência a ser excluída.',
+                    "status": false,
+                    "mensagem": 'Informe código da agência!'
                 });
             }
-        } else {
-            // 4xx = 'Client error'
+        } 
+        else 
+        {
             resp.status(400).json({
-                status: false,
-                msg: 'O método não é permitido ou agência no formato JSON não foi fornecida. Consulte a documentação da API!',
+                "status": false,
+                "mensagem": 'O método DELETE ou o código da agência no formato JSON não foi fornecido. Consulte a documentação do Projeto!'
             });
         }
     }

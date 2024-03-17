@@ -1,59 +1,77 @@
 import Agencia from '../Modelo/Agencia.js';
-import Agencia_Produto from '../Modelo/Agencia_Produto.js';
+//import Agencia_Produto from '../Modelo/Agencia_Produto.js';
 import conectar from './Conexao.js';
 
-export default class AgenciaBD {
-    // ------------------------------------CADASTRAR AGÊNCIA NO BANCO DE DADOS------------------------------------
-    async cadastrar(agencia) {
-        if (agencia instanceof Agencia) {
-            const conexao = await conectar();
+export default class AgenciaBD 
+{
+    // Cadastra Agencia no banco de dados
+    async cadastrar(agencia) 
+    {
+        if (agencia instanceof Agencia) 
+        {
             const sql = 'INSERT INTO Agencia (endereco, cidade, uf) VALUES(?,?,?)';
             const parametros = [agencia.endereco, agencia.cidade, agencia.uf];
-            const resultado = await conexao.query(sql, parametros);
-            // global.poolConexoes.pool.releaseConnection(conexao);
-            return await resultado[0].insertId;
-        }
-    }
-
-    // ------------------------------------ALTERAR AGÊNCIA NO BANCO DE DADOS------------------------------------
-    async alterar(agencia) {
-        if (agencia instanceof Agencia) {
-            const conexao = await conectar();
-            const sql = 'UPDATE Agencia SET endereco=? WHERE cod_ag=?';
-            const parametros = [agencia.endereco, agencia.cod_ag];
-            await conexao.query(sql, parametros);
-            // O QUE É poolConexoes?
-            // global.poolConexoes.pool.releaseConnection(conexao);
-        }
-    }
-
-    // ------------------------------------EXCLUIR AGÊNCIA DO BANCO DE DADOS------------------------------------
-    async excluir(agencia) {
-        if (agencia instanceof Agencia) {
-            const conexao = await conectar();
-            const sql = 'DELETE FROM Agencia WHERE cod_ag=?';
-            const parametros = [agencia.cod_ag];
-            await conexao.query(sql, parametros);
+            const conexao = await conectar();            
+            const retorno = await conexao.execute(sql, parametros);
+            agencia.cod_ag = retorno[0].insertId;
             global.poolConexoes.pool.releaseConnection(conexao);
         }
     }
 
-    // ------------------------------------CONSULTAR AGÊNCIAS NO BANCO DE DADOS------------------------------------
-    async consultar() {
+    // Consulta Agencia(s) com ou sem parametros no banco de dados
+    async consultar(paramConsulta) 
+    {
+        let sql = '';
+        let parametros = [];
+        if (Object.keys(paramConsulta).length === 0)
+        {
+            sql = 'SELECT * FROM Agencia';
+        }
+        else
+        {
+            const coluna = Object.keys(paramConsulta);
+            sql = 'SELECT * FROM Agencia WHERE '+ coluna +' = ?';
+        }
+        parametros = Object.values(paramConsulta);
         const conexao = await conectar();
-        const sql = 'SELECT * FROM Agencia';
-        const parametros = ['%'];
-        const [rows] = await conexao.query(sql, parametros);
+        const [registros] = await conexao.execute(sql, parametros);
         const listaAgencias = [];
-        for (const row of rows) {
-            const agencia = new Agencia(row['cod_ag'], row['endereco'], row['cidade'], row['uf']);
+        for (const registro of registros) 
+        {
+            const agencia = new Agencia(registro.cod_ag, registro.endereco, registro.cidade, registro.uf);
             listaAgencias.push(agencia);
         }
         global.poolConexoes.pool.releaseConnection(conexao);
         return listaAgencias;
     }
 
-    // ------------------------------------ASSOCIAR PRODUTO A AGÊNCIA------------------------------------
+    // Altera Agencia no banco de dados
+    async alterar(agencia) 
+    {
+        if (agencia instanceof Agencia) 
+        {
+            const sql = 'UPDATE Agencia SET endereco = ? WHERE cod_ag = ?';
+            const parametros = [agencia.endereco, agencia.cod_ag];
+            const conexao = await conectar();
+            await conexao.execute(sql, parametros);
+            global.poolConexoes.pool.releaseConnection(conexao);
+        }
+    }
+
+    // Exclui Agencia no banco de dados
+    async excluir(agencia) 
+    {
+        if (agencia instanceof Agencia) 
+        {
+            const sql = 'DELETE FROM Agencia WHERE cod_ag = ?';
+            const parametros = [agencia.cod_ag];
+            const conexao = await conectar();
+            await conexao.execute(sql, parametros);
+            global.poolConexoes.pool.releaseConnection(conexao);
+        }
+    }
+
+    /* // ------------------------------------ASSOCIAR PRODUTO A AGÊNCIA------------------------------------
     async associarProdutoAgencia(agencia_produto) {
         if (agencia_produto instanceof Agencia_Produto) {
             const conexao = await conectar();
@@ -61,5 +79,5 @@ export default class AgenciaBD {
             const parametros = [agencia_produto.cod_ag, agencia_produto.cod_prod];
             await conexao.query(sql, parametros);
         }
-    }
+    } */
 }

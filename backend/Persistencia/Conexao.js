@@ -13,7 +13,7 @@ export default async function conectar()
             host: '129.146.68.51',
             user: process.env.USUARIO_DB,
             password: process.env.SENHA_DB,
-            database: 'bancoaurum',
+            database: 'bancoAurum',
             waitForConnections: true,
             connectionLimit: 10,
             maxIdle: 10,
