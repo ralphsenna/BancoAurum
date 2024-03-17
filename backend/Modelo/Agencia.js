@@ -8,6 +8,7 @@ export default class Agencia
     #cidade;
     #uf;
 
+    // Construtor que inicializa os atributos da classe Agencia
     constructor(cod_ag=0, endereco='', cidade='', uf='') 
     {
         this.#cod_ag = cod_ag;

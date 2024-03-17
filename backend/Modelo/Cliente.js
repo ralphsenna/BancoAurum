@@ -1,182 +1,178 @@
-import conectar from '../Persistencia/Conexao.js';
 import ClienteBD from '../Persistencia/ClienteBD.js';
 
-export default class Cliente {
+export default class Cliente 
+{
     #cod_cli;
     #nome;
     #cpf;
+    #rg
     #dataNasc;
     #endereco;
     #cidade;
     #uf;
     #email;
     #telefone;
-    #cod_ag;
-    #senha;
+    #agencia;
 
-    constructor(cod_cli, nome, cpf, dataNasc, endereco, cidade, uf, email, telefone, cod_ag, senha) {
-        //   constructor(cod_cli, nome, cpf, dataNasc, endereco, cidade, uf, email, telefone, cod_ag) {
+    // Construtor que inicializa os atributos da classe Cliente
+    constructor(cod_cli=0, nome='', cpf='', rg='', dataNasc='', endereco='', cidade='', uf='', email='', telefone='', agencia={}) 
+    {
         this.#cod_cli = cod_cli;
         this.#nome = nome;
         this.#cpf = cpf;
+        this.#rg = rg;
         this.#dataNasc = dataNasc;
         this.#endereco = endereco;
         this.#cidade = cidade;
         this.#uf = uf;
         this.#email = email;
         this.#telefone = telefone;
-        this.#cod_ag = cod_ag;
-        this.#senha = senha;
+        this.#agencia = agencia;
     }
 
-    // MÉTODOS PÚBLICOS
-
-    // CÓDIGO DO CLIENTE
-    get cod_cli() {
+    // Métodos publicos (Gets, Sets e metodo de conversão para JSON)
+    get cod_cli() 
+    {
         return this.#cod_cli;
     }
-    set cod_cli(novoCod_Cli) {
-        this.#cod_cli = novoCod_Cli;
+    set cod_cli(novoCodigo) 
+    {
+        this.#cod_cli = novoCodigo;
     }
 
-    // NOME DO CLIENTE
-    get nome() {
+    get nome() 
+    {
         return this.#nome;
     }
-    set nome(novoNome) {
+    set nome(novoNome) 
+    {
         this.#nome = novoNome;
     }
 
-    // CPF DO CLIENTE
-    get cpf() {
+    get cpf() 
+    {
         return this.#cpf;
     }
-    set cpf(novoCpf) {
+    set cpf(novoCpf) 
+    {
         this.#cpf = novoCpf;
     }
 
-    // DATA DE NASCIMENTO DO CLIENTE
-    get dataNasc() {
+    get rg()
+    {
+        return this.#rg;
+    }
+    set rg(novoRg)
+    {
+        this.#rg = novoRg;
+    }
+
+    get dataNasc() 
+    {
         return this.#dataNasc;
     }
-    set dataNasc(novaDataNasc) {
+    set dataNasc(novaDataNasc) 
+    {
         this.#dataNasc = novaDataNasc;
     }
 
-    // ENDEREÇO DO CLIENTE
-    get endereco() {
+    get endereco() 
+    {
         return this.#endereco;
     }
-    set endereco(novoEndereco) {
+    set endereco(novoEndereco) 
+    {
         this.#endereco = novoEndereco;
     }
 
-    // CIDADE DO CLIENTE
-    get cidade() {
+    get cidade() 
+    {
         return this.#cidade;
     }
-    set cidade(novaCidade) {
+    set cidade(novaCidade) 
+    {
         this.#cidade = novaCidade;
     }
 
-    // UF DO CLIENTE
-    get uf() {
+    get uf() 
+    {
         return this.#uf;
     }
-    set uf(novaUf) {
+    set uf(novaUf) 
+    {
         this.#uf = novaUf;
     }
 
-    // EMAIL DO CLIENTE
-    get email() {
+    get email() 
+    {
         return this.#email;
     }
-    set email(novoEmail) {
+    set email(novoEmail) 
+    {
         this.#email = novoEmail;
     }
 
-    // TELEFONE DO CLIENTE
-    get telefone() {
+    get telefone() 
+    {
         return this.#telefone;
     }
-    set telefone(novoTelefone) {
+    set telefone(novoTelefone)
+    {
         this.#telefone = novoTelefone;
     }
 
-    // SENHA DO CLIENTE
-    get senha() {
-        return this.#senha;
+    get agencia()
+    {
+        return this.#agencia;
     }
-    set senha(novaSenha) {
-        this.#senha = novaSenha;
-    }
-
-    // CÓDIGO DA AGÊNCIA DO CLIENTE
-    get cod_ag() {
-        return this.#cod_ag;
-    }
-    set cod_ag(novoCod_Ag) {
-        this.#cod_ag = novoCod_Ag;
+    set agencia(novaAgencia)
+    {
+        this.#agencia = novaAgencia;
     }
 
-    toJSON() {
+    toJSON() 
+    {
         return {
             cod_cli: this.#cod_cli,
             nome: this.#nome,
             cpf: this.#cpf,
+            rg: this.#rg,
             dataNasc: this.#dataNasc,
             endereco: this.#endereco,
             cidade: this.#cidade,
             uf: this.#uf,
             email: this.#email,
             telefone: this.#telefone,
-            senha: this.#senha,
-            cod_ag: this.#cod_ag,
+            agencia: this.#agencia
         };
     }
 
-    // --------------------------------------CADASTRAR CLIENTE--------------------------------------
-    async cadastrarBD() {
+    // Métodos de persistência (CRUD de Cliente)
+    // Chama a função de cadastro de cliente diretamente no banco de dados
+    async cadastrarBD() 
+    {
         const clienteBD = new ClienteBD();
-        this.cod_cli = await clienteBD.cadastrar(this);
+        await clienteBD.cadastrar(this);
     }
 
-    // --------------------------------------ALTERAR CLIENTE--------------------------------------
-    async alterarBD() {
+    // Chama a função de consulta de cliente diretamente no banco de dados
+    async consultarBD(paramConsulta) 
+    {
+        const clienteBD = new ClienteBD();
+        return await clienteBD.consultar(paramConsulta);
+    }
+
+    // Chama a função de alteração de cliente diretamente no banco de dados
+    async alterarBD() 
+    {
         const clienteBD = new ClienteBD();
         await clienteBD.alterar(this);
     }
-    // --------------------------------------EXCLUIR CLIENTE--------------------------------------
-    async excluirBD() {
+
+    // Chama a função de exclusão de cliente diretamente no banco de dados
+    async excluirBD() 
+    {
         const clienteBD = new ClienteBD();
         await clienteBD.excluir(this);
-    }
-
-    // --------------------------------------CONSULTAR CLIENTES--------------------------------------
-    async consultarBD(cod_cli) {
-        if (cod_cli == undefined) {
-            const conexao = await conectar();
-            const sql = 'SELECT * FROM Cliente';
-            const parametros = ['%'];
-            const [rows] = await conexao.query(sql, parametros);
-            const listaClientes = [];
-            for (const row of rows) {
-                const cliente = new Cliente(row['cod_cli'], row['nome'], row['cpf'], row['dataNasc'], row['endereco'], row['cidade'], row['uf'], row['email'], row['telefone'], row['senha'], row['cod_ag']);
-                listaClientes.push(cliente);
-            }
-            return listaClientes;
-        } else {
-            const conexao = await conectar();
-            const sql = 'SELECT * FROM Cliente WHERE cod_cli=?';
-            const parametros = [cod_cli];
-            const [rows] = await conexao.query(sql, parametros);
-            const listaClientes = [];
-            for (const row of rows) {
-                const cliente = new Cliente(row['cod_cli'], row['nome'], row['cpf'], row['dataNasc'], row['endereco'], row['cidade'], row['uf'], row['email'], row['telefone'], row['senha'], row['cod_ag']);
-                listaClientes.push(cliente);
-            }
-            // PQ RETORNA [0] ?
-            return listaClientes[0];
-        }
     }
 }

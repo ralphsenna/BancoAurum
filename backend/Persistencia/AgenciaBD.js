@@ -1,5 +1,4 @@
 import Agencia from '../Modelo/Agencia.js';
-//import Agencia_Produto from '../Modelo/Agencia_Produto.js';
 import conectar from './Conexao.js';
 
 export default class AgenciaBD 
@@ -77,7 +76,7 @@ export default class AgenciaBD
             const conexao = await conectar();
             const sql = 'INSERT INTO Agencia_Produto (cod_ag, cod_prod) VALUES(?,?)';
             const parametros = [agencia_produto.cod_ag, agencia_produto.cod_prod];
-            await conexao.query(sql, parametros);
+            await conexao.execute(sql, parametros);
         }
     } */
 }

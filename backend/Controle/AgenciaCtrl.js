@@ -4,7 +4,7 @@ import Agencia from '../Modelo/Agencia.js';
 export default class AgenciaCtrl 
 {
     // Chama a função cadastrarBD de Agencia para cadatrar e confirmar o cadastro
-    cadastrar (req, resp) 
+    cadastrar(req, resp) 
     {
         resp.type('application/json');
         if (req.method==='POST' && req.is('application/json')) 
@@ -42,16 +42,16 @@ export default class AgenciaCtrl
         {
             resp.status(400).json({
                 "status": false,
-                "mensagem": 'O método POST ou a agência no formato JSON não foi fornecido. Consulte a documentação do Projeto!'
+                "mensagem": 'O método POST ou a agência no formato JSON não foi fornecido. Consulte a documentação do projeto!'
             });
         }
     }
 
     // Chama a função consultarBD de Agencia para consultar e mostrar a consulta
-    consultar (req, resp) 
+    consultar(req, resp) 
     {
         resp.type('application/json');
-        let paramConsulta = req.body;
+        const paramConsulta = req.body;
         if (req.method==='GET') 
         {
             const agencia = new Agencia();
@@ -78,7 +78,7 @@ export default class AgenciaCtrl
     }
 
     // Chama a função alterarBD de Agencia para alterar e confirmar a alteração
-    alterar (req, resp) 
+    alterar(req, resp) 
     {
         resp.type('application/json');
         if (req.method==='PUT' && req.is('application/json'))
@@ -114,7 +114,7 @@ export default class AgenciaCtrl
         {
             resp.status(400).json({
                 "status": false,
-                "mensagem": 'O método PUT ou o endereço da agência no formato JSON não foi fornecido. Consulte a documentação do Projeto!'
+                "mensagem": 'O método PUT ou o endereço da agência no formato JSON não foi fornecido. Consulte a documentação do projeto!'
             });
         }
     }
@@ -147,7 +147,7 @@ export default class AgenciaCtrl
             {
                 resp.status(400).json({
                     "status": false,
-                    "mensagem": 'Informe código da agência!'
+                    "mensagem": 'Informe o código da agência a ser excluída!'
                 });
             }
         } 
@@ -155,7 +155,7 @@ export default class AgenciaCtrl
         {
             resp.status(400).json({
                 "status": false,
-                "mensagem": 'O método DELETE ou o código da agência no formato JSON não foi fornecido. Consulte a documentação do Projeto!'
+                "mensagem": 'O método DELETE ou o código da agência no formato JSON não foi fornecido. Consulte a documentação do projeto!'
             });
         }
     }
