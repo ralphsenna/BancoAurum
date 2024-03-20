@@ -7,7 +7,7 @@ export default class ClienteCtrl
     cadastrar(req, resp) 
     {
         resp.type('application/json');
-        if (req.method === 'POST' && req.is('application/json')) 
+        if (req.method==='POST' && req.is('application/json')) 
         {
             const dados = req.body;
             const nome = dados.nome;
@@ -60,7 +60,7 @@ export default class ClienteCtrl
     {
         resp.type('application/json');
         const paramConsulta = req.body;
-        if (req.method === 'GET') 
+        if (req.method==='GET') 
         {
             const cliente = new Cliente();
             cliente.consultarBD(paramConsulta).then((listaClientes) => {
@@ -89,7 +89,7 @@ export default class ClienteCtrl
     alterar(req, resp) 
     {
         resp.type('application/json');
-        if (req.method === 'PUT' && req.is('application/json')) 
+        if (req.method==='PUT' && req.is('application/json')) 
         {
             const dados = req.body;
             const cod_cli = dados.cod_cli;
@@ -120,7 +120,7 @@ export default class ClienteCtrl
             {
                 resp.status(400).json({
                     "status": false,
-                    "mensagem": 'Informe todos os novos dados possíveis de alteração do cliente: Endereço, Cidade, UF, E-mail, Telefone e Agência.'
+                    "mensagem": 'Informe o código e os novos dados possíveis de alteração do cliente: Endereço, Cidade, UF, E-mail, Telefone e Agência.'
                 });
             }
         } 
@@ -137,7 +137,7 @@ export default class ClienteCtrl
     excluir(req, resp) 
     {
         resp.type('application/json');
-        if (req.method === 'DELETE' && req.is('application/json')) 
+        if (req.method==='DELETE' && req.is('application/json')) 
         {
             const dados = req.body;
             const cod_cli = dados.cod_cli;

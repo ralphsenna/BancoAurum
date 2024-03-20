@@ -13,7 +13,6 @@ export default class AgenciaBD
             const conexao = await conectar();            
             const retorno = await conexao.execute(sql, parametros);
             agencia.cod_ag = retorno[0].insertId;
-            global.poolConexoes.pool.releaseConnection(conexao);
         }
     }
 
@@ -40,7 +39,6 @@ export default class AgenciaBD
             const agencia = new Agencia(registro.cod_ag, registro.endereco, registro.cidade, registro.uf);
             listaAgencias.push(agencia);
         }
-        global.poolConexoes.pool.releaseConnection(conexao);
         return listaAgencias;
     }
 
@@ -53,7 +51,6 @@ export default class AgenciaBD
             const parametros = [agencia.endereco, agencia.cod_ag];
             const conexao = await conectar();
             await conexao.execute(sql, parametros);
-            global.poolConexoes.pool.releaseConnection(conexao);
         }
     }
 
@@ -66,7 +63,6 @@ export default class AgenciaBD
             const parametros = [agencia.cod_ag];
             const conexao = await conectar();
             await conexao.execute(sql, parametros);
-            global.poolConexoes.pool.releaseConnection(conexao);
         }
     }
 

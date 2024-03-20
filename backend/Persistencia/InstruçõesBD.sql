@@ -31,6 +31,8 @@ CREATE TABLE Produto(
 CREATE TABLE Cliente_Produto(
 	cod_cli INT NOT NULL,
     cod_prod INT NOT NULL,
+    dataContrato DATE NOT NULL,
+    quantidade INT NOT NULL,
     CONSTRAINT pk_cliente_produto PRIMARY KEY(cod_cli, cod_prod),
     CONSTRAINT fk_cliente FOREIGN KEY (cod_cli) REFERENCES Cliente(cod_cli),
     CONSTRAINT fk_produto_cliente FOREIGN KEY (cod_prod) REFERENCES Produto(cod_prod)
@@ -39,6 +41,7 @@ CREATE TABLE Cliente_Produto(
 CREATE TABLE Agencia_Produto(
     cod_ag INT NOT NULL,
     cod_prod INT NOT NULL,
+    dataAdesao DATE NOT NULL,
     CONSTRAINT pk_agencia_produto PRIMARY KEY(cod_ag, cod_prod),
     CONSTRAINT fk_agencia FOREIGN KEY (cod_ag) REFERENCES Agencia(cod_ag),
     CONSTRAINT fk_produto_agencia FOREIGN KEY (cod_prod) REFERENCES Produto(cod_prod)

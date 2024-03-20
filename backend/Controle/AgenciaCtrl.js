@@ -19,7 +19,7 @@ export default class AgenciaCtrl
                 agencia.cadastrarBD().then(() => {
                     resp.status(201).json({
                         "status": true,
-                        "cod_ag": agencia.cod_ag,
+                        "codigoGerado": agencia.cod_ag,
                         "mensagem": 'Agência cadastrada com sucesso!'
                     });
                 })
@@ -92,7 +92,7 @@ export default class AgenciaCtrl
                 agencia.alterarBD().then(() => {
                     resp.status(200).json({
                         "status": true,
-                        "mensagem": 'Endereço da agência alterado com sucesso!'
+                        "mensagem": 'Agência alterada com sucesso!'
                     });
                 })
                 .catch((erro) => {
@@ -106,7 +106,7 @@ export default class AgenciaCtrl
             {
                 resp.status(400).json({
                     "status": false,
-                    "mensagem": 'Informe o novo endereço da agência!'
+                    "mensagem": 'Informe o código e o novo endereço da agência!'
                 });
             }
         } 

@@ -1,4 +1,3 @@
-//import conectar from '../Persistencia/Conexao.js';
 import AgenciaBD from '../Persistencia/AgenciaBD.js';
 
 export default class Agencia 
@@ -60,9 +59,10 @@ export default class Agencia
             cod_ag: this.#cod_ag,
             endereco: this.#endereco,
             cidade: this.#cidade,
-            uf: this.#uf,
+            uf: this.#uf
         };
     }
+    
 
     // Métodos de persistência (CRUD de Agência)
     // Chama a função de cadastro de agência diretamente no banco de dados

@@ -1,9 +1,15 @@
-import ProdutoCtrl from '../Controle/ProdutoCtrl.js';
 import { Router } from 'express';
+import ProdutoCtrl from '../Controle/ProdutoCtrl.js';
 
-const rotaProduto = new Router();
+// Estrutura a rota para produto e recupera funções da ProdutoCtrl
 const produtoCtrl = new ProdutoCtrl();
+const rotaProduto = new Router();
 
-rotaProduto.get('/', produtoCtrl.consultar).post('/', produtoCtrl.cadastrar).delete('/', produtoCtrl.excluir);
+// Define os metodos para a rota produto
+rotaProduto
+.post('/', produtoCtrl.cadastrar)
+.get('/', produtoCtrl.consultar)
+.put('/', produtoCtrl.alterar)
+.delete('/', produtoCtrl.excluir);
 
 export default rotaProduto;

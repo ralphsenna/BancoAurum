@@ -146,6 +146,7 @@ export default class Cliente
             agencia: this.#agencia
         };
     }
+    
 
     // Métodos de persistência (CRUD de Cliente)
     // Chama a função de cadastro de cliente diretamente no banco de dados

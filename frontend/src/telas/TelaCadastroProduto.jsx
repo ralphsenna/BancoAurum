@@ -1,9 +1,9 @@
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import Pagina from '../Templates/Pagina';
+import Pagina from '../Templates/Pagina.jsx';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useState } from 'react';
 
-export default function TelaCadastrarProdEmAgencia(props) {
+export default function TelaCadastrarProduto(props) {
     const [validado, setValidado] = useState(false);
     const [produto, setProduto] = useState({
         cod_prod: '',
@@ -44,31 +44,29 @@ export default function TelaCadastrarProdEmAgencia(props) {
                 <br />
                 <Form noValidate validated={validado} onSubmit={manipulaSubmissao}>
                     <Row>
-                        {/* NOME DO PRODUTO */}
-                        <Col xs={4}>
+                        {/* CÓDIGO */}
+                        <Col xs={2}>
                             <Form.Group controlId='cod_prod'>
+                                <Form.Label>Código:</Form.Label>
+                                <Form.Control required type='number' id='cod_prod' value={produto.cod_prod} onChange={manipularMudanca} />
+                                <Form.Control.Feedback type='invalid'>Informe o código do produto!</Form.Control.Feedback>
+                            </Form.Group>
+                        </Col>
+                        {/* NOME */}
+                        <Col xs={4}>
+                            <Form.Group controlId='nome'>
                                 <Form.Label>Nome do produto:</Form.Label>
                                 <Form.Control required type='text' id='nome' value={produto.nome} onChange={manipularMudanca} />
                                 <Form.Control.Feedback type='invalid'>Informe o nome do produto!</Form.Control.Feedback>
                             </Form.Group>
                         </Col>
-
-                        {/* AGÊNCIA */}
-                        <Col xs={2}>
-                            <Form.Group controlId='cod_ag'>
-                                <Form.Label>Código da agência:</Form.Label>
-                                <Form.Control required type='number' id='cod_ag' value={produto.nome} onChange={manipularMudanca} />
-                                <Form.Control.Feedback type='invalid'>Informe o código da agência!</Form.Control.Feedback>
-                            </Form.Group>
-                        </Col>
                     </Row>
                     <br />
-
                     <Row>
                         {/* BOTÃO DE CADASTRAR */}
                         <Col xs='auto'>
                             <Button variant='dark' type='submit'>
-                                Cadastrar produto na agência selecionada
+                                Cadastrar produto
                             </Button>
                         </Col>
 

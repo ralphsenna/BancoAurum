@@ -1,51 +1,72 @@
 import Produto from '../Modelo/Produto.js';
 import conectar from './Conexao.js';
 
-export default class ProdutoBD {
-    // CADASTRAR PRODUTO NO BANCO DE DADOS
-
-    // EM CÓDIGOS AUTOINCREMENT, NÃO COLOCAR NO INSERT O CÓDIGO
-    async cadastrar(produto) {
-        if (produto instanceof Produto) {
-            const conexao = await conectar();
+export default class ProdutoBD 
+{
+    // Cadastra Produto no banco de dados
+    async cadastrar(produto) 
+    {
+        if (produto instanceof Produto) 
+        {
             const sql = 'INSERT INTO Produto (nome) VALUE (?)';
             const parametros = [produto.nome];
-            // const parametros = [produto.cod_prod, produto.nome];
-            const resultado = await conexao.query(sql, parametros);
-
-            //   CORRIGIR ESSE poolConexoes, o que é?
-            // global.poolConexoes.pool.releaseConnection(conexao);
-            return await resultado[0].insertId;
-        }
-    }
-
-    // EXCLUIR PRODUTO DO BANCO DE DADOS
-    async excluir(produto) {
-        if (produto instanceof Produto) {
             const conexao = await conectar();
-            const sql = 'DELETE FROM Produto WHERE cod_prod=?';
-            const parametros = [produto.cod_prod];
-            await conexao.query(sql, parametros);
-
-            //   CORRIGIR ESSE poolConexoes, o que é?
-            // global.poolConexoes.pool.releaseConnection(conexao);
+            const retorno = await conexao.execute(sql, parametros);
+            produto.cod_prod = retorno[0].insertId;
+            global.poolConexoes.pool.releaseConnection(conexao);
         }
     }
 
-    // CONSULTAR PRODUTO NO BANCO DE DADOS
-    async consultar() {
+    // Consulta Produto(s) com ou sem parametros no banco de dados
+    async consultar(paramConsulta) 
+    {
+        let sql = '';
+        let parametros = [];
+        if (Object.keys(paramConsulta).length === 0) 
+        {
+            sql = 'SELECT * FROM Produto';
+        }
+        else 
+        {
+            const coluna = Object.keys(paramConsulta);
+            sql = 'SELECT * FROM Produto WHERE '+ coluna +' = ?';
+        }
+        parametros = Object.values(paramConsulta);
         const conexao = await conectar();
-        const sql = 'SELECT * FROM Produto';
-        const parametros = ['%'];
-        const [rows] = await conexao.query(sql, parametros);
+        const [registros] = await conexao.execute(sql, parametros);
         const listaProdutos = [];
-        for (const row of [rows]) {
-            const produto = new Produto(row['cod_prod'], row['nome']);
+        for (const registro of registros) 
+        {
+            const produto = new Produto(registro.cod_prod, registro.nome);
             listaProdutos.push(produto);
         }
-
-        //   CORRIGIR ESSE poolConexoes, o que é?
         global.poolConexoes.pool.releaseConnection(conexao);
         return listaProdutos;
+    }
+
+    // Altera Produto no banco de dados
+    async alterar(produto) 
+    {
+        if (produto instanceof Produto) 
+        {
+            const sql = 'UPDATE Produto SET nome = ? WHERE cod_prod = ?';
+            const parametros = [produto.nome, produto.cod_prod];
+            const conexao = await conectar();
+            await conexao.execute(sql, parametros);
+            global.poolConexoes.pool.releaseConnection(conexao);
+        }
+    }
+
+    // Exclui Produto no banco de dados
+    async excluir(produto) 
+    {
+        if (produto instanceof Produto) 
+        {
+            const sql = 'DELETE FROM Produto WHERE cod_prod = ?';
+            const parametros = [produto.cod_prod];
+            const conexao = await conectar();
+            await conexao.execute(sql, parametros);
+            global.poolConexoes.pool.releaseConnection(conexao);
+        }
     }
 }
