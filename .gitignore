@@ -43,7 +43,7 @@ backend/node_modules/
 frontend/node_modules/
 jspm_packages/
 anotações.txt
-JSON para testes.txt
+JSON_para_testes.txt
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
