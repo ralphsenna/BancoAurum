@@ -8,11 +8,12 @@ export default class AgenciaBD
     {
         if (agencia instanceof Agencia) 
         {
-            const sql = 'INSERT INTO Agencia (endereco, cidade, uf) VALUES(?,?,?)';
-            const parametros = [agencia.endereco, agencia.cidade, agencia.uf];
+            const sql = 'INSERT INTO Agencia (endereco, cidade, uf, telefone) VALUES(?,?,?,?)';
+            const parametros = [agencia.endereco, agencia.cidade, agencia.uf, agencia.telefone];
             const conexao = await conectar();            
             const retorno = await conexao.execute(sql, parametros);
             agencia.cod_ag = retorno[0].insertId;
+            global.poolConexoes.releaseConnection(conexao);
         }
     }
 
@@ -20,23 +21,20 @@ export default class AgenciaBD
     async consultar(paramConsulta) 
     {
         let sql = '';
-        let parametros = [];
         if (Object.keys(paramConsulta).length === 0)
         {
             sql = 'SELECT * FROM Agencia';
         }
         else
         {
-            const coluna = Object.keys(paramConsulta);
-            sql = 'SELECT * FROM Agencia WHERE '+ coluna +' = ?';
+            sql = 'SELECT * FROM Agencia WHERE cidade like %?%';
         }
-        parametros = Object.values(paramConsulta);
         const conexao = await conectar();
-        const [registros] = await conexao.execute(sql, parametros);
+        const [registros] = await conexao.execute(sql, paramConsulta);
         const listaAgencias = [];
         for (const registro of registros) 
         {
-            const agencia = new Agencia(registro.cod_ag, registro.endereco, registro.cidade, registro.uf);
+            const agencia = new Agencia(registro.cod_ag, registro.endereco, registro.cidade, registro.uf, registro.telefone);
             listaAgencias.push(agencia);
         }
         return listaAgencias;
@@ -47,10 +45,11 @@ export default class AgenciaBD
     {
         if (agencia instanceof Agencia) 
         {
-            const sql = 'UPDATE Agencia SET endereco = ? WHERE cod_ag = ?';
-            const parametros = [agencia.endereco, agencia.cod_ag];
+            const sql = 'UPDATE Agencia SET endereco = ?, telefone = ? WHERE cod_ag = ?';
+            const parametros = [agencia.endereco, agencia.telefone, agencia.cod_ag];
             const conexao = await conectar();
             await conexao.execute(sql, parametros);
+            global.poolConexoes.releaseConnection(conexao);
         }
     }
 
@@ -63,6 +62,7 @@ export default class AgenciaBD
             const parametros = [agencia.cod_ag];
             const conexao = await conectar();
             await conexao.execute(sql, parametros);
+            global.poolConexoes.releaseConnection(conexao);
         }
     }
 

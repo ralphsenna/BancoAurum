@@ -6,14 +6,18 @@ export default class Agencia
     #endereco;
     #cidade;
     #uf;
+    #telefone
+    #produtos;
 
     // Construtor que inicializa os atributos da classe Agencia
-    constructor(cod_ag=0, endereco='', cidade='', uf='') 
+    constructor(cod_ag=0, endereco='', cidade='', uf='', telefone='', produtos={}) 
     {
         this.#cod_ag = cod_ag;
         this.#endereco = endereco;
         this.#cidade = cidade;
         this.#uf = uf;
+        this.#telefone = telefone;
+        this.#produtos = produtos;
     }
 
     // Métodos publicos (Gets, Sets e metodo de conversão para JSON)
@@ -53,13 +57,33 @@ export default class Agencia
         this.#uf = novaUf;
     }
 
+    get telefone()
+    {
+        return this.#telefone;
+    }
+    set telefone(novoTelefone)
+    {
+        this.#telefone = novoTelefone;
+    }
+
+    get produtos()
+    {
+        return this.#produtos;
+    }
+    set produtos(novosProdutos)
+    {
+        this.#produtos = novosProdutos;
+    }
+
     toJSON() 
     {
         return {
             cod_ag: this.#cod_ag,
             endereco: this.#endereco,
             cidade: this.#cidade,
-            uf: this.#uf
+            uf: this.#uf,
+            telefone: this.#telefone,
+            produtos: this.#produtos
         };
     }
     

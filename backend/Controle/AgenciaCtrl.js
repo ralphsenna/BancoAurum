@@ -13,9 +13,10 @@ export default class AgenciaCtrl
             const endereco = dados.endereco;
             const cidade = dados.cidade;
             const uf = dados.uf;
-            if (endereco && cidade && uf) 
+            const telefone = dados.telefone;
+            if (endereco && cidade && uf && telefone) 
             {
-                const agencia = new Agencia(0, endereco, cidade, uf);
+                const agencia = new Agencia(0, endereco, cidade, uf, telefone, {});
                 agencia.cadastrarBD().then(() => {
                     resp.status(201).json({
                         "status": true,
@@ -86,9 +87,10 @@ export default class AgenciaCtrl
             const dados = req.body;
             const cod_ag = dados.cod_ag;
             const endereco = dados.endereco;
+            const telefone = dados.telefone;
             if (cod_ag && endereco) 
             {
-                const agencia = new Agencia(cod_ag, endereco, '', '');
+                const agencia = new Agencia(cod_ag, endereco, '', '', telefone, {});
                 agencia.alterarBD().then(() => {
                     resp.status(200).json({
                         "status": true,
