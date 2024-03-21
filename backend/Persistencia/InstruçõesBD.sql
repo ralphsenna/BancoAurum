@@ -38,7 +38,7 @@ CREATE TABLE Agencia_Produto(
     CONSTRAINT pk_agencia_produto PRIMARY KEY(cod_ag, cod_prod),
     CONSTRAINT fk_agencia FOREIGN KEY (cod_ag) REFERENCES Agencia(cod_ag),
     CONSTRAINT fk_produto_agencia FOREIGN KEY (cod_prod) REFERENCES Produto(cod_prod)
-)
+);
 
 CREATE TABLE Usuario_Produto(
 	cod_usu INT NOT NULL,
