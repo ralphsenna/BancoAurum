@@ -40,11 +40,11 @@ CREATE TABLE Agencia_Produto(
     CONSTRAINT fk_produto_agencia FOREIGN KEY (cod_prod) REFERENCES Produto(cod_prod)
 )
 
-CREATE TABLE Cliente_Produto(
-	cod_cli INT NOT NULL,
+CREATE TABLE Usuario_Produto(
+	cod_usu INT NOT NULL,
     cod_prod INT NOT NULL,
     dataContrato DATE NOT NULL,
-    CONSTRAINT pk_cliente_produto PRIMARY KEY(cod_cli, cod_prod),
-    CONSTRAINT fk_cliente FOREIGN KEY (cod_cli) REFERENCES Cliente(cod_cli),
-    CONSTRAINT fk_produto_cliente FOREIGN KEY (cod_prod) REFERENCES Produto(cod_prod)
+    CONSTRAINT pk_usuario_produto PRIMARY KEY(cod_usu, cod_prod),
+    CONSTRAINT fk_usuario FOREIGN KEY (cod_usu) REFERENCES Usuario(cod_usu),
+    CONSTRAINT fk_produto_usuario FOREIGN KEY (cod_prod) REFERENCES Produto(cod_prod)
 );
