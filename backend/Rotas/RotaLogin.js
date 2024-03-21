@@ -1,8 +1,12 @@
 import { Router } from 'express';
 import { autenticar } from '../Seguranca/Autenticacao.js';
 
+// Estrutura a rota para login
 const rotaLogin = new Router();
-rotaLogin.post('/', (req, resp) => {
+
+// Define os metodos para a rota login
+rotaLogin
+.post('/', (req, resp) => {
     autenticar(req, resp);
 });
 

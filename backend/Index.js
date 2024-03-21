@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import session from 'express-session';
-import rotaCliente from './Rotas/RotaCliente.js';
+import rotaUsuario from './Rotas/RotaUsuario.js';
 import rotaAgencia from './Rotas/RotaAgencia.js';
 import rotaProduto from './Rotas/RotaProduto.js';
 import rotaLogin from './Rotas/RotaLogin.js';
@@ -26,7 +26,7 @@ app.use(session({
 // Rotas para o servidor
 app.use('/login', rotaLogin);
 app.use('/agencia', /*verificarAcesso, */rotaAgencia);
-app.use('/cliente', /* verificarAcesso,  */rotaCliente);
+app.use('/usuario', /* verificarAcesso,  */rotaUsuario);
 app.use('/produto', /* verificarAcesso,  */rotaProduto);
 
 // Inicialização do servidor

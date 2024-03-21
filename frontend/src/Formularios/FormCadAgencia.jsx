@@ -98,6 +98,20 @@ export default function FormCadAgencia(props)
                     <Form.Control.Feedback type="invalid">Por favor, informe a cidade!</Form.Control.Feedback>
                 </Form.Group>
             </Row>
+            <Row>
+                <Form.Group as={Col} md="2">
+                    <Form.Label>Telefone</Form.Label>
+                    <Form.Control 
+                        required 
+                        type="text" 
+                        placeholder="Telefone" 
+                        value={agencia.telefone}
+                        id="telefone"
+                        name="telefone"
+                        onChange={manipularMudanca}/>
+                    <Form.Control.Feedback type="invalid">Por favor, informe o telefone!</Form.Control.Feedback>
+                </Form.Group>
+            </Row>
             <Button type="submit">Gravar</Button>
             <Button onClick={() => {
                 props.setExibirTabela(true);

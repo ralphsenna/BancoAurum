@@ -5,7 +5,7 @@ export function autenticar(requisicao, resposta)
 {
 	const usuario = requisicao.body.usuario;
 	const senha = requisicao.body.senha;
-	if (usuario === 'admin' && senha === 'admin') 
+	if (usuario === 'adminaurum' && senha === 'adminaurum') 
 	{
 		requisicao.session.usuarioAutenticado = usuario;
 		resposta.json({
