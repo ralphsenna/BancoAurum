@@ -8,9 +8,11 @@ export default function FormCadAgencia(props)
 {
     const [validado, setValidado] = useState(false);
     const [agencia, setAgencia] = useState({
+        cod_ag: 0,
         endereco: '',
         cidade: '',
-        uf: ''
+        uf: '',
+        telefone: ''
     });
 
     function manipularMudanca(evento) 
@@ -19,11 +21,13 @@ export default function FormCadAgencia(props)
         setAgencia({ ...agencia, [componente.name]: componente.value });
     }
 
-    function manipularSubmissao(evento) {
+    function manipularSubmissao(evento) 
+    {
         evento.preventDefault();
         evento.stopPropagation();
         const form = evento.currentTarget;
-        if (form.checkValidity()===false) {
+        if (form.checkValidity()===false) 
+        {
             setValidado(true);
         }
         else
@@ -54,10 +58,11 @@ export default function FormCadAgencia(props)
             });     
         }
     }
+    
     return (
         <Form noValidate validated={validado} onSubmit={manipularSubmissao}>
             <Row className="mb-3">
-                <Form.Group as={Col} md="7" controlId="validationCustom01">
+                <Form.Group as={Col} md="5" controlId="validationCustom01">
                     <Form.Label>Endereço</Form.Label>
                     <Form.Control
                         required
@@ -72,7 +77,7 @@ export default function FormCadAgencia(props)
                 </Form.Group>
             </Row>
             <Row className="mb-3">
-                <Form.Group as={Col} md="5" controlId="validationCustom02">
+                <Form.Group as={Col} md="3" controlId="validationCustom02">
                     <Form.Label>Cidade</Form.Label>
                     <Form.Control
                         required
@@ -85,7 +90,7 @@ export default function FormCadAgencia(props)
                     />
                     <Form.Control.Feedback type='invalid'>Por favor, informe a cidade!</Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group as={Col} md="2" controlId="validationCustom03">
+                <Form.Group as={Col} md="1" controlId="validationCustom03">
                     <Form.Label>UF</Form.Label>
                     <Form.Control 
                         required 

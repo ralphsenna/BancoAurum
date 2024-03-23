@@ -42,6 +42,8 @@ build/Release
 backend/node_modules/
 frontend/node_modules/
 jspm_packages/
+backend/.vscode
+frontend/.vscode
 anotações.txt
 JSON para testes.txt
 

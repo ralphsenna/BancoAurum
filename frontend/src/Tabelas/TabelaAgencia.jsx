@@ -16,6 +16,7 @@ export default function TabelaAgencia(props)
                         <th>Endereço</th>
                         <th>Cidade</th>
                         <th>UF</th>
+                        <th>Telefone</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -27,6 +28,7 @@ export default function TabelaAgencia(props)
                                 <td>{agencia.endereco}</td>
                                 <td>{agencia.cidade}</td>
                                 <td>{agencia.uf}</td>
+                                <td>{agencia.telefone}</td>
                                 <td>
                                     <Button variant="primary" onClick={() => {props.alterarAgencia(agencia)}}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

@@ -21,7 +21,8 @@ export default class AgenciaBD
     async consultar(paramConsulta) 
     {
         let sql = '';
-        if (Object.keys(paramConsulta).length === 0)
+        let parametros = [];
+        if (Object.keys(paramConsulta).length===0)
         {
             sql = 'SELECT * FROM Agencia';
         }
@@ -29,8 +30,9 @@ export default class AgenciaBD
         {
             sql = 'SELECT * FROM Agencia WHERE cidade like %?%';
         }
+        parametros = [paramConsulta]
         const conexao = await conectar();
-        const [registros] = await conexao.execute(sql, paramConsulta);
+        const [registros] = await conexao.execute(sql, parametros);
         const listaAgencias = [];
         for (const registro of registros) 
         {

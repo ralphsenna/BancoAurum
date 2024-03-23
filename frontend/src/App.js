@@ -9,7 +9,6 @@ import TelaCadastroCliente from './Telas/TelaCadastroCliente';
 import TelaCadatroProduto from './Telas/TelaCadastroProduto';
 import Tela404 from './Telas/Tela404';
 
-
 function App() 
 {
     const [usuario, setUsuario] = useState({
