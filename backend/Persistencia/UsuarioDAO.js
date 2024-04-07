@@ -73,14 +73,4 @@ export default class UsuarioBD
             global.poolConexoes.pool.releaseConnection(conexao);
         }
     }
-
-    /* // ------------------------------------ASSOCIAR PRODUTO A CLIENTE------------------------------------
-    async associarProdutoUsuario(usuario_produto) {
-        if (usuario_produto instanceof Usuario_Produto) {
-            const conexao = await conectar();
-            const sql = 'INSERT INTO Usuario_Produto (cod_usu, cod_prod) VALUES(?,?)';
-            const parametros = [usuario_produto.cod_usu, usuario_produto.cod_prod];
-            await conexao.execute(sql, parametros);
-        }
-    } */
 }

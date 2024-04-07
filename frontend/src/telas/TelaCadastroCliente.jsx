@@ -1,10 +1,10 @@
-import { Button, Col, Form, Row } from 'react-bootstrap';
+/* import { Button, Col, Form, Row } from 'react-bootstrap';
 import Pagina from '../Templates/Pagina.jsx';
-import { LinkContainer } from 'react-router-bootstrap';
-import { useState } from 'react';
+import { LinkContainer } from 'react-router-bootstrap'; */
+/* import { useState } from 'react'; */
 
 export default function TelaCadastrarCliente(props) {
-    const [validado, setValidado] = useState(false);
+    /*const [validado, setValidado] = useState(false);
     const [cliente, setCliente] = useState({
         cod_cli: '',
         nome: '',
@@ -41,46 +41,43 @@ export default function TelaCadastrarCliente(props) {
         }
         e.preventDefault();
         e.stopPropagation();
-    }
+    } */
 
-    //
-    // RETURN
-    //
-    return (
+    /* return (
         <>
             <Pagina>
                 <h2>Cadastro de novo cliente</h2>
                 <br />
                 <Form noValidate validated={validado} onSubmit={manipulaSubmissao}>
-                    {/* NOME */}
+                     NOME
                     <Form.Group className='mb-3' controlId='nome' style={{ width: '340px' }}>
                         <Form.Label>Nome:</Form.Label>
                         <Form.Control required type='text' id='nome' value={cliente.nome} onChange={manipularMudanca} />
                         <Form.Control.Feedback type='invalid'>Informe o nome do cliente!</Form.Control.Feedback>
                     </Form.Group>
 
-                    {/* CPF */}
+                     CPF 
                     <Form.Group className='mb-3' controlId='cpf' style={{ width: '140px' }}>
                         <Form.Label>CPF:</Form.Label>
                         <Form.Control required type='text' id='cpf' value={cliente.cpf} onChange={manipularMudanca} />
                         <Form.Control.Feedback type='invalid'>Informe o CPF do cliente!</Form.Control.Feedback>
                     </Form.Group>
 
-                    {/* DATA DE NASCIMENTO */}
+                     DATA DE NASCIMENTO 
                     <Form.Group className='mb-3' controlId='dataNasc' style={{ width: '160px' }}>
                         <Form.Label>Data de nascimento:</Form.Label>
                         <Form.Control required type='date' id='dataNasc' value={cliente.dataNasc} onChange={manipularMudanca} />
                         <Form.Control.Feedback type='invalid'>Informe a data de nascimento do cliente!</Form.Control.Feedback>
                     </Form.Group>
 
-                    {/* ENDEREÇO */}
+                    ENDEREÇO 
                     <Form.Group className='mb-3' controlId='endereco' style={{ width: '340px' }}>
                         <Form.Label>Endereço:</Form.Label>
                         <Form.Control required type='text' id='endereco' value={cliente.endereco} onChange={manipularMudanca} />
                         <Form.Control.Feedback type='invalid'>Informe o endereço do cliente!</Form.Control.Feedback>
                     </Form.Group>
 
-                    {/* CIDADE */}
+                     CIDADE 
                     <Col md='2'>
                         <Form.Group className='mb-3' controlId='cidade' style={{ width: '340px' }}>
                             <Form.Label>Cidade:</Form.Label>
@@ -90,7 +87,7 @@ export default function TelaCadastrarCliente(props) {
                     </Col>
 
                     <Col md='2'>
-                        {/* UF */}
+                        UF
                         <Form.Group className='mb-3' controlId='uf'>
                             <Form.Label style={{ width: '50px' }}>UF:</Form.Label>
                             <select className='mb-3' id='uf'>
@@ -123,7 +120,7 @@ export default function TelaCadastrarCliente(props) {
                                 <option value='TO'>TO</option>
                                 <option value='DF'>DF</option>
                             </select>
-                            {/* <Dropdown.Toggle required id='uf'>
+                            /* <Dropdown.Toggle required id='uf'>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item href='AC'>AC</Dropdown.Item>
@@ -153,18 +150,18 @@ export default function TelaCadastrarCliente(props) {
                   <Dropdown.Item>SE</Dropdown.Item>
                   <Dropdown.Item>TO</Dropdown.Item>
                   <Dropdown.Item>DF</Dropdown.Item>
-                </Dropdown.Menu> */}
+                </Dropdown.Menu> 
                             <Form.Control.Feedback type='invalid'>Informe o estado da agência!</Form.Control.Feedback>
                         </Form.Group>
 
-                        {/* EMAIL */}
+                         EMAIL 
                         <Form.Group className='mb-3' controlId='email' style={{ width: '240px' }}>
                             <Form.Label>Email:</Form.Label>
                             <Form.Control required type='email' id='email' value={cliente.email} onChange={manipularMudanca} />
                             <Form.Control.Feedback type='invalid'>Informe o email do cliente !</Form.Control.Feedback>
                         </Form.Group>
 
-                        {/* TELEFONE */}
+                         TELEFONE 
                         <Form.Group className='mb-3' controlId='telefone' style={{ width: '240px' }}>
                             <Form.Label>Telefone:</Form.Label>
                             <Form.Control required type='number' id='telefone' value={cliente.telefone} onChange={manipularMudanca} />
@@ -173,7 +170,7 @@ export default function TelaCadastrarCliente(props) {
                     </Col>
 
                     <Row style={{ width: '350px' }}>
-                        {/* SENHA */}
+                         SENHA 
                         <Col>
                             <Form.Group className='mb-3' controlId='senha' style={{ width: '120px' }}>
                                 <Form.Label>Senha:</Form.Label>
@@ -182,7 +179,7 @@ export default function TelaCadastrarCliente(props) {
                             </Form.Group>
                         </Col>
                         <Col>
-                            {/* REPETIR A SENHA */}
+                            REPETIR A SENHA 
                             <Form.Group className='mb-3' controlId='senha' style={{ width: '120px' }}>
                                 <Form.Label>Repita a senha:</Form.Label>
                                 <Form.Control required type='password' id='senha' value={cliente.senha} onChange={manipularMudanca} />
@@ -193,14 +190,14 @@ export default function TelaCadastrarCliente(props) {
 
                     <br />
                     <Row>
-                        {/* BOTÃO DE CADASTRAR */}
+                         BOTÃO DE CADASTRAR
                         <Col xs='auto'>
                             <Button variant='dark' type='submit'>
                                 Cadastrar cliente
                             </Button>
                         </Col>
 
-                        {/* BOTÃO DE CANCELAR */}
+                         BOTÃO DE CANCELAR 
                         <Col xs='auto'>
                             <LinkContainer to='/'>
                                 <Button variant='secondary'>Cancelar</Button>
@@ -211,5 +208,5 @@ export default function TelaCadastrarCliente(props) {
                 </Form>
             </Pagina>
         </>
-    );
+    ); */
 }

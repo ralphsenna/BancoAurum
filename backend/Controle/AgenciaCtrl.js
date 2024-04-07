@@ -2,7 +2,7 @@ import Agencia from '../Modelo/Agencia.js';
 
 export default class AgenciaCtrl 
 {
-    // Chama a função cadastrarBD de Agencia para cadatrar e confirmar o cadastro
+    // Chama a função cadastrar de Agencia para cadatrar e confirmar o cadastro
     cadastrar(req, resp) 
     {
         resp.type('application/json');
@@ -16,7 +16,7 @@ export default class AgenciaCtrl
             if (endereco && cidade && uf && telefone) 
             {
                 const agencia = new Agencia(0, endereco, cidade, uf, telefone, {});
-                agencia.cadastrarBD().then(() => {
+                agencia.cadastrar().then(() => {
                     resp.status(201).json({
                         "status": true,
                         "codigoGerado": agencia.cod_ag,
@@ -47,7 +47,7 @@ export default class AgenciaCtrl
         }
     }
 
-    // Chama a função consultarBD de Agencia para consultar e mostrar a consulta
+    // Chama a função consultar de Agencia para consultar e mostrar a consulta
     consultar(req, resp) 
     {
         resp.type('application/json');
@@ -55,7 +55,7 @@ export default class AgenciaCtrl
         if (req.method==='GET') 
         {
             const agencia = new Agencia();
-            agencia.consultarBD(paramConsulta).then((listaAgencias) => {
+            agencia.consultar(paramConsulta).then((listaAgencias) => {
                 resp.status(200).json({
                     "status": true,
                     listaAgencias
@@ -77,7 +77,7 @@ export default class AgenciaCtrl
         }
     }
 
-    // Chama a função alterarBD de Agencia para alterar e confirmar a alteração
+    // Chama a função alterar de Agencia para alterar e confirmar a alteração
     alterar(req, resp) 
     {
         resp.type('application/json');
@@ -86,11 +86,13 @@ export default class AgenciaCtrl
             const dados = req.body;
             const cod_ag = dados.cod_ag;
             const endereco = dados.endereco;
+            const cidade = dados.cidade;
+            const uf = dados.uf;
             const telefone = dados.telefone;
-            if (cod_ag && endereco) 
+            if (cod_ag && endereco && cidade && uf && telefone) 
             {
-                const agencia = new Agencia(cod_ag, endereco, '', '', telefone, {});
-                agencia.alterarBD().then(() => {
+                const agencia = new Agencia(cod_ag, endereco, cidade, uf, telefone, {});
+                agencia.alterar().then(() => {
                     resp.status(200).json({
                         "status": true,
                         "mensagem": 'Agência alterada com sucesso!'
@@ -120,7 +122,7 @@ export default class AgenciaCtrl
         }
     }
 
-    // Chamada a função excluirBD de Agencia para excluir e confirmar a exclusão
+    // Chamada a função excluir de Agencia para excluir e confirmar a exclusão
     excluir(req, resp) 
     {
         resp.type('application/json');
@@ -131,7 +133,7 @@ export default class AgenciaCtrl
             if (cod_ag) 
             {
                 const agencia = new Agencia(cod_ag);
-                agencia.excluirBD().then(() => {
+                agencia.excluir().then(() => {
                     resp.status(200).json({
                         "status": true,
                         "mensagem": 'Agência excluída com sucesso!',
@@ -160,77 +162,4 @@ export default class AgenciaCtrl
             });
         }
     }
-
-    /* // ---------------------------------CONSULTAR PARA ALTERAR AGÊNCIA---------------------------------
-    consultarParaAlterar(req, resp) {
-        resp.type('application/json');
-
-        if (req.method === 'GET') {
-            const cod_ag = req.params.cod_ag;
-            const agencia = new Agencia();
-            // // método assíncrono consultar da camada de persistência
-            agencia
-                .consultarBD(cod_ag)
-                .then((agencias) => {
-                    resp.status(200).json(agencias);
-                })
-                .catch((erro) => {
-                    resp.status(500).json({
-                        status: false,
-                        msg: erro.message,
-                    });
-                });
-            // console.log('backend funcionando para GET');
-        } else {
-            resp.status(400).json({
-                status: false,
-                msg: 'O método não é permitido! Consulte a documentação da API!',
-            });
-        }
-    }
-
-    // ASSOCIAR PRODUTO A AGÊNCIA
-    associarProduto(req, resp) {
-        resp.type('application/json');
-        if (req.method === 'POST' && req.is('application/json')) {
-            const dados = req.body;
-            const cod_ag = dados.cod_ag;
-            const cod_prod = dados.cod_prod;
-
-            if (cod_ag && cod_prod) {
-                // const agencia = new Agencia(0, endereco, cidade);
-                // CRIAR MODELO AGENCIAPRODUTO
-                const agencia_produto = new Agencia_Produto(cod_ag, cod_prod);
-                // console.log('Agência cadastrada (endereço) / cidade:', agencia.endereco, agencia.cidade);
-
-                agencia_produto
-                    .cadastrarBD()
-                    .then(() => {
-                        resp.status(200).json({
-                            status: true,
-                            cod_ag: agencia_produto.cod_ag, //nao retirar
-                            cod_prod: agencia_produto.cod_prod,
-                            msg: 'Agência criada com sucesso!',
-                        });
-                    })
-                    .catch((erro) => {
-                        resp.status(500).json({
-                            status: false,
-                            msg: erro.message,
-                        });
-                    });
-            } else {
-                resp.status(400).json({
-                    status: false,
-                    msg: 'Informe todos os dados da agência: endereço e cidade ',
-                });
-            }
-        } else {
-            // 4xx = 'Client error'
-            resp.status(400).json({
-                status: false,
-                msg: 'O método não é permitido ou agência no formato JSON não foi fornecida. Consulte a documentação da API!',
-            });
-        }
-    } */
 }

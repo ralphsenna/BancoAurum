@@ -1,4 +1,4 @@
-import ProdutoBD from '../Persistencia/ProdutoBD.js';
+import ProdutoBD from '../Persistencia/ProdutoDAO.js';
 
 export default class Produto 
 {

@@ -1,7 +1,5 @@
+import { useState, createContext } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
-import { ContextoUsuario } from './Templates/Contexto';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import TelaLogin from './Telas/TelaLogin';
 import TelaInicial from './Telas/TelaInicial';
 import TelaCadastroAgencia from './Telas/TelaCadastroAgencia';
@@ -9,19 +7,23 @@ import TelaCadastroCliente from './Telas/TelaCadastroCliente';
 import TelaCadatroProduto from './Telas/TelaCadastroProduto';
 import Tela404 from './Telas/Tela404';
 
+export const ContextoUsuario = createContext("");
+
 function App() 
 {
     const [usuario, setUsuario] = useState({
-        nome: "",
-        senha: "",
-        logado: false
+        nome: "adminaurum",
+        senha: "admin",
+        logado: true
     });
 
     if (!usuario.logado) 
     {
-        return <ContextoUsuario.Provider value={[usuario, setUsuario]}>
-            <TelaLogin/>;
-        </ContextoUsuario.Provider>;
+        return (
+            <ContextoUsuario.Provider value={[usuario, setUsuario]}>
+                <TelaLogin/>;
+            </ContextoUsuario.Provider>
+        );
     }
     else
     {

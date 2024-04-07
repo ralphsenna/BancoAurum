@@ -6,14 +6,8 @@ import { useState } from 'react';
 
 export default function FormCadAgencia(props) 
 {
-    const [validado, setValidado] = useState(false);
-    const [agencia, setAgencia] = useState({
-        cod_ag: 0,
-        endereco: '',
-        cidade: '',
-        uf: '',
-        telefone: ''
-    });
+    const [validado, setValidado] = useState(true);
+    const [agencia, setAgencia] = useState(props.agencia);
 
     function manipularMudanca(evento) 
     {
@@ -26,43 +20,36 @@ export default function FormCadAgencia(props)
         evento.preventDefault();
         evento.stopPropagation();
         const form = evento.currentTarget;
-        if (form.checkValidity()===false) 
-        {
-            setValidado(true);
-        }
+        if (!form.checkValidity()) 
+            setValidado(false);
         else
         {
-            setValidado(false);
-            fetch('http://localhost:4000/agencia', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(agencia)
-            })
-            .then(response => response.json())
-            .then(retorno => {
-                if (retorno.status) 
-                {
-                    alert(retorno.mensagem + ' Código gerado: ' + retorno.codigoGerado);
-                    props.setListaProdutos([...props.setListaProdutos, agencia])
-                    props.setExibirTabela(true);
-                }
-                else 
-                {
-                    alert(retorno.mensagem);
-                }
-            })     
-            .catch(erro => {
-                alert('Erro: ' + erro.mensagem);
-            });     
+            setValidado(true);
+            if (!props.atualizando)
+                props.gravarAgencia(agencia);
+            else
+                props.alterarAgencia(agencia);
         }
     }
     
     return (
-        <Form noValidate validated={validado} onSubmit={manipularSubmissao}>
+        <Form noValidate validated={!validado} onSubmit={manipularSubmissao}>
             <Row className="mb-3">
-                <Form.Group as={Col} md="5" controlId="validationCustom01">
+                <Form.Group as={Col} md="1">
+                    <Form.Label>Código</Form.Label>
+                    <Form.Control
+                        disabled
+                        type="number"
+                        placeholder="0"
+                        value={agencia.cod_ag}
+                        id="cod_ag"
+                        name="cod_ag"
+                        onChange={manipularMudanca}
+                    />
+                </Form.Group>
+            </Row>
+            <Row className="mb-3">
+                <Form.Group as={Col} md="5">
                     <Form.Label>Endereço</Form.Label>
                     <Form.Control
                         required
@@ -77,7 +64,7 @@ export default function FormCadAgencia(props)
                 </Form.Group>
             </Row>
             <Row className="mb-3">
-                <Form.Group as={Col} md="3" controlId="validationCustom02">
+                <Form.Group as={Col} md="3">
                     <Form.Label>Cidade</Form.Label>
                     <Form.Control
                         required
@@ -90,7 +77,7 @@ export default function FormCadAgencia(props)
                     />
                     <Form.Control.Feedback type='invalid'>Por favor, informe a cidade!</Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group as={Col} md="1" controlId="validationCustom03">
+                <Form.Group as={Col} md="2">
                     <Form.Label>UF</Form.Label>
                     <Form.Control 
                         required 
@@ -100,10 +87,10 @@ export default function FormCadAgencia(props)
                         id="uf"
                         name="uf"
                         onChange={manipularMudanca}/>
-                    <Form.Control.Feedback type="invalid">Por favor, informe a cidade!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">Por favor, informe o estado!</Form.Control.Feedback>
                 </Form.Group>
             </Row>
-            <Row>
+            <Row className="mb-3">
                 <Form.Group as={Col} md="2">
                     <Form.Label>Telefone</Form.Label>
                     <Form.Control 
@@ -117,9 +104,14 @@ export default function FormCadAgencia(props)
                     <Form.Control.Feedback type="invalid">Por favor, informe o telefone!</Form.Control.Feedback>
                 </Form.Group>
             </Row>
-            <Button type="submit">Gravar</Button>
+            <Button style={{marginRight:'5px'}} type="submit">
+                {props.atualizando ? 'Atualizar' : 'Gravar'}
+            </Button>
             <Button onClick={() => {
+                if (props.atualizando)
+                    props.setAtualizando(false);
                 props.setExibirTabela(true);
+                props.setAgenciaAtual(props.agenciaVazia);
             }}>Voltar</Button>
         </Form>
     );

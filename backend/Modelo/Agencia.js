@@ -1,16 +1,16 @@
-import AgenciaBD from '../Persistencia/AgenciaBD.js';
+import AgenciaDAO from '../Persistencia/AgenciaDAO.js';
 
 export default class Agencia 
 {
-    #cod_ag;
-    #endereco;
-    #cidade;
-    #uf;
+    #cod_ag
+    #endereco
+    #cidade
+    #uf
     #telefone
-    #produtos;
+    #produtos
 
     // Construtor que inicializa os atributos da classe Agencia
-    constructor(cod_ag=0, endereco='', cidade='', uf='', telefone='', produtos={}) 
+    constructor(cod_ag=0, endereco="", cidade="", uf="", telefone="", produtos={}) 
     {
         this.#cod_ag = cod_ag;
         this.#endereco = endereco;
@@ -20,7 +20,7 @@ export default class Agencia
         this.#produtos = produtos;
     }
 
-    // Métodos publicos (Gets, Sets e metodo de conversão para JSON)
+    // Métodos publicos (Gets e Sets)
     get cod_ag() 
     {
         return this.#cod_ag;
@@ -75,6 +75,8 @@ export default class Agencia
         this.#produtos = novosProdutos;
     }
 
+
+    // Métodos de persistência (CRUD de Agência) e conversão de dados para o formato JSON
     toJSON() 
     {
         return {
@@ -86,34 +88,32 @@ export default class Agencia
             produtos: this.#produtos
         };
     }
-    
-
-    // Métodos de persistência (CRUD de Agência)
+   
     // Chama a função de cadastro de agência diretamente no banco de dados
-    async cadastrarBD() 
+    async cadastrar() 
     {
-        const agenciaBD = new AgenciaBD();
-        await agenciaBD.cadastrar(this);
+        const agenciaDAO = new AgenciaDAO();
+        await agenciaDAO.cadastrar(this);
     }
 
     // Chama a função de consulta de agência diretamente no banco de dados
-    async consultarBD(paramConsulta) 
+    async consultar(paramConsulta) 
     {
-        const agenciaBD = new AgenciaBD();
-        return await agenciaBD.consultar(paramConsulta);
+        const agenciaDAO = new AgenciaDAO();
+        return await agenciaDAO.consultar(paramConsulta);
     }
 
     // Chama a função de alteração de agência diretamente no banco de dados
-    async alterarBD() 
+    async alterar() 
     {
-        const agenciaBD = new AgenciaBD();
-        await agenciaBD.alterar(this);
+        const agenciaDAO = new AgenciaDAO();
+        await agenciaDAO.alterar(this);
     }
 
     // Chama a função de exclusão de agência diretamente no banco de dados
-    async excluirBD() 
+    async excluir() 
     {
-        const agenciaBD = new AgenciaBD();
-        await agenciaBD.excluir(this);
+        const agenciaDAO = new AgenciaDAO();
+        await agenciaDAO.excluir(this);
     }
 }

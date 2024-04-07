@@ -1,40 +1,47 @@
+import { useContext } from "react";
 import { Container, Form, Button } from "react-bootstrap";
-import { useContext, useState } from "react";
-import { ContextoUsuario } from "../Templates/Contexto";
+import { ContextoUsuario } from "../App";
 
 export default function TelaLogin() 
 {
+    // Variáveis de estado para armazenar o nome do usuário, senha e a alteração desses valores
     const [usuario, setUsuario] = useContext(ContextoUsuario);
-    const [nomeUsuario, setNomeUsuario] = useState("");
-    const [senha, setSenha] = useState("");
+
+    // Função para manipular a mudança de valores nos campos de usuário e senha
+    function manipulaMudanca(evento)
+    {
+        const {id, value} = evento.target;
+        setUsuario(prevUsuario => ({
+            ...prevUsuario,
+            [id]: value
+        }));
+    }
 
     // Função para realizar o login
-    function realizarLogin()
+    function realizarLogin(evento)
     {
-        if (nomeUsuario==='adminaurum' && senha==='adminaurum')
-        {
-            setUsuario({
-                nome: nomeUsuario,
-                senha: senha,
+        evento.preventDefault();
+        if (usuario.nome==="adminaurum" && usuario.senha==="admin")
+            setUsuario(prevUsuario => ({
+                ...prevUsuario,
                 logado: true
-            });
-        }
+            }));
     }
     
     return (
         <Container className="d-flex align-items-center justify-content-center w-50">
-            <Form className="mt-5">
-                {/* Formulário de usuário */}
+            <Form className="mt-5" onSubmit={realizarLogin}>
+                {/* Formulário do nome de usuário */}
                 <Form.Group className="mb-3">
                     <Form.Label>Usuário</Form.Label>
                     <Form.Control 
-                        type="username"  
-                        id="usuario" 
-                        name="usuario"
-                        value={nomeUsuario}
-                        onChange={(e) => setNomeUsuario(e.target.value)}/>
+                        type="text"  
+                        id="nome" 
+                        name="nome"
+                        value={usuario.nome}
+                        onChange={manipulaMudanca}
+                    />
                 </Form.Group>
-
                 {/* Formulário de senha */}
                 <Form.Group className="mb-3">
                     <Form.Label>Senha</Form.Label>
@@ -42,17 +49,15 @@ export default function TelaLogin()
                         type="password" 
                         id="senha" 
                         name="senha"  
-                        value={senha}
-                        onChange={(e) => setSenha(e.target.value)}
+                        value={usuario.senha}
+                        onChange={manipulaMudanca}
                     />
                 </Form.Group>
-                
                 {/* Botão de entrar */}
-                <Button variant="primary" type="button" onClick={realizarLogin}>
+                <Button variant="primary" type="submit">
                     Entrar
                 </Button>
             </Form>
         </Container>
     );
-
 }

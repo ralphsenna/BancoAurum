@@ -1,4 +1,4 @@
-import UsuarioBD from '../Persistencia/UsuarioBD.js';
+import UsuarioBD from '../Persistencia/UsuarioDAO.js';
 
 export default class Usuario 
 {

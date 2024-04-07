@@ -12,7 +12,4 @@ rotaUsuario
 .put('/', usuarioCtrl.alterar)
 .delete('/', usuarioCtrl.excluir);
 
-// rotaUsuario.post('/associarProdutoUsuario', usuarioCtrl.associarProdutoUsuario);
-// rotaUsuario.get('/consultarParaAlterar/:cod_cli', usuarioCtrl.consultarParaAlterar);
-
 export default rotaUsuario;

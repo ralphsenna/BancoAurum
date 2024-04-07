@@ -1,18 +1,28 @@
 import { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import Pagina from '../Templates/Pagina.jsx';
 import TabelaAgencia from '../Tabelas/TabelaAgencia';
 import FormCadAgencia from '../Formularios/FormCadAgencia';
 
-const url = 'http://localhost:4000/agencia';
+const urlAgencia = 'http://localhost:4000/agencia';
 
 export default function TelaCadastroAgencia(props)
 {
     const [exibirTabela, setExibirTabela] = useState(true);
     const [listaAgencias, setListaAgencias] = useState([]);
+    const [atualizando, setAtualizando] = useState(false);
+    const agenciaVazia = {
+        cod_ag: 0,
+        endereco: "",
+        cidade: "",
+        uf: "",
+        telefone: ""
+    };
+    const [agenciaAtual, setAgenciaAtual] = useState(agenciaVazia);
 
-    function buscarAgencias()
+    function consultarAgencia()
     {
-        fetch(url, {method: 'GET'})
+        fetch(urlAgencia, {method: 'GET'})
         .then(resposta => resposta.json())
         .then(retorno => {
             if (retorno.status)
@@ -25,23 +35,123 @@ export default function TelaCadastroAgencia(props)
             }
         })
         .catch(erro => {
-            alert('Erro: ' + erro.mensagem);
+            alert("Erro: " + erro.mensagem);
         });
     }
-
     useEffect(() => {
-        buscarAgencias();
-    }, [listaAgencias]);
+        if (exibirTabela)
+            consultarAgencia();
+    }, [exibirTabela]);
+
+    async function gravarAgencia(agencia)
+    {
+        await fetch(urlAgencia, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(agencia)
+        })
+        .then(resposta => resposta.json())
+        .then(retorno => {
+            if (retorno.status)
+            {
+                alert(retorno.mensagem + " Código do agência: " + retorno.codigoGerado);                   
+            }
+            else
+            {
+                alert(retorno.mensagem);
+            }
+        })
+        .catch(erro => {
+            alert("Erro: " + erro.message);
+        });
+        setExibirTabela(true);
+        setAgenciaAtual(agenciaVazia);
+    }
+
+    async function alterarAgencia(agencia)
+    {
+        if (!atualizando)
+        {
+            setExibirTabela(false);
+            setAtualizando(true);
+            setAgenciaAtual(agencia);
+        }
+        else
+        {
+            await fetch(urlAgencia, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(agencia)
+            })
+            .then(resposta => resposta.json())
+            .then(retorno => {
+                if (retorno.status)
+                {
+                    alert(retorno.mensagem);
+                }
+                else
+                {
+                    alert(retorno.mensagem);
+                }
+            })
+            .catch(erro => {
+                alert("Erro: " + erro.message);
+            });
+            setAtualizando(false);
+            setExibirTabela(true);
+            setAgenciaAtual(agenciaVazia);
+        }
+    }
+
+    async function excluirAgencia(agencia)
+    {
+        await fetch(urlAgencia, {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({cod_ag: agencia.cod_ag})
+        })
+        .then(resposta => resposta.json())
+        .then(retorno => {
+            if (retorno.status)
+            {
+                alert(retorno.mensagem);
+            }
+            else
+            {
+                alert(retorno.mensagem);
+            }
+        })
+        .catch(erro => {
+            alert("Erro: " + erro.message);
+        });
+        consultarAgencia();
+    }
 
     if (exibirTabela)
     {
         return (
             <div>
                 <Pagina>
-                    <h2>Tela de Cadastro de Agências</h2>
+                    <h2 style={{ marginTop: '10px' }}>Tela de Cadastro de Agências</h2>
                     <br/>
                     <h2>Lista de Agências</h2>
-                    <TabelaAgencia listaAgencias={listaAgencias} setExibirTabela={setExibirTabela}/>
+                    <Button className="mb-3" onClick={() => {
+                            setExibirTabela(false);
+                        }}>
+                        Cadastrar Agência
+                    </Button>
+                    <TabelaAgencia 
+                        setExibirTabela={setExibirTabela}
+                        listaAgencias={listaAgencias} 
+                        alterarAgencia={alterarAgencia}
+                        excluirAgencia={excluirAgencia}
+                    />
                 </Pagina>
             </div>
         );
@@ -55,9 +165,15 @@ export default function TelaCadastroAgencia(props)
                     <br/>
                     <h2>Formulário de cadastro de Agências</h2>
                     <FormCadAgencia 
+                        exibirTabela={exibirTabela}
                         setExibirTabela={setExibirTabela}
-                        listaAgencias={listaAgencias}
-                        setListaAgencias={setExibirTabela}
+                        gravarAgencia={gravarAgencia}
+                        alterarAgencia={alterarAgencia}
+                        atualizando={atualizando}
+                        setAtualizando={setAtualizando}
+                        agencia={agenciaAtual}
+                        setAgenciaAtual={setAgenciaAtual}
+                        agenciaVazia={agenciaVazia}
                     />
                 </Pagina>
             </div>

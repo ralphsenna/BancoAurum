@@ -5,7 +5,7 @@ export function autenticar(requisicao, resposta)
 {
 	const usuario = requisicao.body.usuario;
 	const senha = requisicao.body.senha;
-	if (usuario === 'adminaurum' && senha === 'adminaurum') 
+	if (usuario==='adminaurum' && senha==='adminaurum') 
 	{
 		requisicao.session.usuarioAutenticado = usuario;
 		resposta.json({
@@ -27,28 +27,13 @@ export function autenticar(requisicao, resposta)
 export function verificarAcesso(requisicao, resposta, next) 
 {
 	const token = requisicao.headers['authorization'];
-	let tokenDecodificado = '';
-	try 
+	let tokenDecodificado = undefined;
+	if (token) 
+		tokenDecodificado = verificarAssinatura(token);
+	if (tokenDecodificado.usuario.usuario == requisicao.session.usuarioAutenticado) 
+		next();
+	else 
 	{
-		if (token) 
-		{
-			tokenDecodificado = verificarAssinatura(token);
-		}
-		if (tokenDecodificado.usuario.usuario == requisicao.session.usuarioAutenticado) 
-		{
-			next();
-		}
-		else 
-		{
-			resposta.status(401).json({
-				"status": false,
-				"mensagem": 'Acesso não autorizado. Faça o login na aplicação!'
-			});
-		}
-	} 
-	catch 
-	{
-		console.log("Erro ao decodificar token");
 		resposta.status(401).json({
 			"status": false,
 			"mensagem": 'Acesso não autorizado. Faça o login na aplicação!'

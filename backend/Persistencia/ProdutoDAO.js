@@ -1,7 +1,7 @@
 import Produto from '../Modelo/Produto.js';
 import conectar from './Conexao.js';
 
-export default class ProdutoBD 
+export default class ProdutoDAO 
 {
     // Cadastra Produto no banco de dados
     async cadastrar(produto) 

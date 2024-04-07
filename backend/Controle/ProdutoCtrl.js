@@ -2,7 +2,7 @@ import Produto from '../Modelo/Produto.js';
 
 export default class ProdutoCtrl 
 {
-    // Chama a função cadastrarBD de Produto para cadatrar e confirmar o cadastro
+    // Chama a função cadastrar de Produto para cadatrar e confirmar o cadastro
     cadastrar(req, resp)
     {
         resp.type('application/json');
@@ -13,7 +13,7 @@ export default class ProdutoCtrl
             if (nome) 
             {
                 const produto = new Produto(0, nome);
-                produto.cadastrarBD().then(() => {
+                produto.cadastrar().then(() => {
                     resp.status(201).json({
                         "status": true,
                         "codigoGerado": produto.cod_prod,
@@ -44,7 +44,7 @@ export default class ProdutoCtrl
         }
     }
 
-    // Chama a função consultarBD de Produto para consultar e mostrar a consulta
+    // Chama a função consultar de Produto para consultar e mostrar a consulta
     consultar(req, resp) 
     {
         resp.type('application/json');
@@ -52,7 +52,7 @@ export default class ProdutoCtrl
         if (req.method==='GET') 
         {
             const produto = new Produto();
-            produto.consultarBD(paramConsulta).then((listaProdutos) => {
+            produto.consultar(paramConsulta).then((listaProdutos) => {
                     resp.status(200).json({
                         "status": true,
                         listaProdutos
@@ -74,7 +74,7 @@ export default class ProdutoCtrl
         }
     }
 
-    // Chama a função alterarBD de Produto para alterar e confirmar a alteração
+    // Chama a função alterar de Produto para alterar e confirmar a alteração
     alterar(req, resp)
     {
         resp.type('application/json');
@@ -86,7 +86,7 @@ export default class ProdutoCtrl
             if (cod_prod && nome) 
             {
                 const produto = new Produto(cod_prod, nome);
-                produto.alterarBD().then(() => {
+                produto.alterar().then(() => {
                     resp.status(200).json({
                         "status": true,
                         "mensagem": 'Produto alterado com sucesso!'
@@ -116,7 +116,7 @@ export default class ProdutoCtrl
         }
     }
 
-    // Chama a função excluirBD de Produto para excluir e confirmar a exclusão
+    // Chama a função excluir de Produto para excluir e confirmar a exclusão
     excluir(req, resp) 
     {
         resp.type('application/json');
@@ -127,7 +127,7 @@ export default class ProdutoCtrl
             if (cod_prod) 
             {
                 const produto = new Produto(cod_prod);
-                produto.excluirBD().then(() => {
+                produto.excluir().then(() => {
                     resp.status(200).json({
                         "status": true,
                         "mensagem": 'Produto excluído com sucesso!'
@@ -156,7 +156,4 @@ export default class ProdutoCtrl
             });
         }
     }
-
-    /* // IMPLEMENTAR POSTERIORMENTE
-    associarProdutoCliente() { } */
 }
