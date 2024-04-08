@@ -8,12 +8,25 @@ export default class ProdutoDAO
     {
         if (produto instanceof Produto) 
         {
-            const sql = 'INSERT INTO Produto (nome) VALUE (?)';
-            const parametros = [produto.nome];
-            const conexao = await conectar();
-            const retorno = await conexao.execute(sql, parametros);
-            produto.cod_prod = retorno[0].insertId;
-            global.poolConexoes.pool.releaseConnection(conexao);
+            const conexao = await conectar();   
+            await conexao.beginTransaction();
+            try
+            {
+                const sql = 'INSERT INTO Produto (descricao) VALUE (?)';
+                const parametros = [produto.descricao];
+                const retorno = await conexao.execute(sql, parametros);
+                produto.cod_prod = retorno[0].insertId;
+                await conexao.commit();
+            }
+            catch(erro)
+            {
+                await conexao.rollback();
+                throw erro;
+            }
+            finally
+            {
+                conexao.release();
+            }
         }
     }
 
@@ -22,14 +35,12 @@ export default class ProdutoDAO
     {
         let sql = '';
         let parametros = [];
-        if (Object.keys(paramConsulta).length === 0) 
-        {
+        if (Object.keys(paramConsulta).length===0) 
             sql = 'SELECT * FROM Produto';
-        }
         else 
         {
             const coluna = Object.keys(paramConsulta);
-            sql = 'SELECT * FROM Produto WHERE '+ coluna +' = ?';
+            sql = 'SELECT * FROM Produto WHERE ' + coluna + ' = ?';
         }
         parametros = Object.values(paramConsulta);
         const conexao = await conectar();
@@ -37,10 +48,10 @@ export default class ProdutoDAO
         const listaProdutos = [];
         for (const registro of registros) 
         {
-            const produto = new Produto(registro.cod_prod, registro.nome);
+            const produto = new Produto(registro.cod_prod, registro.descricao);
             listaProdutos.push(produto);
         }
-        global.poolConexoes.pool.releaseConnection(conexao);
+        conexao.release();
         return listaProdutos;
     }
 
@@ -49,11 +60,24 @@ export default class ProdutoDAO
     {
         if (produto instanceof Produto) 
         {
-            const sql = 'UPDATE Produto SET nome = ? WHERE cod_prod = ?';
-            const parametros = [produto.nome, produto.cod_prod];
-            const conexao = await conectar();
-            await conexao.execute(sql, parametros);
-            global.poolConexoes.pool.releaseConnection(conexao);
+            const conexao = await conectar();   
+            await conexao.beginTransaction();
+            try
+            {
+                const sql = 'UPDATE Produto SET descricao = ? WHERE cod_prod = ?';
+                const parametros = [produto.descricao, produto.cod_prod];
+                await conexao.execute(sql, parametros);
+                await conexao.commit();
+            }
+            catch(erro)
+            {
+                await conexao.rollback();
+                throw erro;
+            }
+            finally
+            {
+                conexao.release();
+            }
         }
     }
 
@@ -62,11 +86,24 @@ export default class ProdutoDAO
     {
         if (produto instanceof Produto) 
         {
-            const sql = 'DELETE FROM Produto WHERE cod_prod = ?';
-            const parametros = [produto.cod_prod];
             const conexao = await conectar();
-            await conexao.execute(sql, parametros);
-            global.poolConexoes.pool.releaseConnection(conexao);
+            await conexao.beginTransaction();
+            try
+            {
+                const sql = 'DELETE FROM Produto WHERE cod_prod = ?';
+                const parametros = [produto.cod_prod];
+                await conexao.execute(sql, parametros);
+                await conexao.commit();
+            }
+            catch(erro)
+            {
+                await conexao.rollback();
+                throw erro;
+            }
+            finally
+            {
+                conexao.release();
+            }
         }
     }
 }

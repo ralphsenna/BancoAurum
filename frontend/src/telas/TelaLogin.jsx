@@ -1,6 +1,6 @@
-import { useContext } from "react";
-import { Container, Form, Button } from "react-bootstrap";
-import { ContextoUsuario } from "../App";
+import { useContext } from 'react';
+import { Container, Form, Button } from 'react-bootstrap';
+import { ContextoUsuario } from '../App';
 
 export default function TelaLogin() 
 {
@@ -21,7 +21,7 @@ export default function TelaLogin()
     function realizarLogin(evento)
     {
         evento.preventDefault();
-        if (usuario.nome==="adminaurum" && usuario.senha==="admin")
+        if (usuario.nome==='adminaurum' && usuario.senha==='admin')
             setUsuario(prevUsuario => ({
                 ...prevUsuario,
                 logado: true
@@ -29,32 +29,32 @@ export default function TelaLogin()
     }
     
     return (
-        <Container className="d-flex align-items-center justify-content-center w-50">
-            <Form className="mt-5" onSubmit={realizarLogin}>
+        <Container className='d-flex align-items-center justify-content-center w-50'>
+            <Form className='mt-5' onSubmit={realizarLogin}>
                 {/* Formulário do nome de usuário */}
-                <Form.Group className="mb-3">
+                <Form.Group className='mb-3'>
                     <Form.Label>Usuário</Form.Label>
                     <Form.Control 
-                        type="text"  
-                        id="nome" 
-                        name="nome"
+                        type='text'  
+                        id='nome' 
+                        name='nome'
                         value={usuario.nome}
                         onChange={manipulaMudanca}
                     />
                 </Form.Group>
                 {/* Formulário de senha */}
-                <Form.Group className="mb-3">
+                <Form.Group className='mb-3'>
                     <Form.Label>Senha</Form.Label>
                     <Form.Control 
-                        type="password" 
-                        id="senha" 
-                        name="senha"  
+                        type='password' 
+                        id='senha' 
+                        name='senha'  
                         value={usuario.senha}
                         onChange={manipulaMudanca}
                     />
                 </Form.Group>
                 {/* Botão de entrar */}
-                <Button variant="primary" type="submit">
+                <Button variant='primary' type='submit'>
                     Entrar
                 </Button>
             </Form>

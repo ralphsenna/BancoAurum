@@ -9,37 +9,37 @@ export default class ProdutoCtrl
         if (req.method==='POST' && req.is('application/json')) 
         {
             const dados = req.body;
-            const nome = dados.nome;
-            if (nome) 
+            const descricao = dados.descricao;
+            if (descricao) 
             {
-                const produto = new Produto(0, nome);
+                const produto = new Produto(0, descricao);
                 produto.cadastrar().then(() => {
                     resp.status(201).json({
-                        "status": true,
-                        "codigoGerado": produto.cod_prod,
-                        "mensagem": 'Produto cadastrado com sucesso!'
+                        'status': true,
+                        'codigoGerado': produto.cod_prod,
+                        'mensagem': 'Produto cadastrado com sucesso!'
                     });
                 })
                 .catch((erro) => {
                     resp.status(500).json({
-                        "status": false,
-                        "mensagem": 'Erro ao cadastrar produto: ' + erro.message
+                        'status': false,
+                        'mensagem': 'Erro ao cadastrar produto: ' + erro.message
                     });
                 });
             }
             else 
             {
                 resp.status(400).json({
-                    "status": false,
-                    "mensagem": 'Informe o nome do produto!'
+                    'status': false,
+                    'mensagem': 'Informe a descricao do produto!'
                 });
             }
         }
         else 
         {
             resp.status(400).json({
-                "status": false,
-                "mensagem": 'O método POST ou o produto no formato JSON não foi fornecido. Consulte a documentação do projeto!'
+                'status': false,
+                'mensagem': 'O método POST ou o produto no formato JSON não foi fornecido. Consulte a documentação do projeto!'
             });
         }
     }
@@ -54,22 +54,22 @@ export default class ProdutoCtrl
             const produto = new Produto();
             produto.consultar(paramConsulta).then((listaProdutos) => {
                     resp.status(200).json({
-                        "status": true,
+                        'status': true,
                         listaProdutos
                     });
                 })
                 .catch((erro) => {
                     resp.status(500).json({
-                        "status": false,
-                        "mensagem": 'Erro ao obter produtos: ' + erro.message
+                        'status': false,
+                        'mensagem': 'Erro ao obter produtos: ' + erro.message
                     });
                 });
         } 
         else 
         {
             resp.status(400).json({
-                "status": false,
-                "mensagem": 'Por favor, utilize o método GET para consultar produtos!'
+                'status': false,
+                'mensagem': 'Por favor, utilize o método GET para consultar produtos!'
             });
         }
     }
@@ -82,36 +82,36 @@ export default class ProdutoCtrl
         {
             const dados = req.body;
             const cod_prod = dados.cod_prod;
-            const nome = dados.nome;
-            if (cod_prod && nome) 
+            const descricao = dados.descricao;
+            if (cod_prod && descricao) 
             {
-                const produto = new Produto(cod_prod, nome);
+                const produto = new Produto(cod_prod, descricao);
                 produto.alterar().then(() => {
-                    resp.status(200).json({
-                        "status": true,
-                        "mensagem": 'Produto alterado com sucesso!'
+                    resp.status(201).json({
+                        'status': true,
+                        'mensagem': 'Produto alterado com sucesso!'
                     });
                 })
                 .catch((erro) => {
                     resp.status(500).json({
-                        "status": false,
-                        "mensagem": 'Erro ao alterar produto: ' + erro.message
+                        'status': false,
+                        'mensagem': 'Erro ao alterar produto: ' + erro.message
                     });
                 });
             } 
             else 
             {
                 resp.status(400).json({
-                    "status": false,
-                    "mensagem": 'Informe o código e o novo nome do produto!'
+                    'status': false,
+                    'mensagem': 'Informe o código e a nova descricao do produto!'
                 });
             }
         } 
         else 
         {
             resp.status(400).json({
-                "status": false,
-                "mensagem": 'O método PUT ou o produto no formato JSON não foi fornecido. Consulte a documentação do projeto!'
+                'status': false,
+                'mensagem': 'O método PUT ou o produto no formato JSON não foi fornecido. Consulte a documentação do projeto!'
             });
         }
     }
@@ -129,30 +129,30 @@ export default class ProdutoCtrl
                 const produto = new Produto(cod_prod);
                 produto.excluir().then(() => {
                     resp.status(200).json({
-                        "status": true,
-                        "mensagem": 'Produto excluído com sucesso!'
+                        'status': true,
+                        'mensagem': 'Produto excluído com sucesso!'
                     });
                 })
                 .catch((erro) => {
                     resp.status(500).json({
-                        "status": false,
-                        "mensagem": 'Erro ao excluir produto: ' + erro.message
+                        'status': false,
+                        'mensagem': 'Erro ao excluir produto: ' + erro.message
                     });
                 });
             } 
             else 
             {
                 resp.status(400).json({
-                    "status": false,
-                    "mensagem": 'Informe o código do produto a ser excluído!'
+                    'status': false,
+                    'mensagem': 'Informe o código do produto a ser excluído!'
                 });
             }
         } 
         else 
         {
             resp.status(400).json({
-                "status": false,
-                "mensagem": 'O método DELETE ou o código do produto no formato JSON não foi fornecido. Consulte a documentação do projeto!'
+                'status': false,
+                'mensagem': 'O método DELETE ou o código do produto no formato JSON não foi fornecido. Consulte a documentação do projeto!'
             });
         }
     }

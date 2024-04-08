@@ -9,16 +9,16 @@ export function autenticar(requisicao, resposta)
 	{
 		requisicao.session.usuarioAutenticado = usuario;
 		resposta.json({
-			"status": true,
-			"token": assinar({usuario})
+			'status': true,
+			'token': assinar({usuario})
 		});
 	} 
 	else 
 	{
 		requisicao.session.usuarioAutenticado = null;
 		resposta.status(401).json({
-			"status": false,
-			"mensagem": 'Usuário ou senha inválidos!'
+			'status': false,
+			'mensagem': 'Usuário ou senha inválidos!'
 		});
 	}
 }
@@ -35,8 +35,8 @@ export function verificarAcesso(requisicao, resposta, next)
 	else 
 	{
 		resposta.status(401).json({
-			"status": false,
-			"mensagem": 'Acesso não autorizado. Faça o login na aplicação!'
+			'status': false,
+			'mensagem': 'Acesso não autorizado. Faça o login na aplicação!'
 		});
 	}
 }

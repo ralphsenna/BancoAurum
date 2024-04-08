@@ -15,7 +15,7 @@ export default function Cabecalho(props)
                 <h1>{props?.texto}</h1>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flex: 1 }}>
                     <span>Usuário: {usuario?.nome}</span>
-                    <Nav.Link href="#" style={{ color: 'red', textDecoration: 'underline' }} onClick={() => {
+                    <Nav.Link href='#' style={{ color: 'red', textDecoration: 'underline' }} onClick={() => {
                             setUsuario({ usuario: '', senha: '', logado: false})
                         }}>
                         Sair

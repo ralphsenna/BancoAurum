@@ -26,31 +26,31 @@ export default class UsuarioCtrl
                 const usuario = new Usuario(0, nome, cpf, rg, dataNasc, endereco, cidade, uf, email, telefone, objAgencia);
                 usuario.cadastrarBD().then(() => {
                     resp.status(201).json({
-                        "status": true,
-                        "codigoGerado": usuario.cod_usu,
-                        "mensagem": 'Usuario cadastrado com sucesso!'
+                        'status': true,
+                        'codigoGerado': usuario.cod_usu,
+                        'mensagem': 'Usuario cadastrado com sucesso!'
                     });
                 })
                 .catch((erro) => {
                     resp.status(500).json({
-                        "status": false,
-                        "mensagem": 'Erro ao cadastrar usuario: ' + erro.message
+                        'status': false,
+                        'mensagem': 'Erro ao cadastrar usuario: ' + erro.message
                     });
                 });
             } 
             else 
             {
                 resp.status(400).json({
-                    "status": false,
-                    "mensagem": 'Informe todos os dados do usuario: Nome, CPF, RG, Data de Nascimento, Endereço, Cidade, UF, E-mail, Telefone e Agência.'
+                    'status': false,
+                    'mensagem': 'Informe todos os dados do usuario: Nome, CPF, RG, Data de Nascimento, Endereço, Cidade, UF, E-mail, Telefone e Agência.'
                 });
             }
         } 
         else 
         {
             resp.status(400).json({
-                "status": false,
-                "mensagem": 'O método POST ou o usuario no formato JSON não foi fornecido. Consulte a documentação do projeto!'
+                'status': false,
+                'mensagem': 'O método POST ou o usuario no formato JSON não foi fornecido. Consulte a documentação do projeto!'
             });
         }
     }
@@ -65,22 +65,22 @@ export default class UsuarioCtrl
             const usuario = new Usuario();
             usuario.consultarBD(paramConsulta).then((listaUsuarios) => {
                 resp.status(200).json({
-                    "status": true,
+                    'status': true,
                     listaUsuarios
                 });
             })
             .catch((erro) => {
                 resp.status(500).json({
-                    "status": false,
-                    "mensagem": 'Erro ao obter usuarios: ' + erro.message
+                    'status': false,
+                    'mensagem': 'Erro ao obter usuarios: ' + erro.message
                 });
             });
         } 
         else 
         {
             resp.status(400).json({
-                "status": false,
-                "mensagem": 'Por favor, utilize o método GET para consultar usuarios!'
+                'status': false,
+                'mensagem': 'Por favor, utilize o método GET para consultar usuarios!'
             });
         }
     }
@@ -105,30 +105,30 @@ export default class UsuarioCtrl
                 const usuario = new Usuario(cod_usu, '', '', '', '', endereco, cidade, uf, email, telefone, objAgencia);
                 usuario.alterarBD().then(() => {
                     resp.status(200).json({
-                        "status": true,
-                        "mensagem": 'Usuario alterado com sucesso!'
+                        'status': true,
+                        'mensagem': 'Usuario alterado com sucesso!'
                     });
                 })
                 .catch((erro) => {
                     resp.status(500).json({
-                        "status": false,
-                        "mensagem": 'Erro ao alterar usuario: ' + erro.message
+                        'status': false,
+                        'mensagem': 'Erro ao alterar usuario: ' + erro.message
                     });
                 });
             } 
             else 
             {
                 resp.status(400).json({
-                    "status": false,
-                    "mensagem": 'Informe o código e os novos dados possíveis de alteração do usuario: Endereço, Cidade, UF, E-mail, Telefone e Agência.'
+                    'status': false,
+                    'mensagem': 'Informe o código e os novos dados possíveis de alteração do usuario: Endereço, Cidade, UF, E-mail, Telefone e Agência.'
                 });
             }
         } 
         else 
         {
             resp.status(400).json({
-                "status": false,
-                "mensagem": 'O método PUT ou o usuario no formato JSON não foi fornecido. Consulte a documentação do projeto!'
+                'status': false,
+                'mensagem': 'O método PUT ou o usuario no formato JSON não foi fornecido. Consulte a documentação do projeto!'
             });
         }
     }
@@ -146,30 +146,30 @@ export default class UsuarioCtrl
                 const usuario = new Usuario(cod_usu);
                 usuario.excluirBD().then(() => {
                     resp.status(200).json({
-                        "status": true,
-                        "mensagem": 'Usuario excluído com sucesso!'
+                        'status': true,
+                        'mensagem': 'Usuario excluído com sucesso!'
                     });
                 })
                 .catch((erro) => {
                     resp.status(500).json({
-                        "status": false,
-                        "mensagem": 'Erro ao excluir usuario: ' + erro.message
+                        'status': false,
+                        'mensagem': 'Erro ao excluir usuario: ' + erro.message
                     });
                 });
             } 
             else 
             {
                 resp.status(400).json({
-                    "status": false,
-                    "mensagem": 'Informe o código do usuario a ser excluído!'
+                    'status': false,
+                    'mensagem': 'Informe o código do usuario a ser excluído!'
                 });
             }
         } 
         else 
         {
             resp.status(400).json({
-                "status": false,
-                "mensagem": 'O método DELETE ou o código de usuario no formato JSON não foi fornecido. Consulte a documentação do projeto!'
+                'status': false,
+                'mensagem': 'O método DELETE ou o código de usuario no formato JSON não foi fornecido. Consulte a documentação do projeto!'
             });
         }
     }

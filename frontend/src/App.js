@@ -3,17 +3,17 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TelaLogin from './Telas/TelaLogin';
 import TelaInicial from './Telas/TelaInicial';
 import TelaCadastroAgencia from './Telas/TelaCadastroAgencia';
-import TelaCadastroCliente from './Telas/TelaCadastroCliente';
+import TelaCadastroCliente from './Telas/TelaCadastroUsuario';
 import TelaCadatroProduto from './Telas/TelaCadastroProduto';
 import Tela404 from './Telas/Tela404';
 
-export const ContextoUsuario = createContext("");
+export const ContextoUsuario = createContext('');
 
 function App() 
 {
     const [usuario, setUsuario] = useState({
-        nome: "adminaurum",
-        senha: "admin",
+        nome: 'adminaurum',
+        senha: 'admin',
         logado: true
     });
 
@@ -28,7 +28,7 @@ function App()
     else
     {
         return (
-            <div className="App">
+            <div className='App'>
                 <ContextoUsuario.Provider value={[usuario, setUsuario]}>
                     <BrowserRouter>
                         <Routes>

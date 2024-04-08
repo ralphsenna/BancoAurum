@@ -10,7 +10,7 @@ export default class Agencia
     #produtos
 
     // Construtor que inicializa os atributos da classe Agencia
-    constructor(cod_ag=0, endereco="", cidade="", uf="", telefone="", produtos={}) 
+    constructor(cod_ag=0, endereco='', cidade='', uf='', telefone='', produtos={}) 
     {
         this.#cod_ag = cod_ag;
         this.#endereco = endereco;

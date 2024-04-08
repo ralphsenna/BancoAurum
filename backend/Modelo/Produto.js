@@ -2,17 +2,17 @@ import ProdutoBD from '../Persistencia/ProdutoDAO.js';
 
 export default class Produto 
 {
-    #cod_prod;
-    #nome;
+    #cod_prod
+    #descricao
 
     // Construtor que inicializa os atributos da classe Produto
-    constructor(cod_prod=0, nome='') 
+    constructor(cod_prod=0, descricao='') 
     {
         this.#cod_prod = cod_prod;
-        this.#nome = nome;
+        this.#descricao = descricao;
     }
 
-    // Métodos publicos (Gets, Sets e metodo de conversão para JSON)
+    // Métodos publicos (Gets e Sets)
     get cod_prod() 
     {
         return this.#cod_prod;
@@ -22,48 +22,48 @@ export default class Produto
         this.#cod_prod = novoCodigo;
     }
 
-    get nome() 
+    get descricao() 
     {
-        return this.#nome;
+        return this.#descricao;
     }
-    set nome(novoNome) 
+    set descricao(novDescricao) 
     {
-        this.#nome = novoNome;
+        this.#descricao = novDescricao;
     }
 
+
+    // Métodos de persistência (CRUD de Produto) e conversão de dados para o formato JSON
     toJSON() 
     {
         return {
             cod_prod: this.#cod_prod,
-            nome: this.#nome
+            descricao: this.#descricao
         };
     }
-    
 
-    // Métodos de persistência (CRUD de Produto)
     // Chama a função cadatro de produto diretamente do banco de dados
-    async cadastrarBD() 
+    async cadastrar() 
     {
         const produtoBD = new ProdutoBD();
         await produtoBD.cadastrar(this);
     }
 
     // Chama a função de consulta de produto diretamente no banco de dados
-    async consultarBD(paramConsulta) 
+    async consultar(paramConsulta) 
     {
         const produtoBD = new ProdutoBD();
         return await produtoBD.consultar(paramConsulta);
     }
 
     // Chama a função de alteração de produto diretamente no banco de dados  
-    async alterarBD() 
+    async alterar() 
     {
         const produtoBD = new ProdutoBD();
         await produtoBD.alterar(this);
     }
 
     // Chama a função de exclusão de produto diretamente no banco de dados
-    async excluirBD() 
+    async excluir() 
     {
         const produtoBD = new ProdutoBD();
         await produtoBD.excluir(this);
