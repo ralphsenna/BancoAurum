@@ -29,13 +29,9 @@ export default function TelaCadastroAgencia(props)
         .then(resposta => resposta.json())
         .then(retorno => {
             if (retorno.status)
-            {
                 setListaAgencias(retorno.listaAgencias);
-            }
             else
-            {
                 alert(retorno.mensagem);
-            }
         })
         .catch(erro => {
             alert('Erro: ' + erro.mensagem);
@@ -60,13 +56,9 @@ export default function TelaCadastroAgencia(props)
         .then(resposta => resposta.json())
         .then(retorno => {
             if (retorno.status)
-            {
-                alert(retorno.mensagem + ' Código do agência: ' + retorno.codigoGerado);                   
-            }
+                alert(retorno.mensagem + ' Código do agência: ' + retorno.codigoGerado);   
             else
-            {
                 alert(retorno.mensagem);
-            }
         })
         .catch(erro => {
             alert('Erro: ' + erro.message);
@@ -96,13 +88,9 @@ export default function TelaCadastroAgencia(props)
             .then(resposta => resposta.json())
             .then(retorno => {
                 if (retorno.status)
-                {
                     alert(retorno.mensagem);
-                }
                 else
-                {
                     alert(retorno.mensagem);
-                }
             })
             .catch(erro => {
                 alert('Erro: ' + erro.message);
@@ -126,13 +114,9 @@ export default function TelaCadastroAgencia(props)
         .then(resposta => resposta.json())
         .then(retorno => {
             if (retorno.status)
-            {
                 alert(retorno.mensagem);
-            }
             else
-            {
                 alert(retorno.mensagem);
-            }
         })
         .catch(erro => {
             alert('Erro: ' + erro.message);
@@ -191,23 +175,6 @@ export default function TelaCadastroAgencia(props)
 
     /* return (
         <>
-            <Pagina>
-                <h2>Cadastro de nova agência</h2>
-                <br />
-                <Form noValidate validated={validado} onSubmit={manipulaSubmissao}>
-                    
-                    <Form.Group className='mb-3' controlId='endereco' style={{ width: '340px' }}>
-                        <Form.Label>Endereço:</Form.Label>
-                        <Form.Control required type='text' id='endereco' value={agencia.endereco} onChange={manipularMudanca} />
-                        <Form.Control.Feedback type='invalid'>Informe o endereço da agência!</Form.Control.Feedback>
-                    </Form.Group>
-
-                    <Form.Group className='mb-3' controlId='cidade' style={{ width: '340px' }}>
-                        <Form.Label>Cidade:</Form.Label>
-                        <Form.Control required type='email' id='cidade' value={agencia.cidade} onChange={manipularMudanca} />
-                        <Form.Control.Feedback type='invalid'>Informe a cidade da agência!</Form.Control.Feedback>
-                    </Form.Group>
-
                     <Row>
                         <Col md='2'>
                             <Form.Group className='mb-3' controlId='uf'>
@@ -243,7 +210,6 @@ export default function TelaCadastroAgencia(props)
                                     <option value='DF'>DF</option>
                                 </select>
                                 {/* <Dropdown.Toggle required id='uf'>
-                  akjsdh
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item href='AC'>AC</Dropdown.Item>
@@ -273,28 +239,6 @@ export default function TelaCadastroAgencia(props)
                   <Dropdown.Item>SE</Dropdown.Item>
                   <Dropdown.Item>TO</Dropdown.Item>
                   <Dropdown.Item>DF</Dropdown.Item>
-                </Dropdown.Menu> 
-                                <Form.Control.Feedback type='invalid'>Informe o estado da agência!</Form.Control.Feedback>
-                            </Form.Group>
-                        </Col>
-                    </Row>
-
-                    <br />
-                    <Row>
-                        <Col xs='auto'>
-                            <Button variant='dark' type='submit'>
-                                Cadastrar agência
-                            </Button>
-                        </Col>
-
-                        <Col xs='auto'>
-                            <LinkContainer to='/'>
-                                <Button variant='secondary'>Cancelar</Button>
-                            </LinkContainer>
-                        </Col>
-                    </Row>
-                </Form>
-            </Pagina>
         </>
     ); */
 }

@@ -74,14 +74,13 @@ export default function FormCadAgencia(props)
                         required
                         type='text'
                         placeholder='Cidade'
+                        value={agencia.cidade}
                         id='cidade'
                         name='cidade'
-                        value={agencia.cidade}
                         onChange={manipularMudanca}
                     />
                     <Form.Control.Feedback type='invalid'>Por favor, informe a cidade!</Form.Control.Feedback>
                 </Form.Group>
-                {/* Estado da Agência */}
                 <Form.Group as={Col} md='2'>
                     <Form.Label>UF</Form.Label>
                     <Form.Control 

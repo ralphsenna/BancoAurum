@@ -9,7 +9,7 @@ export default function Cabecalho(props)
     
     return (
         <div>
-            <Alert variant='dark' className='text-center'>
+            <Alert variant='dark' className='text-center' style={{marginBottom: '0'}}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                 <div style={{ flex: 1 }}></div>
                 <h1>{props?.texto}</h1>

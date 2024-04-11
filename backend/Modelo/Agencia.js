@@ -76,7 +76,7 @@ export default class Agencia
     }
 
 
-    // Métodos de persistência (CRUD de Agência) e conversão de dados para o formato JSON
+    // Métodos de persistência (CRUD de Agencia) e conversão de dados para o formato JSON
     toJSON() 
     {
         return {
@@ -89,28 +89,28 @@ export default class Agencia
         };
     }
    
-    // Chama a função de cadastro de agência diretamente no banco de dados
+    // Chama a função de cadastro de agencia diretamente no banco de dados
     async cadastrar() 
     {
         const agenciaDAO = new AgenciaDAO();
         await agenciaDAO.cadastrar(this);
     }
 
-    // Chama a função de consulta de agência diretamente no banco de dados
+    // Chama a função de consulta de agencia diretamente no banco de dados
     async consultar(paramConsulta) 
     {
         const agenciaDAO = new AgenciaDAO();
         return await agenciaDAO.consultar(paramConsulta);
     }
 
-    // Chama a função de alteração de agência diretamente no banco de dados
+    // Chama a função de alteração de agencia diretamente no banco de dados
     async alterar() 
     {
         const agenciaDAO = new AgenciaDAO();
         await agenciaDAO.alterar(this);
     }
 
-    // Chama a função de exclusão de agência diretamente no banco de dados
+    // Chama a função de exclusão de agencia diretamente no banco de dados
     async excluir() 
     {
         const agenciaDAO = new AgenciaDAO();

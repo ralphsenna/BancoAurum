@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TelaLogin from './Telas/TelaLogin';
 import TelaInicial from './Telas/TelaInicial';
 import TelaCadastroAgencia from './Telas/TelaCadastroAgencia';
-import TelaCadastroCliente from './Telas/TelaCadastroUsuario';
+import TelaCadastroUsuario from './Telas/TelaCadastroUsuario';
 import TelaCadatroProduto from './Telas/TelaCadastroProduto';
 import Tela404 from './Telas/Tela404';
 
@@ -34,7 +34,7 @@ function App()
                         <Routes>
                             <Route path='/' element={<TelaInicial/>}/>
                             <Route path='/agencia' element={<TelaCadastroAgencia/>}/>
-                            <Route path='/cliente' element={<TelaCadastroCliente/>}/>
+                            <Route path='/usuario' element={<TelaCadastroUsuario/>}/>
                             <Route path='/produto' element={<TelaCadatroProduto/>}/>
                             <Route path='*' element={<Tela404/>} />
                         </Routes>

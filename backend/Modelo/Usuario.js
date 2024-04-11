@@ -2,7 +2,7 @@ import UsuarioBD from '../Persistencia/UsuarioDAO.js';
 
 export default class Usuario 
 {
-    #cod_cli;
+    #cod_usu;
     #nome;
     #cpf;
     #rg
@@ -18,9 +18,9 @@ export default class Usuario
     #produtos;
 
     // Construtor que inicializa os atributos da classe Usuario
-    constructor(cod_cli=0, nome='', cpf='', rg='', dataNasc='', endereco='', cidade='', uf='', email='', telefone='', agencia={}) 
+    constructor(cod_usu=0, nome='', cpf='', rg='', dataNasc='', endereco='', cidade='', uf='', telefone='', tipo='', email='', senha='', agencia={}, produtos={}) 
     {
-        this.#cod_cli = cod_cli;
+        this.#cod_usu = cod_usu;
         this.#nome = nome;
         this.#cpf = cpf;
         this.#rg = rg;
@@ -28,19 +28,22 @@ export default class Usuario
         this.#endereco = endereco;
         this.#cidade = cidade;
         this.#uf = uf;
-        this.#email = email;
         this.#telefone = telefone;
+        this.#tipo = tipo;
+        this.#email = email;
+        this.#senha = senha;
         this.#agencia = agencia;
+        this.#produtos = produtos;
     }
 
-    // Métodos publicos (Gets, Sets e metodo de conversão para JSON)
-    get cod_cli() 
+    // Métodos publicos (Gets e Sets)
+    get cod_usu() 
     {
-        return this.#cod_cli;
+        return this.#cod_usu;
     }
-    set cod_cli(novoCodigo) 
+    set cod_usu(novoCodigo) 
     {
-        this.#cod_cli = novoCodigo;
+        this.#cod_usu = novoCodigo;
     }
 
     get nome() 
@@ -106,15 +109,6 @@ export default class Usuario
         this.#uf = novaUf;
     }
 
-    get email() 
-    {
-        return this.#email;
-    }
-    set email(novoEmail) 
-    {
-        this.#email = novoEmail;
-    }
-
     get telefone() 
     {
         return this.#telefone;
@@ -124,6 +118,33 @@ export default class Usuario
         this.#telefone = novoTelefone;
     }
 
+    get tipo()
+    {
+        return this.#tipo;
+    }
+    set tipo(novoTipo)
+    {
+        this.#tipo = novoTipo;
+    }
+
+    get email() 
+    {
+        return this.#email;
+    }
+    set email(novoEmail) 
+    {
+        this.#email = novoEmail;
+    }
+
+    get senha()
+    {
+        return this.#senha;
+    }
+    set senha(novaSenha)
+    {
+        this.#senha = novaSenha;
+    }
+    
     get agencia()
     {
         return this.#agencia;
@@ -133,10 +154,21 @@ export default class Usuario
         this.#agencia = novaAgencia;
     }
 
+    get produtos()
+    {
+        return this.#produtos;
+    }
+    set produtos(novosProdutos)
+    {
+        this.#produtos = novosProdutos;
+    }
+
+
+    // Métodos de persistência (CRUD de Usuario) e conversão de dados para o formato JSON
     toJSON() 
     {
         return {
-            cod_cli: this.#cod_cli,
+            cod_usu: this.#cod_usu,
             nome: this.#nome,
             cpf: this.#cpf,
             rg: this.#rg,
@@ -144,37 +176,38 @@ export default class Usuario
             endereco: this.#endereco,
             cidade: this.#cidade,
             uf: this.#uf,
-            email: this.#email,
             telefone: this.#telefone,
-            agencia: this.#agencia
+            tipo: this.#tipo,
+            email: this.#email,
+            senha: this.#senha,
+            agencia: this.#agencia,
+            produtos: this.#produtos
         };
     }
-    
 
-    // Métodos de persistência (CRUD de Usuario)
     // Chama a função de cadastro de usuario diretamente no banco de dados
-    async cadastrarBD() 
+    async cadastrar() 
     {
         const usuarioBD = new UsuarioBD();
         await usuarioBD.cadastrar(this);
     }
 
     // Chama a função de consulta de usuario diretamente no banco de dados
-    async consultarBD(paramConsulta) 
+    async consultar(paramConsulta) 
     {
         const usuarioBD = new UsuarioBD();
         return await usuarioBD.consultar(paramConsulta);
     }
 
     // Chama a função de alteração de usuario diretamente no banco de dados
-    async alterarBD() 
+    async alterar() 
     {
         const usuarioBD = new UsuarioBD();
         await usuarioBD.alterar(this);
     }
 
     // Chama a função de exclusão de usuario diretamente no banco de dados
-    async excluirBD() 
+    async excluir() 
     {
         const usuarioBD = new UsuarioBD();
         await usuarioBD.excluir(this);

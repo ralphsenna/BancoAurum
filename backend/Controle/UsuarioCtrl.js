@@ -3,7 +3,7 @@ import Agencia from '../Modelo/Agencia.js';
 
 export default class UsuarioCtrl 
 {
-    // Chama a função cadastrarBD de Usuario para cadatrar e confirmar o cadastro
+    // Chama a função cadastrar de Usuario para cadatrar e confirmar o cadastro
     cadastrar(req, resp) 
     {
         resp.type('application/json');
@@ -17,14 +17,16 @@ export default class UsuarioCtrl
             const endereco = dados.endereco;
             const cidade = dados.cidade;
             const uf = dados.uf;
-            const email = dados.email;
             const telefone = dados.telefone;
+            const tipo = dados.tipo;
+            const email = dados.email;
+            const senha = dados.senha;
             const agencia = dados.agencia
-            const objAgencia = new Agencia(agencia);
-            if (nome && cpf && rg && dataNasc && endereco && cidade && uf && email && telefone && agencia) 
+            const objAgencia = new Agencia(agencia.cod_ag);
+            if (nome && cpf && rg && dataNasc && endereco && cidade && uf && telefone && tipo && email && senha && agencia) 
             {
-                const usuario = new Usuario(0, nome, cpf, rg, dataNasc, endereco, cidade, uf, email, telefone, objAgencia);
-                usuario.cadastrarBD().then(() => {
+                const usuario = new Usuario(0, nome, cpf, rg, dataNasc, endereco, cidade, uf, telefone, tipo, email, senha, objAgencia);
+                usuario.cadastrar().then(() => {
                     resp.status(201).json({
                         'status': true,
                         'codigoGerado': usuario.cod_usu,
@@ -42,7 +44,7 @@ export default class UsuarioCtrl
             {
                 resp.status(400).json({
                     'status': false,
-                    'mensagem': 'Informe todos os dados do usuario: Nome, CPF, RG, Data de Nascimento, Endereço, Cidade, UF, E-mail, Telefone e Agência.'
+                    'mensagem': 'Informe todos os dados do usuario: Nome, CPF, RG, Data de Nascimento, Endereço, Cidade, UF, Telefone, Tipo, E-mail, Senha e Agência.'
                 });
             }
         } 
@@ -55,7 +57,7 @@ export default class UsuarioCtrl
         }
     }
 
-    // Chama a função consultarBD de Usuario para consultar e mostrar a consulta
+    // Chama a função consultar de Usuario para consultar e mostrar a consulta
     consultar(req, resp) 
     {
         resp.type('application/json');
@@ -63,7 +65,7 @@ export default class UsuarioCtrl
         if (req.method==='GET') 
         {
             const usuario = new Usuario();
-            usuario.consultarBD(paramConsulta).then((listaUsuarios) => {
+            usuario.consultar(paramConsulta).then((listaUsuarios) => {
                 resp.status(200).json({
                     'status': true,
                     listaUsuarios
@@ -85,7 +87,7 @@ export default class UsuarioCtrl
         }
     }
 
-    // Chama a função alterarBD de Usuario para alterar e confirmar a alteração
+    // Chama a função alterar de Usuario para alterar e confirmar a alteração
     alterar(req, resp) 
     {
         resp.type('application/json');
@@ -93,17 +95,23 @@ export default class UsuarioCtrl
         {
             const dados = req.body;
             const cod_usu = dados.cod_usu;
+            const nome = dados.nome;
+            const cpf = dados.cpf;
+            const rg = dados.rg;
+            const dataNasc = dados.dataNasc;
             const endereco = dados.endereco;
             const cidade = dados.cidade;
             const uf = dados.uf;
-            const email = dados.email;
             const telefone = dados.telefone;
-            const agencia = dados.agencia;
-            const objAgencia = new Agencia(agencia);
-            if (endereco && cidade && uf && email && telefone && agencia) 
+            const tipo = dados.tipo;
+            const email = dados.email;
+            const senha = dados.senha;
+            const agencia = dados.agencia
+            const objAgencia = new Agencia(agencia.cod_ag);
+            if (cod_usu && nome && cpf && rg && dataNasc && endereco && cidade && uf && telefone && tipo && email && senha && agencia) 
             {
-                const usuario = new Usuario(cod_usu, '', '', '', '', endereco, cidade, uf, email, telefone, objAgencia);
-                usuario.alterarBD().then(() => {
+                const usuario = new Usuario(cod_usu, nome, cpf, rg, dataNasc, endereco, cidade, uf, telefone, tipo, email, senha, objAgencia);
+                usuario.alterar().then(() => {
                     resp.status(200).json({
                         'status': true,
                         'mensagem': 'Usuario alterado com sucesso!'
@@ -120,7 +128,7 @@ export default class UsuarioCtrl
             {
                 resp.status(400).json({
                     'status': false,
-                    'mensagem': 'Informe o código e os novos dados possíveis de alteração do usuario: Endereço, Cidade, UF, E-mail, Telefone e Agência.'
+                    'mensagem': 'Informe o código e os novos dados possíveis de alteração do usuario: Nome, CPF, RG, Data de Nascimento, Endereço, Cidade, UF, Telefone, Tipo, E-mail, Senha e Agência.'
                 });
             }
         } 
@@ -133,7 +141,7 @@ export default class UsuarioCtrl
         }
     }
 
-    // Chama a função excluirBD de Usuario para excluir e confirmar a exclusão
+    // Chama a função excluir de Usuario para excluir e confirmar a exclusão
     excluir(req, resp) 
     {
         resp.type('application/json');
@@ -144,7 +152,7 @@ export default class UsuarioCtrl
             if (cod_usu)
             {
                 const usuario = new Usuario(cod_usu);
-                usuario.excluirBD().then(() => {
+                usuario.excluir().then(() => {
                     resp.status(200).json({
                         'status': true,
                         'mensagem': 'Usuario excluído com sucesso!'
@@ -173,73 +181,4 @@ export default class UsuarioCtrl
             });
         }
     }
-
-    /* // CONSULTAR PARA ALTERAR USUARIO
-    consultarParaAlterar(req, resp) {
-        resp.type('application/json');
-
-        if (req.method === 'GET') {
-            const cod_usu = req.params.cod_usu;
-            const usuario = new Usuario();
-            // // método assíncrono consultar da camada de persistência
-            usuario
-                .consultarBD(cod_usu)
-                .then((usuarios) => {
-                    resp.status(200).json(usuarios);
-                })
-                .catch((erro) => {
-                    resp.status(500).json({
-                        status: false,
-                        msg: erro.message,
-                    });
-                });
-        } else {
-            resp.status(400).json({
-                status: false,
-                msg: 'O método não é permitido! Consulte a documentação da API!',
-            });
-        }
-    }
-
-    // ASSOCIAR PRODUTO A USUARIO
-    associarProdutoUsuario(req, resp) {
-        resp.type('application/json');
-        if (req.method === 'POST' && req.is('application/json')) {
-            const dados = req.body;
-            const cod_usu = dados.cod_usu;
-            const cod_prod = dados.cod_prod;
-
-            if (cod_usu && cod_prod) {
-                // CRIAR MODELO USUPROD
-                const usuario_produto = new UsuarioProduto(cod_usu, cod_prod);
-                // console.log('Agência cadastrada (endereço) / cidade:', agencia.endereco, agencia.cidade);
-
-                usuario_produto
-                    .cadastrarBD()
-                    .then(() => {
-                        resp.status(200).json({
-                            status: true,
-                            cod_ag: agencia.cod_ag, //nao retirar
-                            msg: 'Agência criada com sucesso!',
-                        });
-                    })
-                    .catch((erro) => {
-                        resp.status(500).json({
-                            status: false,
-                            msg: erro.message,
-                        });
-                    });
-            } else {
-                resp.status(400).json({
-                    status: false,
-                    msg: 'Informe todos os dados da agência: endereço e cidade ',
-                });
-            }
-        } else {
-            resp.status(400).json({
-                status: false,
-                msg: 'O método não é permitido ou agência no formato JSON não foi fornecida. Consulte a documentação da API!',
-            });
-        }
-    }*/
 }

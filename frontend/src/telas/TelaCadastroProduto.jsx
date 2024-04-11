@@ -26,13 +26,9 @@ export default function TelaCadastrarProduto(props)
         .then(resposta => resposta.json())
         .then(retorno => {
             if (retorno.status)
-            {
                 setListaProdutos(retorno.listaProdutos);
-            }
             else
-            {
                 alert(retorno.mensagem);
-            }
         })
         .catch(erro => {
             alert('Erro: ' + erro.mensagem);
@@ -57,13 +53,9 @@ export default function TelaCadastrarProduto(props)
         .then(resposta => resposta.json())
         .then(retorno => {
             if (retorno.status)
-            {
-                alert(retorno.mensagem + ' Código do produto: ' + retorno.codigoGerado);                   
-            }
+                alert(retorno.mensagem + ' Código do produto: ' + retorno.codigoGerado);    
             else
-            {
                 alert(retorno.mensagem);
-            }
         })
         .catch(erro => {
             alert('Erro: ' + erro.message);
@@ -93,13 +85,9 @@ export default function TelaCadastrarProduto(props)
             .then(resposta => resposta.json())
             .then(retorno => {
                 if (retorno.status)
-                {
                     alert(retorno.mensagem);
-                }
                 else
-                {
                     alert(retorno.mensagem);
-                }
             })
             .catch(erro => {
                 alert('Erro: ' + erro.message);
@@ -123,13 +111,9 @@ export default function TelaCadastrarProduto(props)
         .then(resposta => resposta.json())
         .then(retorno => {
             if (retorno.status)
-            {
                 alert(retorno.mensagem);
-            }
             else
-            {
                 alert(retorno.mensagem);
-            }
         })
         .catch(erro => {
             alert('Erro: ' + erro.message);
