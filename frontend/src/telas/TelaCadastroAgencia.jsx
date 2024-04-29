@@ -14,11 +14,15 @@ export default function TelaCadastroAgencia(props)
     const [listaAgencias, setListaAgencias] = useState([]);
     const [atualizando, setAtualizando] = useState(false);
     const agenciaVazia = {
-        cod_ag: 0,
+        codigo: 0,
+        numero: 0,
+        telefone: '',
+        email: '',
+        cep: '',
         endereco: '',
         cidade: '',
         uf: '',
-        telefone: ''
+        produtos: {}
     };
     const [agenciaAtual, setAgenciaAtual] = useState(agenciaVazia);
 
@@ -56,7 +60,7 @@ export default function TelaCadastroAgencia(props)
         .then(resposta => resposta.json())
         .then(retorno => {
             if (retorno.status)
-                alert(retorno.mensagem + ' Código do agência: ' + retorno.codigoGerado);   
+                alert(retorno.mensagem + ' Código da agência: ' + retorno.codigo_gerado);   
             else
                 alert(retorno.mensagem);
         })
@@ -109,7 +113,7 @@ export default function TelaCadastroAgencia(props)
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({cod_ag: agencia.cod_ag})
+            body: JSON.stringify({codigo: agencia.codigo})
         })
         .then(resposta => resposta.json())
         .then(retorno => {
@@ -124,8 +128,7 @@ export default function TelaCadastroAgencia(props)
         consultarAgencia();
     }
 
-    // Se a variável exibirTabela for verdadeira, exibe a tabela de agências
-    if (exibirTabela)
+    if (exibirTabela) // Se a variável exibirTabela for verdadeira, exibe a tabela de agências
     {
         return (
             <div>
@@ -148,8 +151,7 @@ export default function TelaCadastroAgencia(props)
             </div>
         )
     }
-    // Se a variável exibirTabela for falsa, exibe o formulário de cadastro de agências
-    else
+    else // Se a variável exibirTabela for falsa, exibe o formulário de cadastro de agências
     {
         return (
             <div>
@@ -172,73 +174,4 @@ export default function TelaCadastroAgencia(props)
             </div>
         )   
     }
-
-    /* return (
-        <>
-                    <Row>
-                        <Col md='2'>
-                            <Form.Group className='mb-3' controlId='uf'>
-                                <Form.Label style={{ width: '50px' }}>UF:</Form.Label>
-                                <select className='mb-3' style={{ width: '60px' }} id='uf'>
-                                    <option></option>
-                                    <option value='AC'>AC</option>
-                                    <option value='AL'>AL</option>
-                                    <option value='AP'>AP</option>
-                                    <option value='AM'>AM</option>
-                                    <option value='BA'>BA</option>
-                                    <option value='CE'>CE</option>
-                                    <option value='ES'>ES</option>
-                                    <option value='GO'>GO</option>
-                                    <option value='MA'>MA</option>
-                                    <option value='MT'>MT</option>
-                                    <option value='MS'>MS</option>
-                                    <option value='MG'>MG</option>
-                                    <option value='PA'>PA</option>
-                                    <option value='PB'>PB</option>
-                                    <option value='PR'>PR</option>
-                                    <option value='PE'>PE</option>
-                                    <option value='PI'>PI</option>
-                                    <option value='RJ'>RJ</option>
-                                    <option value='RN'>RN</option>
-                                    <option value='RS'>RS</option>
-                                    <option value='RO'>RO</option>
-                                    <option value='RR'>RR</option>
-                                    <option value='SC'>SC</option>
-                                    <option value='SP'>SP</option>
-                                    <option value='SE'>SE</option>
-                                    <option value='TO'>TO</option>
-                                    <option value='DF'>DF</option>
-                                </select>
-                                {/* <Dropdown.Toggle required id='uf'>
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href='AC'>AC</Dropdown.Item>
-                  <Dropdown.Item>AL</Dropdown.Item>
-                  <Dropdown.Item>AP</Dropdown.Item>
-                  <Dropdown.Item>AM</Dropdown.Item>
-                  <Dropdown.Item>BA</Dropdown.Item>
-                  <Dropdown.Item>CE</Dropdown.Item>
-                  <Dropdown.Item>ES</Dropdown.Item>
-                  <Dropdown.Item>GO</Dropdown.Item>
-                  <Dropdown.Item>MA</Dropdown.Item>
-                  <Dropdown.Item>MT</Dropdown.Item>
-                  <Dropdown.Item>MS</Dropdown.Item>
-                  <Dropdown.Item>MG</Dropdown.Item>
-                  <Dropdown.Item>PA</Dropdown.Item>
-                  <Dropdown.Item>PB</Dropdown.Item>
-                  <Dropdown.Item>PR</Dropdown.Item>
-                  <Dropdown.Item>PE</Dropdown.Item>
-                  <Dropdown.Item>PI</Dropdown.Item>
-                  <Dropdown.Item>RJ</Dropdown.Item>
-                  <Dropdown.Item>RN</Dropdown.Item>
-                  <Dropdown.Item>RS</Dropdown.Item>
-                  <Dropdown.Item>RO</Dropdown.Item>
-                  <Dropdown.Item>RR</Dropdown.Item>
-                  <Dropdown.Item>SC</Dropdown.Item>
-                  <Dropdown.Item>SP</Dropdown.Item>
-                  <Dropdown.Item>SE</Dropdown.Item>
-                  <Dropdown.Item>TO</Dropdown.Item>
-                  <Dropdown.Item>DF</Dropdown.Item>
-        </>
-    ); */
 }

@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import Router from 'express';
 import AgenciaCtrl from '../Controle/AgenciaCtrl.js';
 
 // Estrutura a rota para agencia e recupera funções da AgenciaCtrl

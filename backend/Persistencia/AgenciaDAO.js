@@ -12,13 +12,14 @@ export default class AgenciaDAO
             await conexao.beginTransaction();
             try
             {
-                const sql = 'INSERT INTO Agencia (endereco, cidade, uf, telefone) VALUES(?,?,?,?)';
-                const parametros = [agencia.endereco, agencia.cidade, agencia.uf, agencia.telefone];
+                const sql = `INSERT INTO Agencia (ag_numero, ag_telefone, ag_email, ag_cep, ag_endereco, ag_cidade, ag_uf) 
+                             VALUES (?, ?, ?, ?, ?, ?, ?)`;
+                const parametros = [agencia.numero, agencia.telefone, agencia.email, agencia.cep, agencia.endereco, agencia.cidade, agencia.uf];
                 const retorno = await conexao.execute(sql, parametros);
-                agencia.cod_ag = retorno[0].insertId;
+                agencia.codigo = retorno[0].insertId;
                 await conexao.commit();
             }
-            catch (erro)
+            catch(erro)
             {
                 await conexao.rollback();
                 throw erro;
@@ -40,7 +41,7 @@ export default class AgenciaDAO
         else
         {
             const coluna = Object.keys(paramConsulta);
-            sql = 'SELECT * FROM Agencia WHERE ' + coluna + ' = ?';
+            sql = 'SELECT * FROM Agencia WHERE '+ coluna +' = ?';
         }
         parametros = Object.values(paramConsulta);
         const conexao = await conectar();
@@ -48,7 +49,8 @@ export default class AgenciaDAO
         const listaAgencias = [];
         for (const registro of registros) 
         {
-            const agencia = new Agencia(registro.cod_ag, registro.endereco, registro.cidade, registro.uf, registro.telefone);
+            const agencia = new Agencia(registro.ag_codigo, registro.ag_numero, registro.ag_telefone, registro.ag_email, 
+                                        registro.ag_cep, registro.ag_endereco, registro.ag_cidade, registro.ag_uf);
             listaAgencias.push(agencia);
         }
         conexao.release();
@@ -64,12 +66,12 @@ export default class AgenciaDAO
             await conexao.beginTransaction();
             try
             {
-                const sql = 'UPDATE Agencia SET endereco = ?, cidade = ?, uf = ?, telefone = ? WHERE cod_ag = ?';
-                const parametros = [agencia.endereco, agencia.cidade, agencia.uf, agencia.telefone, agencia.cod_ag];
+                const sql = 'UPDATE Agencia SET ag_numero = ?, ag_telefone = ?, ag_email = ?, ag_cep = ?, ag_endereco = ?, ag_cidade = ?, ag_uf = ? WHERE ag_codigo = ?';
+                const parametros = [agencia.numero, agencia.telefone, agencia.email, agencia.cep, agencia.endereco, agencia.cidade, agencia.uf, agencia.codigo];
                 await conexao.execute(sql, parametros);
                 await conexao.commit();
             }
-            catch (erro)
+            catch(erro)
             {
                 await conexao.rollback();
                 throw erro;
@@ -90,12 +92,12 @@ export default class AgenciaDAO
             await conexao.beginTransaction();
             try
             {
-                const sql = 'DELETE FROM Agencia WHERE cod_ag = ?';
-                const parametros = [agencia.cod_ag];
+                const sql = 'DELETE FROM Agencia WHERE ag_codigo = ?';
+                const parametros = [agencia.codigo];
                 await conexao.execute(sql, parametros);
                 await conexao.commit();
             }
-            catch (erro)
+            catch(erro)
             {
                 await conexao.rollback();
                 throw erro;

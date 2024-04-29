@@ -2,32 +2,75 @@ import AgenciaDAO from '../Persistencia/AgenciaDAO.js';
 
 export default class Agencia 
 {
-    #cod_ag
+    // Atributos privados da classe Agencia
+    #codigo
+    #numero
+    #telefone
+    #email
+    #cep
     #endereco
     #cidade
     #uf
-    #telefone
     #produtos
 
     // Construtor que inicializa os atributos da classe Agencia
-    constructor(cod_ag=0, endereco='', cidade='', uf='', telefone='', produtos={}) 
+    constructor(codigo=0, numero=0, telefone='', email='', cep='', endereco='', cidade='', uf='', produtos={})
     {
-        this.#cod_ag = cod_ag;
+        this.#codigo = codigo;
+        this.#numero = numero;
+        this.#telefone = telefone;
+        this.#email = email;
+        this.#cep = cep;
         this.#endereco = endereco;
         this.#cidade = cidade;
         this.#uf = uf;
-        this.#telefone = telefone;
         this.#produtos = produtos;
     }
 
-    // Métodos publicos (Gets e Sets)
-    get cod_ag() 
+    // Métodos públicos (Gets e Sets)
+    get codigo() 
     {
-        return this.#cod_ag;
+        return this.#codigo;
     }
-    set cod_ag(novoCodigo) 
+    set codigo(novoCodigo) 
     {
-        this.#cod_ag = novoCodigo;
+        this.#codigo = novoCodigo;
+    }
+
+    get numero()
+    {
+        return this.#numero;
+    }
+    set numero(novoNumero)
+    {
+        this.#numero = novoNumero;
+    }
+
+    get telefone()
+    {
+        return this.#telefone;
+    }
+    set telefone(novoTelefone)
+    {
+        this.#telefone = novoTelefone;
+    }
+
+    get email()
+    {
+        return this.#email;
+    }
+    set email(novoEmail)
+    {
+        this.#email = novoEmail;
+    }
+
+    get cep()
+    {
+        return this.#cep;
+    }
+    set cep(novoCep)
+    {
+        this.#cep = novoCep;
     }
 
     get endereco() 
@@ -57,15 +100,6 @@ export default class Agencia
         this.#uf = novaUf;
     }
 
-    get telefone()
-    {
-        return this.#telefone;
-    }
-    set telefone(novoTelefone)
-    {
-        this.#telefone = novoTelefone;
-    }
-
     get produtos()
     {
         return this.#produtos;
@@ -80,11 +114,14 @@ export default class Agencia
     toJSON() 
     {
         return {
-            cod_ag: this.#cod_ag,
+            codigo: this.#codigo,
+            numero: this.#numero,
+            telefone: this.#telefone,
+            email: this.#email,
+            cep: this.#cep,
             endereco: this.#endereco,
             cidade: this.#cidade,
             uf: this.#uf,
-            telefone: this.#telefone,
             produtos: this.#produtos
         };
     }
@@ -97,10 +134,10 @@ export default class Agencia
     }
 
     // Chama a função de consulta de agencia diretamente no banco de dados
-    async consultar(paramConsulta) 
+    async consultar(termo) 
     {
         const agenciaDAO = new AgenciaDAO();
-        return await agenciaDAO.consultar(paramConsulta);
+        return await agenciaDAO.consultar(termo);
     }
 
     // Chama a função de alteração de agencia diretamente no banco de dados

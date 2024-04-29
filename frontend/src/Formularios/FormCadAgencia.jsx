@@ -43,14 +43,72 @@ export default function FormCadAgencia(props)
                         disabled
                         type='number'
                         placeholder='0'
-                        value={agencia.cod_ag}
-                        id='cod_ag'
-                        name='cod_ag'
+                        value={agencia.codigo}
+                        id='codigo'
+                        name='codigo'
                         onChange={manipularMudanca}
                     />
                 </Form.Group>
             </Row>
             <Row className='mb-3'>
+                {/* Número da Agência */}
+                <Form.Group as={Col} md='2'>
+                    <Form.Label>Número da Agência</Form.Label>
+                    <Form.Control
+                        required
+                        type='number'
+                        placeholder='Número'
+                        value={agencia.numero}
+                        id='numero'
+                        name='numero'
+                        onChange={manipularMudanca}
+                    />
+                    <Form.Control.Feedback type='invalid'>Por favor, informe o número!</Form.Control.Feedback>
+                </Form.Group>
+                {/* Telefone da Agência */}
+                <Form.Group as={Col} md='2'>
+                    <Form.Label>Telefone</Form.Label>
+                    <Form.Control 
+                        required 
+                        type='text' 
+                        placeholder='Telefone' 
+                        value={agencia.telefone}
+                        id='telefone'
+                        name='telefone'
+                        onChange={manipularMudanca}/>
+                    <Form.Control.Feedback type='invalid'>Por favor, informe o telefone!</Form.Control.Feedback>
+                </Form.Group>
+            </Row>
+            <Row className='mb-3'>
+                {/* E-mail da Agência */}
+                <Form.Group as={Col} md='3'>
+                    <Form.Label>E-mail</Form.Label>
+                    <Form.Control 
+                        required 
+                        type='email' 
+                        placeholder='E-mail' 
+                        value={agencia.email}
+                        id='email'
+                        name='email'
+                        onChange={manipularMudanca}/>
+                    <Form.Control.Feedback type='invalid'>Por favor, informe o e-mail!</Form.Control.Feedback>
+                </Form.Group>
+            </Row>
+            <Row className='mb-3'>
+                {/* CEP da Agência */}
+                <Form.Group as={Col} md='2'>
+                    <Form.Label>CEP</Form.Label>
+                    <Form.Control
+                        required
+                        type='text'
+                        placeholder='CEP'
+                        value={agencia.cep}
+                        id='cep'
+                        name='cep'
+                        onChange={manipularMudanca}
+                    />
+                    <Form.Control.Feedback type='invalid'>Por favor, informe o CEP!</Form.Control.Feedback>
+                </Form.Group>
                 {/* Endereço da Agência */}
                 <Form.Group as={Col} md='5'>
                     <Form.Label>Endereço</Form.Label>
@@ -65,8 +123,6 @@ export default function FormCadAgencia(props)
                     />
                     <Form.Control.Feedback type='invalid'>Por favor, informe o endereço!</Form.Control.Feedback>
                 </Form.Group>
-            </Row>
-            <Row className='mb-3'>
                 {/* Cidade e UF da Agência */}
                 <Form.Group as={Col} md='3'>
                     <Form.Label>Cidade</Form.Label>
@@ -92,21 +148,6 @@ export default function FormCadAgencia(props)
                         name='uf'
                         onChange={manipularMudanca}/>
                     <Form.Control.Feedback type='invalid'>Por favor, informe o estado!</Form.Control.Feedback>
-                </Form.Group>
-            </Row>
-            <Row className='mb-3'>
-                {/* Telefone da Agência */}
-                <Form.Group as={Col} md='2'>
-                    <Form.Label>Telefone</Form.Label>
-                    <Form.Control 
-                        required 
-                        type='text' 
-                        placeholder='Telefone' 
-                        value={agencia.telefone}
-                        id='telefone'
-                        name='telefone'
-                        onChange={manipularMudanca}/>
-                    <Form.Control.Feedback type='invalid'>Por favor, informe o telefone!</Form.Control.Feedback>
                 </Form.Group>
             </Row>
             {/* Botões para Gravar/Alterar e Voltar para a lista de agências */}

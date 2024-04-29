@@ -1,5 +1,5 @@
-import { useState, createContext } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { createContext, useState } from 'react';
 import TelaLogin from './Telas/TelaLogin';
 import TelaInicial from './Telas/TelaInicial';
 import TelaCadastroAgencia from './Telas/TelaCadastroAgencia';
@@ -11,12 +11,14 @@ export const ContextoUsuario = createContext('');
 
 function App() 
 {
+    // Define o estado inicial do usuário 
     const [usuario, setUsuario] = useState({
-        nome: 'adminaurum',
+        email: 'adminaurum@admin',
         senha: 'admin',
         logado: true
     });
 
+    // Verifica se o usuário está logado. Se não estiver, exibe a tela de login. Se estiver, exibe a aplicação
     if (!usuario.logado) 
     {
         return (
