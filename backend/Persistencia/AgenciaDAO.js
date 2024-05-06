@@ -32,18 +32,18 @@ export default class AgenciaDAO
     }
 
     // Consulta Agencia(s) com ou sem parametros no banco de dados
-    async consultar(paramConsulta) 
+    async consultar(termo) 
     {
         let sql = '';
         let parametros = [];
-        if (Object.keys(paramConsulta).length===0)
+        if (Object.keys(termo).length===0)
             sql = 'SELECT * FROM Agencia';
         else
         {
-            const coluna = Object.keys(paramConsulta);
+            const coluna = Object.keys(termo);
             sql = 'SELECT * FROM Agencia WHERE '+ coluna +' = ?';
         }
-        parametros = Object.values(paramConsulta);
+        parametros = Object.values(termo);
         const conexao = await conectar();
         const [registros] = await conexao.execute(sql, parametros);
         const listaAgencias = [];

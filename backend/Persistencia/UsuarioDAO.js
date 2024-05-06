@@ -13,13 +13,14 @@ export default class UsuarioDAO
             await conexao.beginTransaction();
             try
             {
-                const sql = `INSERT INTO Usuario (nome, cpf, rg, dataNasc, endereco, cidade, uf, telefone, tipo, email, senha, cod_ag) 
-                             VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`;
-                const parametros = [usuario.nome, usuario.cpf, usuario.rg, usuario.dataNasc, usuario.endereco, 
-                                    usuario.cidade, usuario.uf, usuario.telefone, usuario.tipo, usuario.email, 
-                                    usuario.senha, usuario.agencia.cod_ag];
+                const sql = `INSERT INTO Usuario (usu_tipo, usu_nome, usu_cpf, usu_rg, usu_genero, usu_telefone, 
+                             usu_data_nascimento, usu_cep, usu_endereco, usu_cidade, usu_uf, usu_email, usu_senha, ag_codigo)
+                             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+                const parametros = [usuario.tipo, usuario.nome, usuario.cpf, usuario.rg, usuario.genero, usuario.telefone,
+                                    usuario.data_nascimento, usuario.cep, usuario.endereco, usuario.cidade, usuario.uf, 
+                                    usuario.email, usuario.senha, usuario.agencia.codigo];
                 const retorno = await conexao.execute(sql, parametros);
-                usuario.cod_usu = retorno[0].insertId;
+                usuario.codigo = retorno[0].insertId;
                 await conexao.commit();
             }
             catch (erro)
@@ -35,31 +36,39 @@ export default class UsuarioDAO
     }
 
     // Consulta Usuario(s) com ou sem parametros no banco de dados
-    async consultar(paramConsulta) 
+    async consultar(termo) 
     {
         let sql = '';
         let parametros = [];
-        if (Object.keys(paramConsulta).length===0)
+        if (Object.keys(termo).length===0)
             sql = `SELECT * FROM Usuario c
-                   INNER JOIN Agencia a ON c.cod_ag = a.cod_ag`;
+                   INNER JOIN Agencia a ON c.ag_codigo = a.ag_codigo`;
+        else if (Object.keys(termo)==='AUTO_INCREMENT')
+        {
+            sql = `SELECT AUTO_INCREMENT 
+                   FROM INFORMATION_SCHEMA.TABLES 
+                   WHERE TABLE_NAME = 'Usuario'`;
+        }
         else
         {
-            const coluna = Object.keys(paramConsulta);
+            const coluna = Object.keys(termo);
             sql = `SELECT * FROM Usuario c
-                   INNER JOIN Agencia a ON c.cod_ag = a.cod_ag
+                   INNER JOIN Agencia a ON c.ag_codigo = a.ag_codigo
                    WHERE ${coluna} = ?`;
         }
-        parametros = Object.values(paramConsulta);
+        parametros = Object.values(termo);
         const conexao = await conectar();
         const [registros] = await conexao.execute(sql, parametros);
         const listaUsuarios = [];
         for (const registro of registros)
         {
-            const agencia = new Agencia(registro.cod_ag, registro.endereco, registro.cidade, registro.uf, registro.telefone);
-            registro.dataNasc = registro.dataNasc.toISOString().split('T')[0];
-            const usuario = new Usuario(registro.cod_usu, registro.nome, registro.cpf, registro.rg, registro.dataNasc, 
-                                        registro.endereco, registro.cidade, registro.uf, registro.telefone, 
-                                        registro.tipo, registro.email, registro.senha, agencia);
+            const agencia = new Agencia(registro.ag_codigo, registro.ag_numero, registro.ag_telefone, registro.ag_email, 
+                                        registro.ag_cep, registro.ag_endereco, registro.ag_cidade, registro.ag_uf);
+            registro.usu_data_nascimento = registro.usu_data_nascimento.toISOString().split('T')[0];
+            const usuario = new Usuario(registro.usu_codigo, registro.usu_tipo, registro.usu_nome, registro.usu_cpf, 
+                                        registro.usu_rg, registro.usu_genero, registro.usu_telefone, registro.usu_data_nascimento,
+                                        registro.usu_cep, registro.usu_endereco, registro.usu_cidade, registro.usu_uf,
+                                        registro.usu_email, registro.usu_senha, agencia);
             listaUsuarios.push(usuario);
         }
         conexao.release();
@@ -75,10 +84,11 @@ export default class UsuarioDAO
             await conexao.beginTransaction();
             try
             {
-                const sql = `UPDATE Usuario SET nome = ?, cpf = ?, rg = ?, dataNasc = ?, endereco = ?, cidade = ?,
-                             uf = ?, telefone = ?, tipo = ?, email = ?, senha = ?, cod_ag = ? WHERE cod_usu = ?`;
-                const parametros = [usuario.nome, usuario.cpf, usuario.rg, usuario.dataNasc, usuario.endereco, usuario.cidade, usuario.uf, 
-                                    usuario.telefone, usuario.tipo, usuario.email, usuario.senha, usuario.agencia.cod_ag, usuario.cod_usu];
+                const sql = `UPDATE Usuario SET usu_tipo = ?, usu_telefone = ?, usu_cep = ?, usu_endereco = ?,
+                             usu_cidade = ?, usu_uf = ?, usu_email = ?, usu_senha = ?, ag_codigo = ?
+                             WHERE usu_codigo = ?`;
+                const parametros = [usuario.tipo, usuario.telefone, usuario.cep, usuario.endereco, usuario.cidade, 
+                                    usuario.uf, usuario.email, usuario.senha, usuario.agencia.codigo, usuario.codigo];
                 await conexao.execute(sql, parametros);
                 await conexao.commit();
             }
@@ -103,8 +113,8 @@ export default class UsuarioDAO
             await conexao.beginTransaction();
             try
             {
-                const sql = 'DELETE FROM Usuario WHERE cod_usu = ?';
-                const parametros = [usuario.cod_usu];
+                const sql = 'DELETE FROM Usuario WHERE usu_codigo = ?';
+                const parametros = [usuario.codigo];
                 await conexao.execute(sql, parametros);
                 await conexao.commit();
             }

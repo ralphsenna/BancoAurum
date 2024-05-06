@@ -60,15 +60,18 @@ export default function TelaCadastroAgencia(props)
         .then(resposta => resposta.json())
         .then(retorno => {
             if (retorno.status)
-                alert(retorno.mensagem + ' Código da agência: ' + retorno.codigo_gerado);   
+            {
+                alert(retorno.mensagem + ' Código da agência: ' + retorno.codigo_gerado); 
+                setExibirTabela(true);
+                setAgenciaAtual(agenciaVazia);  
+            }
             else
                 alert(retorno.mensagem);
         })
         .catch(erro => {
             alert('Erro: ' + erro.message);
         });
-        setExibirTabela(true);
-        setAgenciaAtual(agenciaVazia);
+        
     }
 
     // Função para chamar a alteração de uma agência no Backend
@@ -92,16 +95,18 @@ export default function TelaCadastroAgencia(props)
             .then(resposta => resposta.json())
             .then(retorno => {
                 if (retorno.status)
+                {
                     alert(retorno.mensagem);
+                    setAtualizando(false);
+                    setExibirTabela(true);
+                    setAgenciaAtual(agenciaVazia);
+                }
                 else
                     alert(retorno.mensagem);
             })
             .catch(erro => {
                 alert('Erro: ' + erro.message);
             });
-            setAtualizando(false);
-            setExibirTabela(true);
-            setAgenciaAtual(agenciaVazia);
         }
     }
 
@@ -149,7 +154,7 @@ export default function TelaCadastroAgencia(props)
                     />
                 </Pagina>
             </div>
-        )
+        );
     }
     else // Se a variável exibirTabela for falsa, exibe o formulário de cadastro de agências
     {
@@ -172,6 +177,6 @@ export default function TelaCadastroAgencia(props)
                     />
                 </Pagina>
             </div>
-        )   
+        );
     }
 }

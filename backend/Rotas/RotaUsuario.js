@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import Router from 'express';
 import UsuarioCtrl from '../Controle/UsuarioCtrl.js'; 
 
 // Estrutura a rota para usuario e recupera funções da UsuarioCtrl

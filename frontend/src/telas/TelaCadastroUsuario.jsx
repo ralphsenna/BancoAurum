@@ -13,32 +13,39 @@ export default function TelaCadastroUsuario(props)
     // Constantes para definir e controlar o estado das variáveis utilizadas
     const [exibirTabela, setExibirTabela] = useState(true);
     const [listaAgencias, setListaAgencias] = useState([{ 
-        cod_ag: '', 
-        endereco: 'Nenhuma agência cadastrada', 
-        cidade: '', 
-        uf: '', 
-        telefone: '' 
+        codigo: 0,
+        numero: 0,
+        telefone: '',
+        email: '',
+        cep: 'Nenhuma agência cadastrada', 
+        endereco: '',
+        cidade: '',
+        uf: '',
+        produtos: {}
     }]);
     const [listaUsuarios, setListaUsuarios] = useState([]);
     const [atualizando, setAtualizando] = useState(false);
     const usuarioVazio = {
-        cod_usu: 0,
+        codigo: 0,
+        tipo: '',
         nome: '',
         cpf: '',
         rg: '',
-        dataNasc: '',
+        genero: '',
+        telefone: '',
+        data_nascimento: '',
+        cep: '',
         endereco: '',
         cidade: '',
         uf: '',
-        telefone: '',
-        tipo: '',
         email: '',
         senha: '',
-        agencia: {}
+        agencia: {},
+        produtos: {}
     };
     const [usuarioAtual, setUsuarioAtual] = useState(usuarioVazio);
 
-    // Função para chamar a consulta de agências no Backend para preencher a lista de agências
+    // Função para chamar a consulta de agências no Backend
     async function consultarAgencia()
     {
         await fetch(urlAgencia, {method: 'GET'})
@@ -91,7 +98,7 @@ export default function TelaCadastroUsuario(props)
         .then(retorno => {
             if (retorno.status)
             {
-                alert(retorno.mensagem + ' Código do usuário: ' + retorno.codigoGerado);   
+                alert(retorno.mensagem + ' Código do usuário: ' + retorno.codigo_gerado);   
                 setExibirTabela(true);
                 setUsuarioAtual(usuarioVazio);    
             }            
@@ -124,16 +131,18 @@ export default function TelaCadastroUsuario(props)
             .then(resposta => resposta.json())
             .then(retorno => {
                 if (retorno.status)
+                {
                     alert(retorno.mensagem);
+                    setAtualizando(false);
+                    setExibirTabela(true);
+                    setUsuarioAtual(usuarioVazio);
+                }
                 else
                     alert(retorno.mensagem);
             })
             .catch(erro => {
                 alert('Erro: ' + erro.message);
             });
-            setAtualizando(false);
-            setExibirTabela(true);
-            setUsuarioAtual(usuarioVazio);
         }
     }
 
@@ -160,8 +169,7 @@ export default function TelaCadastroUsuario(props)
         consultarUsuario();
     }
 
-    // Se a variável exibirTabela for verdadeira, exibe a tabela de usuários
-    if (exibirTabela) 
+    if (exibirTabela) // Se a variável exibirTabela for verdadeira, exibe a tabela de usuários
     {
         return (
             <Pagina titulo="Cadastro de Usuários">
@@ -180,9 +188,9 @@ export default function TelaCadastroUsuario(props)
                         excluirUsuario={excluirUsuario}
                     />
             </Pagina>
-        )
+        );
     }
-    else 
+    else // Se a variável exibirTabela for falsa, exibe o formulário de cadastro de usuários
     {
         return (
             <Pagina titulo="Cadastro de Usuários">
@@ -204,5 +212,4 @@ export default function TelaCadastroUsuario(props)
             </Pagina>
         );
     }
-
 }

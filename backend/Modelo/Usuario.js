@@ -2,34 +2,39 @@ import UsuarioBD from '../Persistencia/UsuarioDAO.js';
 
 export default class Usuario 
 {
-    #cod_usu;
+    #codigo;
+    #tipo
     #nome;
     #cpf;
-    #rg
-    #dataNasc;
+    #rg;
+    #genero;
+    #telefone;
+    #data_nascimento;
+    #cep;
     #endereco;
     #cidade;
     #uf;
-    #telefone;
-    #tipo;
     #email;
     #senha;
     #agencia
     #produtos;
 
     // Construtor que inicializa os atributos da classe Usuario
-    constructor(cod_usu=0, nome='', cpf='', rg='', dataNasc='', endereco='', cidade='', uf='', telefone='', tipo='', email='', senha='', agencia={}, produtos={}) 
+    constructor(codigo=0, tipo='', nome='', cpf='', rg='', genero='', telefone='', data_nascimento='', 
+                cep='', endereco='', cidade='', uf='', email='', senha='', agencia={}, produtos={})
     {
-        this.#cod_usu = cod_usu;
+        this.#codigo = codigo;
+        this.#tipo = tipo;
         this.#nome = nome;
         this.#cpf = cpf;
         this.#rg = rg;
-        this.#dataNasc = dataNasc;
+        this.#genero = genero;
+        this.#telefone = telefone;
+        this.#data_nascimento = data_nascimento;
+        this.#cep = cep;
         this.#endereco = endereco;
         this.#cidade = cidade;
         this.#uf = uf;
-        this.#telefone = telefone;
-        this.#tipo = tipo;
         this.#email = email;
         this.#senha = senha;
         this.#agencia = agencia;
@@ -37,13 +42,22 @@ export default class Usuario
     }
 
     // Métodos publicos (Gets e Sets)
-    get cod_usu() 
+    get codigo()
     {
-        return this.#cod_usu;
+        return this.#codigo;
     }
-    set cod_usu(novoCodigo) 
+    set codigo(novoCodigo)
     {
-        this.#cod_usu = novoCodigo;
+        this.#codigo = novoCodigo;
+    }
+
+    get tipo()
+    {
+        return this.#tipo;
+    }
+    set tipo(novoTipo)
+    {
+        this.#tipo = novoTipo;
     }
 
     get nome() 
@@ -73,13 +87,40 @@ export default class Usuario
         this.#rg = novoRg;
     }
 
-    get dataNasc() 
+    get genero()
     {
-        return this.#dataNasc;
+        return this.#genero;
     }
-    set dataNasc(novaDataNasc) 
+    set genero(novoGenero)
     {
-        this.#dataNasc = novaDataNasc;
+        this.#genero = novoGenero;
+    }
+
+    get telefone() 
+    {
+        return this.#telefone;
+    }
+    set telefone(novoTelefone)
+    {
+        this.#telefone = novoTelefone;
+    }
+
+    get data_nascimento()
+    {
+        return this.#data_nascimento;
+    }
+    set data_nascimento(novaData)
+    {
+        this.#data_nascimento = novaData;
+    }
+
+    get cep()
+    {
+        return this.#cep;
+    }
+    set cep(novoCep)
+    {
+        this.#cep = novoCep;
     }
 
     get endereco() 
@@ -107,24 +148,6 @@ export default class Usuario
     set uf(novaUf) 
     {
         this.#uf = novaUf;
-    }
-
-    get telefone() 
-    {
-        return this.#telefone;
-    }
-    set telefone(novoTelefone)
-    {
-        this.#telefone = novoTelefone;
-    }
-
-    get tipo()
-    {
-        return this.#tipo;
-    }
-    set tipo(novoTipo)
-    {
-        this.#tipo = novoTipo;
     }
 
     get email() 
@@ -168,16 +191,18 @@ export default class Usuario
     toJSON() 
     {
         return {
-            cod_usu: this.#cod_usu,
+            codigo: this.#codigo,
+            tipo: this.#tipo,
             nome: this.#nome,
             cpf: this.#cpf,
             rg: this.#rg,
-            dataNasc: this.#dataNasc,
+            genero: this.#genero,
+            telefone: this.#telefone,
+            data_nascimento: this.#data_nascimento,
+            cep: this.#cep,
             endereco: this.#endereco,
             cidade: this.#cidade,
             uf: this.#uf,
-            telefone: this.#telefone,
-            tipo: this.#tipo,
             email: this.#email,
             senha: this.#senha,
             agencia: this.#agencia,
@@ -193,10 +218,10 @@ export default class Usuario
     }
 
     // Chama a função de consulta de usuario diretamente no banco de dados
-    async consultar(paramConsulta) 
+    async consultar(termo) 
     {
         const usuarioBD = new UsuarioBD();
-        return await usuarioBD.consultar(paramConsulta);
+        return await usuarioBD.consultar(termo);
     }
 
     // Chama a função de alteração de usuario diretamente no banco de dados

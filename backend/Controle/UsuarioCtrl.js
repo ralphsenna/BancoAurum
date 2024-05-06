@@ -3,86 +3,76 @@ import Agencia from '../Modelo/Agencia.js';
 
 export default class UsuarioCtrl 
 {
-    // Chama a função cadastrar de Usuario para cadatrar e confirmar o cadastro
+    // Chama a função cadastrar de Usuario para cadatrar e efetivar o cadastro
     cadastrar(req, resp) 
     {
         resp.type('application/json');
         if (req.method==='POST' && req.is('application/json')) 
         {
             const dados = req.body;
-            const nome = dados.nome;
-            const cpf = dados.cpf;
-            const rg = dados.rg;
-            const dataNasc = dados.dataNasc;
-            const endereco = dados.endereco;
-            const cidade = dados.cidade;
-            const uf = dados.uf;
-            const telefone = dados.telefone;
-            const tipo = dados.tipo;
-            const email = dados.email;
-            const senha = dados.senha;
-            const agencia = dados.agencia
-            const objAgencia = new Agencia(agencia.cod_ag);
-            if (nome && cpf && rg && dataNasc && endereco && cidade && uf && telefone && tipo && email && senha && agencia) 
+            if (dados.tipo && dados.nome && dados.cpf && dados.rg && dados.genero && dados.telefone && dados.data_nascimento && 
+                dados.cep && dados.endereco && dados.cidade && dados.uf && dados.email && dados.senha && dados.agencia)
             {
-                const usuario = new Usuario(0, nome, cpf, rg, dataNasc, endereco, cidade, uf, telefone, tipo, email, senha, objAgencia);
+                const usuario = new Usuario(0, dados.tipo, dados.nome, dados.cpf, dados.rg, dados.genero, dados.telefone,
+                                            dados.data_nascimento, dados.cep, dados.endereco, dados.cidade, dados.uf, 
+                                            dados.email, dados.senha, dados.agencia);
                 usuario.cadastrar().then(() => {
                     resp.status(201).json({
-                        'status': true,
-                        'codigoGerado': usuario.cod_usu,
-                        'mensagem': 'Usuario cadastrado com sucesso!'
+                        status: true,
+                        codigo_gerado: usuario.codigo,
+                        mensagem: 'Usuário cadastrado com sucesso!'
                     });
                 })
                 .catch((erro) => {
                     resp.status(500).json({
-                        'status': false,
-                        'mensagem': 'Erro ao cadastrar usuario: ' + erro.message
+                        status: false,
+                        mensagem: 'Erro ao cadastrar usuário: ' + erro.message
                     });
                 });
             } 
             else 
             {
                 resp.status(400).json({
-                    'status': false,
-                    'mensagem': 'Informe todos os dados do usuario: Nome, CPF, RG, Data de Nascimento, Endereço, Cidade, UF, Telefone, Tipo, E-mail, Senha e Agência.'
+                    status: false,
+                    mensagem: 'Informe todos os dados do usuário!'
                 });
             }
         } 
         else 
         {
             resp.status(400).json({
-                'status': false,
-                'mensagem': 'O método POST ou o usuario no formato JSON não foi fornecido. Consulte a documentação do projeto!'
+                status: false,
+                mensagem: 'O método POST ou o usuário no formato JSON não foi fornecido.'
             });
         }
     }
 
-    // Chama a função consultar de Usuario para consultar e mostrar a consulta
+    // Chama a função consultar de Usuario para consultar e mostrar os usuarios
     consultar(req, resp) 
     {
+        const termo = req.body;
         resp.type('application/json');
-        const paramConsulta = req.body;
         if (req.method==='GET') 
         {
             const usuario = new Usuario();
-            usuario.consultar(paramConsulta).then((listaUsuarios) => {
+            usuario.consultar(termo).then((listaUsuarios) => {
                 resp.status(200).json({
-                    'status': true,
+                    status: true,
                     listaUsuarios
                 });
             })
             .catch((erro) => {
                 resp.status(500).json({
-                    'status': false,
-                    'mensagem': 'Erro ao obter usuarios: ' + erro.message
+                    status: false,
+                    mensagem: 'Erro ao obter usuários: ' + erro.message
                 });
             });
         } 
         else 
         {
             resp.status(400).json({
-                'status': false,
-                'mensagem': 'Por favor, utilize o método GET para consultar usuarios!'
+                status: false,
+                mensagem: 'Por favor, utilize o método GET para consultar usuários!'
             });
         }
     }
@@ -94,49 +84,38 @@ export default class UsuarioCtrl
         if (req.method==='PUT' && req.is('application/json')) 
         {
             const dados = req.body;
-            const cod_usu = dados.cod_usu;
-            const nome = dados.nome;
-            const cpf = dados.cpf;
-            const rg = dados.rg;
-            const dataNasc = dados.dataNasc;
-            const endereco = dados.endereco;
-            const cidade = dados.cidade;
-            const uf = dados.uf;
-            const telefone = dados.telefone;
-            const tipo = dados.tipo;
-            const email = dados.email;
-            const senha = dados.senha;
-            const agencia = dados.agencia
-            const objAgencia = new Agencia(agencia.cod_ag);
-            if (cod_usu && nome && cpf && rg && dataNasc && endereco && cidade && uf && telefone && tipo && email && senha && agencia) 
+            if (dados.tipo && dados.nome && dados.cpf && dados.rg && dados.genero && dados.telefone && dados.data_nascimento && 
+                dados.cep && dados.endereco && dados.cidade && dados.uf && dados.email && dados.senha && dados.agencia)
             {
-                const usuario = new Usuario(cod_usu, nome, cpf, rg, dataNasc, endereco, cidade, uf, telefone, tipo, email, senha, objAgencia);
+                const usuario = new Usuario(dados.codigo, dados.tipo, dados.nome, dados.cpf, dados.rg, dados.genero, dados.telefone,
+                                            dados.data_nascimento, dados.cep, dados.endereco, dados.cidade, dados.uf, 
+                                            dados.email, dados.senha, dados.agencia);
                 usuario.alterar().then(() => {
                     resp.status(200).json({
-                        'status': true,
-                        'mensagem': 'Usuario alterado com sucesso!'
+                        status: true,
+                        mensagem: 'Usuário alterado com sucesso!'
                     });
                 })
                 .catch((erro) => {
                     resp.status(500).json({
-                        'status': false,
-                        'mensagem': 'Erro ao alterar usuario: ' + erro.message
+                        status: false,
+                        mensagem: 'Erro ao alterar usuário: ' + erro.message
                     });
                 });
             } 
             else 
             {
                 resp.status(400).json({
-                    'status': false,
-                    'mensagem': 'Informe o código e os novos dados possíveis de alteração do usuario: Nome, CPF, RG, Data de Nascimento, Endereço, Cidade, UF, Telefone, Tipo, E-mail, Senha e Agência.'
+                    status: false,
+                    mensagem: 'Informe todos os dados do usuário!'
                 });
             }
         } 
         else 
         {
             resp.status(400).json({
-                'status': false,
-                'mensagem': 'O método PUT ou o usuario no formato JSON não foi fornecido. Consulte a documentação do projeto!'
+                status: false,
+                mensagem: 'O método PUT ou o usuário no formato JSON não foi fornecido.'
             });
         }
     }
@@ -148,36 +127,35 @@ export default class UsuarioCtrl
         if (req.method==='DELETE' && req.is('application/json')) 
         {
             const dados = req.body;
-            const cod_usu = dados.cod_usu;
-            if (cod_usu)
+            if (dados.codigo)
             {
-                const usuario = new Usuario(cod_usu);
+                const usuario = new Usuario(dados.codigo);
                 usuario.excluir().then(() => {
                     resp.status(200).json({
-                        'status': true,
-                        'mensagem': 'Usuario excluído com sucesso!'
+                        status: true,
+                        mensagem: 'Usuário excluído com sucesso!'
                     });
                 })
                 .catch((erro) => {
                     resp.status(500).json({
-                        'status': false,
-                        'mensagem': 'Erro ao excluir usuario: ' + erro.message
+                        status: false,
+                        mensagem: 'Erro ao excluir usuário: ' + erro.message
                     });
                 });
             } 
             else 
             {
                 resp.status(400).json({
-                    'status': false,
-                    'mensagem': 'Informe o código do usuario a ser excluído!'
+                    status: false,
+                    mensagem: 'Informe o código do usuário a ser excluído!'
                 });
             }
         } 
         else 
         {
             resp.status(400).json({
-                'status': false,
-                'mensagem': 'O método DELETE ou o código de usuario no formato JSON não foi fornecido. Consulte a documentação do projeto!'
+                status: false,
+                mensagem: 'O método DELETE ou o código de usuario no formato JSON não foi fornecido.'
             });
         }
     }

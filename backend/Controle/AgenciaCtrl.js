@@ -46,12 +46,12 @@ export default class AgenciaCtrl
     // Chama a função consultar de Agencia para consultar e mostrar as agencias
     consultar(req, resp) 
     {
-        const paramConsulta = req.body;
+        const termo = req.body;
         resp.type('application/json');
         if (req.method==='GET') 
         {
             const agencia = new Agencia();
-            agencia.consultar(paramConsulta).then((listaAgencias) => {
+            agencia.consultar(termo).then((listaAgencias) => {
                 resp.status(200).json({
                     status: true,
                     listaAgencias
@@ -68,7 +68,7 @@ export default class AgenciaCtrl
         {
             resp.status(400).json({
                 status: false,
-                mensagem: 'Por favor, utilize o método GET para consultar agencias!'
+                mensagem: 'Por favor, utilize o método GET para consultar agências!'
             });
         }
     }
