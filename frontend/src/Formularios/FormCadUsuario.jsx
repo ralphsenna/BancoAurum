@@ -5,9 +5,9 @@ export default function FormCadUsuario(props)
 {
     // Define o estado do formulário e do usuário
     const [validado, setValidado] = useState(true);
-    //const [validaSenha, setValidaSenha] = useState(true);
+    const [validaSenhaConfirmada, setValidaSenhaConfirmada] = useState(true);
     const [usuario, setUsuario] = useState(props.usuario);
-    const [senha_confirmada, setSenhaConfirmada] = useState('');
+    const [senha_confirmada, setSenhaConfirmada] = useState(props.usuario.senha);
 
     // Função para manipular qualquer mudança de valores nos campos do formulário
     function manipularMudanca(evento) 
@@ -19,13 +19,6 @@ export default function FormCadUsuario(props)
             setSenhaConfirmada(componente.value);
         else
             setUsuario({ ...usuario, [componente.name]: componente.value});
-        /* if (componente.name==='senha_confirmada')
-        {
-            if (senha_confirmada===usuario.senha)
-                setValidaSenha(true);
-            else
-                setValidaSenha(false);
-        } */
     }
 
     // Função para enviar os dados do formulário para gravação/alteração caso estejam válidos
@@ -34,11 +27,14 @@ export default function FormCadUsuario(props)
         evento.preventDefault();
         evento.stopPropagation();
         const form = evento.currentTarget;
-        if (!form.checkValidity()) 
+        if (senha_confirmada!==usuario.senha)
+            setValidaSenhaConfirmada(false);
+        else if (!form.checkValidity())
             setValidado(false);
         else
         {
             setValidado(true);
+            setValidaSenhaConfirmada(true);
             if (!props.atualizando)
                 props.gravarUsuario(usuario);
             else
@@ -48,7 +44,7 @@ export default function FormCadUsuario(props)
     
     // Retorna o formulário de cadastro de usuário e seus atributos para ser preenchido
     return (
-        <Form noValidate validated={!validado} onSubmit={manipularSubmissao}>
+        <Form noValidate validated={!validado && !validaSenhaConfirmada} onSubmit={manipularSubmissao}>
             <Row className='mb-3'>
                 {/* Código do Usuário */}
                 <Form.Group as={Col} md='1'>
@@ -76,9 +72,10 @@ export default function FormCadUsuario(props)
                         onChange={manipularMudanca}
                     >
                         <option key={0} value={''}>Selecione o tipo</option>
-                        <option key={1} value={'Cliente'}>Cliente</option>
-                        <option key={2} value={'Funcionario'}>Funcionário</option>
-                        <option key={3} value={'Gerente'}>Gerente</option>
+                        <option disabled style={{backgroundColor: '#d3d3d3', color: 'white'}} key={1} value={'Administrador'}>Administrador</option>
+                        <option key={2} value={'Cliente'}>Cliente</option>
+                        <option key={3} value={'Funcionário'}>Funcionário</option>
+                        <option key={4} value={'Gerente'}>Gerente</option>
                     </Form.Select>
                     <Form.Control.Feedback type='invalid'>Por favor, informe o tipo!</Form.Control.Feedback>
                 </Form.Group>
@@ -285,9 +282,9 @@ export default function FormCadUsuario(props)
                 {/* Senha do Usuário */}
                 <Form.Group as={Col} md='2'>
                     <Form.Label>Senha</Form.Label>
-                    <Form.Control 
+                    <Form.Control
                         required 
-                        type='password' 
+                        type='password'
                         placeholder='Senha' 
                         value={usuario.senha}
                         id='senha'
@@ -307,13 +304,14 @@ export default function FormCadUsuario(props)
                         id='senha_confirmada'
                         name='senha_confirmada'
                         onChange={manipularMudanca}
-                        //isInvalid={!validaSenha}
+                        isInvalid={!validaSenhaConfirmada}
                     />
-                    {   senha_confirmada==='' ? (
-                        <Form.Control.Feedback type='invalid'>Por favor, informe novamente a senha!</Form.Control.Feedback>
+                    {   
+                        senha_confirmada==='' ? (
+                            <Form.Control.Feedback type='invalid'>Por favor, informe novamente a senha!</Form.Control.Feedback>
                     ) : (
                         senha_confirmada!==usuario.senha &&
-                        <Form.Control.Feedback type='invalid'>As senhas não conferem!</Form.Control.Feedback>
+                            <Form.Control.Feedback type='invalid'>As senhas não conferem!</Form.Control.Feedback>
                     )}
                 </Form.Group>
             </Row>

@@ -43,13 +43,13 @@ export default class UsuarioDAO
         if (Object.keys(termo).length===0)
             sql = `SELECT * FROM Usuario c
                    INNER JOIN Agencia a ON c.ag_codigo = a.ag_codigo`;
-        else if (Object.keys(termo)==='AUTO_INCREMENT')
+        /* else if (Object.keys(termo)==='AUTO_INCREMENT')
         {
             sql = `SELECT AUTO_INCREMENT 
                    FROM INFORMATION_SCHEMA.TABLES 
                    WHERE TABLE_NAME = 'Usuario'`;
-        }
-        else
+        } */
+        else 
         {
             const coluna = Object.keys(termo);
             sql = `SELECT * FROM Usuario c

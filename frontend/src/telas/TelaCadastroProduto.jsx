@@ -14,8 +14,12 @@ export default function TelaCadastrarProduto(props)
     const [listaProdutos, setListaProdutos] = useState([]);
     const [atualizando, setAtualizando] = useState(false);
     const produtoVazio = {
-        cod_prod: 0,
-        descricao: ''
+        codigo: 0,
+        tipo: '',
+        nome: '',
+        limite: 0,
+        valor: 0,
+        juros: 0
     };
     const [produtoAtual, setProdutoAtual] = useState(produtoVazio);
 
@@ -53,15 +57,17 @@ export default function TelaCadastrarProduto(props)
         .then(resposta => resposta.json())
         .then(retorno => {
             if (retorno.status)
-                alert(retorno.mensagem + ' Código do produto: ' + retorno.codigoGerado);    
+            {
+                alert(retorno.mensagem + ' Código do produto: ' + retorno.codigo_gerado);    
+                setExibirTabela(true);
+                setProdutoAtual(produtoVazio);
+            }
             else
                 alert(retorno.mensagem);
         })
         .catch(erro => {
             alert('Erro: ' + erro.message);
         });
-        setExibirTabela(true);
-        setProdutoAtual(produtoVazio);
     }
 
     // Função para chamar a alteração de um produto no Backend
@@ -85,16 +91,18 @@ export default function TelaCadastrarProduto(props)
             .then(resposta => resposta.json())
             .then(retorno => {
                 if (retorno.status)
+                {
                     alert(retorno.mensagem);
+                    setAtualizando(false);
+                    setExibirTabela(true);
+                    setProdutoAtual(produtoVazio);
+                }
                 else
                     alert(retorno.mensagem);
             })
             .catch(erro => {
                 alert('Erro: ' + erro.message);
             });
-            setAtualizando(false);
-            setExibirTabela(true);
-            setProdutoAtual(produtoVazio);
         }
     }
 
@@ -106,7 +114,7 @@ export default function TelaCadastrarProduto(props)
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({cod_prod: produto.cod_prod})
+            body: JSON.stringify(produto)
         })
         .then(resposta => resposta.json())
         .then(retorno => {
@@ -121,8 +129,7 @@ export default function TelaCadastrarProduto(props)
         consultarProduto();
     }
 
-    // Se a variável exibirTabela for verdadeira, exibe a tabela de produtos
-    if (exibirTabela)
+    if (exibirTabela) // Se a variável exibirTabela for verdadeira, exibe a tabela de produtos
     {
         return (
             <div>
@@ -145,8 +152,7 @@ export default function TelaCadastrarProduto(props)
             </div>
         )
     }
-    // Se a variável exibirTabela for falsa, exibe o formulário de cadastro de produtos
-    else
+    else // Se a variável exibirTabela for falsa, exibe o formulário de cadastro de produtos
     {
         return (
             <div>

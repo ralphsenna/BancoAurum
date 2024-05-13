@@ -1,5 +1,4 @@
 import Usuario from '../Modelo/Usuario.js';
-import Agencia from '../Modelo/Agencia.js';
 
 export default class UsuarioCtrl 
 {
@@ -84,7 +83,7 @@ export default class UsuarioCtrl
         if (req.method==='PUT' && req.is('application/json')) 
         {
             const dados = req.body;
-            if (dados.tipo && dados.nome && dados.cpf && dados.rg && dados.genero && dados.telefone && dados.data_nascimento && 
+            if (dados.codigo && dados.tipo && dados.nome && dados.cpf && dados.rg && dados.genero && dados.telefone && dados.data_nascimento && 
                 dados.cep && dados.endereco && dados.cidade && dados.uf && dados.email && dados.senha && dados.agencia)
             {
                 const usuario = new Usuario(dados.codigo, dados.tipo, dados.nome, dados.cpf, dados.rg, dados.genero, dados.telefone,

@@ -2,46 +2,94 @@ import ProdutoBD from '../Persistencia/ProdutoDAO.js';
 
 export default class Produto 
 {
-    #cod_prod
-    #descricao
+    #codigo
+    #tipo
+    #nome
+    #limite
+    #valor
+    #juros
 
     // Construtor que inicializa os atributos da classe Produto
-    constructor(cod_prod=0, descricao='') 
+    constructor(codigo=0, tipo='', nome='', limite=0, valor=0, juros=0)
     {
-        this.#cod_prod = cod_prod;
-        this.#descricao = descricao;
+        this.#codigo = codigo;
+        this.#tipo = tipo;
+        this.#nome = nome;
+        this.#limite = limite;
+        this.#valor = valor;
+        this.#juros = juros;
     }
 
     // Métodos publicos (Gets e Sets)
-    get cod_prod() 
+    get codigo()
     {
-        return this.#cod_prod;
+        return this.#codigo;
     }
-    set cod_prod(novoCodigo) 
+    set codigo(novoCodigo)
     {
-        this.#cod_prod = novoCodigo;
-    }
-
-    get descricao() 
-    {
-        return this.#descricao;
-    }
-    set descricao(novDescricao) 
-    {
-        this.#descricao = novDescricao;
+        this.#codigo = novoCodigo;
     }
 
+    get tipo()
+    {
+        return this.#tipo;
+    }
+    set tipo(novoTipo)
+    {
+        this.#tipo = novoTipo;
+    }
 
+    get nome()
+    {
+        return this.#nome;
+    }
+    set nome(novoNome)
+    {
+        this.#nome = novoNome;
+    }
+
+    get limite()
+    {
+        return this.#limite;
+    }
+    set limite(novoLimite)
+    {
+        this.#limite = novoLimite;
+    }
+
+    get valor()
+    {
+        return this.#valor;
+    }
+    set valor(novoValor)
+    {
+        this.#valor = novoValor;
+    }
+
+    get juros()
+    {
+        return this.#juros;
+    }
+    set juros(novoJuros)
+    {
+        this.#juros = novoJuros;
+    }
+
+    
     // Métodos de persistência (CRUD de Produto) e conversão de dados para o formato JSON
     toJSON() 
     {
         return {
-            cod_prod: this.#cod_prod,
-            descricao: this.#descricao
+            codigo: this.#codigo,
+            tipo: this.#tipo,
+            nome: this.#nome,
+            limite: this.#limite,
+            valor: this.#valor,
+            juros: this.#juros
         };
     }
 
-    // Chama a função cadatro de produto diretamente do banco de dados
+    // Chama a função de cadastro de produto diretamente do banco de dados
     async cadastrar() 
     {
         const produtoBD = new ProdutoBD();
@@ -49,10 +97,10 @@ export default class Produto
     }
 
     // Chama a função de consulta de produto diretamente no banco de dados
-    async consultar(paramConsulta) 
+    async consultar(termo) 
     {
         const produtoBD = new ProdutoBD();
-        return await produtoBD.consultar(paramConsulta);
+        return await produtoBD.consultar(termo);
     }
 
     // Chama a função de alteração de produto diretamente no banco de dados  

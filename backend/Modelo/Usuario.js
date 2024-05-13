@@ -2,22 +2,22 @@ import UsuarioBD from '../Persistencia/UsuarioDAO.js';
 
 export default class Usuario 
 {
-    #codigo;
+    #codigo
     #tipo
-    #nome;
-    #cpf;
-    #rg;
-    #genero;
-    #telefone;
-    #data_nascimento;
-    #cep;
-    #endereco;
-    #cidade;
-    #uf;
-    #email;
-    #senha;
+    #nome
+    #cpf
+    #rg
+    #genero
+    #telefone
+    #data_nascimento
+    #cep
+    #endereco
+    #cidade
+    #uf
+    #email
+    #senha
     #agencia
-    #produtos;
+    #produtos
 
     // Construtor que inicializa os atributos da classe Usuario
     constructor(codigo=0, tipo='', nome='', cpf='', rg='', genero='', telefone='', data_nascimento='', 
@@ -211,7 +211,7 @@ export default class Usuario
     }
 
     // Chama a função de cadastro de usuario diretamente no banco de dados
-    async cadastrar() 
+    async cadastrar()
     {
         const usuarioBD = new UsuarioBD();
         await usuarioBD.cadastrar(this);

@@ -174,19 +174,19 @@ export default function TelaCadastroUsuario(props)
         return (
             <Pagina titulo="Cadastro de Usuários">
                 <h2 style={{ marginTop: '10px' }}>Tela de Cadastro de Usuários</h2>
-                    <br/>
-                    <h2>Lista de Usuários</h2>
-                    <Button className='mb-3' onClick={() => {
-                            setExibirTabela(false);
-                        }}>
-                        Cadastrar Usuário
-                    </Button>
-                    <TabelaUsuario
-                        setExibirTabela={setExibirTabela}
-                        listaUsuarios={listaUsuarios} 
-                        alterarUsuario={alterarUsuario}
-                        excluirUsuario={excluirUsuario}
-                    />
+                <br/>
+                <h2>Lista de Usuários</h2>
+                <Button className='mb-3' onClick={() => {
+                        setExibirTabela(false);
+                    }}>
+                    Cadastrar Usuário
+                </Button>
+                <TabelaUsuario
+                    setExibirTabela={setExibirTabela}
+                    listaUsuarios={listaUsuarios} 
+                    alterarUsuario={alterarUsuario}
+                    excluirUsuario={excluirUsuario}
+                />
             </Pagina>
         );
     }

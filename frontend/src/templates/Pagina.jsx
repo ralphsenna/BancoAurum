@@ -8,7 +8,7 @@ export default function Pagina(props)
     return (
         <div>
             <Cabecalho texto='Banco Aurum'/>
-            <Menu style={{ marginTop: '0'}}/>
+            <Menu style={{marginTop: '0'}}/>
             <Container fluid style={{padding: '0 50px'}}>{props.children}</Container>
         </div>
     );
