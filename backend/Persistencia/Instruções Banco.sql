@@ -76,7 +76,7 @@ END;
 
 CREATE TABLE Produto(
     pro_codigo INT PRIMARY KEY AUTO_INCREMENT,
-    pro_tipo VARCHAR(16) NOT NULL,
+    pro_tipo VARCHAR(18) NOT NULL,
     pro_nome VARCHAR(50) NOT NULL,
     pro_limite DECIMAL(10,2),
     pro_valor DECIMAL(10,2),
@@ -142,7 +142,7 @@ END;
 CREATE TABLE Agencia_Produto(
     ag_codigo INT NOT NULL,
     pro_codigo INT NOT NULL,
-    data_adesao DATE NOT NULL,
+    ap_data_adesao DATE NOT NULL,
     PRIMARY KEY (ag_codigo, pro_codigo),
     FOREIGN KEY (ag_codigo) REFERENCES Agencia(ag_codigo),
     FOREIGN KEY (pro_codigo) REFERENCES Produto(pro_codigo)
@@ -152,9 +152,9 @@ CREATE TABLE Agencia_Produto(
 CREATE TABLE Usuario_Produto(
 	usu_codigo INT NOT NULL,
     pro_codigo INT NOT NULL,
-    data_contratacao DATE NOT NULL,
-    saldo DECIMAL(10,2),
-    valor_final DECIMAL(10,2),
+    up_data_contratacao DATE NOT NULL,
+    up_saldo DECIMAL(10,2),
+    up_valor_final DECIMAL(10,2),
     PRIMARY KEY (usu_codigo, pro_codigo),
     FOREIGN KEY (usu_codigo) REFERENCES Usuario(usu_codigo),
     FOREIGN KEY (pro_codigo) REFERENCES Produto(pro_codigo)

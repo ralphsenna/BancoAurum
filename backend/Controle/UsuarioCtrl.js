@@ -92,6 +92,7 @@ export default class UsuarioCtrl
                 usuario.alterar().then(() => {
                     resp.status(200).json({
                         status: true,
+                        codigo_gerado: usuario.codigo,
                         mensagem: 'Usuário alterado com sucesso!'
                     });
                 })

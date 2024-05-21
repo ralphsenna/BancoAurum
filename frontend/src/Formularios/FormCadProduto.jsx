@@ -87,6 +87,7 @@ export default function FormCadProduto(props)
                 <Form.Group as={Col} md='1'>
                     <Form.Label>Limite</Form.Label>
                     <Form.Control
+                        required
                         type='number'
                         placeholder='0'
                         value={produto.limite}
@@ -103,6 +104,7 @@ export default function FormCadProduto(props)
                 <Form.Group as={Col} md='1'>
                     <Form.Label>Valor</Form.Label>
                     <Form.Control
+                        required
                         type='number'
                         placeholder='0'
                         value={produto.valor}
@@ -115,6 +117,7 @@ export default function FormCadProduto(props)
                     <Form.Group as={Col} md='1'>
                         <Form.Label>Juros</Form.Label>
                         <Form.Control
+                            required
                             type='number'
                             placeholder='0'
                             value={produto.juros}

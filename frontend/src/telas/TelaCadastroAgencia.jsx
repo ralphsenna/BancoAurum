@@ -138,7 +138,7 @@ export default function TelaCadastroAgencia(props)
         return (
             <div>
                 <Pagina>
-                    <h2 style={{ marginTop: '10px' }}>Tela de Cadastro de Agências</h2>
+                    <h1 style={{ marginTop: '10px' }}>Tela de Cadastro de Agências</h1>
                     <br/>
                     <h2>Lista de Agências</h2>
                     <Button className='mb-3' onClick={() => {
@@ -148,7 +148,7 @@ export default function TelaCadastroAgencia(props)
                     </Button>
                     <TabelaAgencia 
                         setExibirTabela={setExibirTabela}
-                        listaAgencias={listaAgencias} 
+                        listaAgencias={listaAgencias}
                         alterarAgencia={alterarAgencia}
                         excluirAgencia={excluirAgencia}
                     />
@@ -161,7 +161,7 @@ export default function TelaCadastroAgencia(props)
         return (
             <div>
                 <Pagina>
-                    <h1>Tela de Cadastro de Agências</h1>
+                    <h1 style={{ marginTop: '10px' }}>Tela de Cadastro de Agências</h1>
                     <br/>
                     <h2>Formulário de cadastro de Agências</h2>
                     <FormCadAgencia 

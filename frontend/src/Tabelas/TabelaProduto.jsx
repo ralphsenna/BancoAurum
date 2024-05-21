@@ -40,10 +40,10 @@ export default function TabelaProduto(props)
                                         <td>{produto.valor}</td>
                                         <td>{produto.juros}</td>
                                         <td>
-                                            <Button variant='primary' style={{marginRight:'5px'}} onClick={() => {props.alterarProduto(produto)}}>
+                                            <Button title='Alterar' variant='primary' style={{marginRight:'5px'}} onClick={() => {props.alterarProduto(produto)}}>
                                                 <Icone.Alterar/>
                                             </Button>
-                                            <Button variant='danger' onClick={() => {
+                                            <Button title='Excluir' variant='danger' onClick={() => {
                                                 if (window.confirm('Deseja realmente excluir o produto ' + produto.nome + '?'))
                                                     props.excluirProduto(produto)
                                             }}>

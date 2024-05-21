@@ -1,4 +1,5 @@
 import { Button, Table } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Icone from '../Templates/Icones';
 
 export default function TabelaAgencia(props) 
@@ -33,10 +34,15 @@ export default function TabelaAgencia(props)
                                 <td>{agencia.cidade}</td>
                                 <td>{agencia.uf}</td>
                                 <td>
-                                    <Button variant='primary' style={{marginRight:'5px'}} onClick={() => {props.alterarAgencia(agencia)}}>
+                                    <Link to={{ pathname: `/agencia/${agencia.codigo}`, state: {agencia} }}>
+                                        <Button title='Listar Produtos' variant='info' style={{marginRight:'5px'}}>
+                                            <Icone.Produtos/>
+                                        </Button>
+                                    </Link>
+                                    <Button title='Alterar' variant='primary' style={{marginRight:'5px'}} onClick={() => {props.alterarAgencia(agencia)}}>
                                         <Icone.Alterar/>
                                     </Button>
-                                    <Button variant='danger' onClick={() => {
+                                    <Button title='Excluir' variant='danger' onClick={() => {
                                         if (window.confirm('Deseja realmente excluir a agência que se encontra no endereço ' + agencia.endereco + '?'))
                                             props.excluirAgencia(agencia)
                                     }}>

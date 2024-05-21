@@ -56,21 +56,21 @@ export default function TabelaUsuario(props)
                                 <td>{usuario.email}</td>
                                 <td>
                                     {mostrarSenha[usuario.codigo] ? usuario.senha : '••••••••'}
-                                    <button onClick={() => mudarMostrarSenha(usuario.codigo)}>
+                                    <Button variant='secondary' onClick={() => mudarMostrarSenha(usuario.codigo)}>
                                         {mostrarSenha[usuario.codigo] ? 
                                             <Icone.SenhaOculta/>
                                             : 
                                             <Icone.SenhaVisivel/>
                                         }
-                                    </button>
+                                    </Button>
                                 </td>
                                 <td>{usuario.agencia.numero}</td>
                                 <td>{usuario.agencia.cidade}</td>
                                 <td>
-                                    <Button variant='primary' style={{marginRight:'5px'}} onClick={() => {props.alterarUsuario(usuario)}}>
+                                    <Button title='Alterar' variant='primary' style={{marginRight:'5px'}} onClick={() => {props.alterarUsuario(usuario)}}>
                                         <Icone.Alterar/>
                                     </Button>
-                                    <Button variant='danger' onClick={() => {
+                                    <Button title='Excluir' variant='danger' onClick={() => {
                                         if (window.confirm('Deseja realmente excluir o usuário ' + usuario.nome + '?'))
                                             props.excluirUsuario(usuario)
                                     }}>
