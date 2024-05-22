@@ -37,7 +37,7 @@ export default function FormCadProdutoAgencia(props)
         }
     }
     
-    // Retorna o formulário de cadastro de agência e seus atributos para ser preenchido
+    // Retorna o formulário de cadastro de produto em agência e seus atributos para ser preenchido
     return (
         <Form noValidate validated={!validado} onSubmit={manipularSubmissao}>
             <Row className='mb-3'>
@@ -45,8 +45,7 @@ export default function FormCadProdutoAgencia(props)
                 <Form.Group as={Col} md='3'>
                     <Form.Label>Agência</Form.Label>
                     <Form.Select 
-                        disabled={props.atualizando}
-                        required={!props.atualizando}
+                        disabled
                         value={produtoAgencia.agencia.codigo}
                         id='agencia' 
                         name='agencia'
@@ -59,6 +58,8 @@ export default function FormCadProdutoAgencia(props)
                 <Form.Group as={Col} md='3'>
                     <Form.Label>Produto</Form.Label>
                     <Form.Select 
+                        disabled={props.atualizando}
+                        required={!props.atualizando}
                         value={produtoAgencia.produto.codigo}
                         id='produto' 
                         name='produto'
@@ -78,13 +79,13 @@ export default function FormCadProdutoAgencia(props)
                             ): <option key={0} value={''}>{props.listaProdutos[0].nome}</option>
                         }
                     </Form.Select>
-                    <Form.Control.Feedback type='invalid'>Por favor, informe a agência!</Form.Control.Feedback>
+                    <Form.Control.Feedback type='invalid'>Por favor, informe o produto!</Form.Control.Feedback>
                 </Form.Group>
             </Row>
             <Row className='mb-3'>
-                {/* Data do Contrato */}
+                {/* Data da Adesão */}
                 <Form.Group as={Col} md='2'>
-                    <Form.Label>Data do Contrato</Form.Label>
+                    <Form.Label>Data da Adesão</Form.Label>
                     <Form.Control
                         required
                         type='date'
@@ -97,7 +98,7 @@ export default function FormCadProdutoAgencia(props)
                     <Form.Control.Feedback type='invalid'>Por favor, informe a data do adesao!</Form.Control.Feedback>
                 </Form.Group>
             </Row>
-            {/* Botões para Gravar/Alterar e Voltar para a lista de agências */}
+            {/* Botões para Gravar/Alterar e Voltar para a lista de produtos da agência */}
             <Button style={{marginRight:'5px'}} type='submit'>
                 {props.atualizando ? 'Atualizar' : 'Gravar'}
             </Button>

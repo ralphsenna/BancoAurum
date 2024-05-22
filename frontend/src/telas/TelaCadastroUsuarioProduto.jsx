@@ -2,36 +2,43 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import Pagina from '../Templates/Pagina';
-import TabelaAgenciaProduto from '../Tabelas/TabelaAgenciaProduto';
-import FormCadProdutoAgencia from '../Formularios/FormCadProdutoAgencia';
+import TabelaUsuarioProduto from '../Tabelas/TabelaUsuarioProduto';
+import FormCadProdutoUsuario from '../Formularios/FormCadProdutoUsuario';
 import Icone from '../Templates/Icones';
 
 // URLs para acessar o Backend
+const urlUsuario = 'http://localhost:4000/usuario';
 const urlAgencia = 'http://localhost:4000/agencia';
-const urlProduto = 'http://localhost:4000/produto';
 
-export default function TelaCadastroAgenciaproduto(props)
+export default function TelaCadastroUsuarioProduto(props) 
 {
-    // Constantes para definir e controlar o estado das váriaveis utilizadas
+    // Constantes para definir e controlar o estado das variáveis utilizadas
     const termo = useParams();
     const [exibirTabela, setExibirTabela] = useState(true);
     const [atualizando, setAtualizando] = useState(false);
     const [listaProdutos, setListaProdutos] = useState([{
         codigo: 0,
         tipo: '',
-        nome: 'Nenhum produto encontrado!'
+        nome: 'Nenhum produto encontrado na agência!'
     }]);
-    const [listaProdutosAgencia, setListaProdutosAgencia] = useState([]);
-    const produtoAgenciaVazio = {
-        agencia: {
+    const [listaProdutosUsuario, setListaProdutosUsuario] = useState([]);
+    const produtoUsuarioVazio = {
+        usuario: {
             codigo: 0,
-            numero: 0,
+            tipo: '',
+            nome: '',
+            cpf: '',
+            rg: '',
+            genero: '',
             telefone: '',
-            email: '',
+            data_nascimento: '',
             cep: '',
             endereco: '',
             cidade: '',
             uf: '',
+            email: '',
+            senha: '',
+            agencia: {},
             produtos: {}
         },
         produto: {
@@ -42,22 +49,24 @@ export default function TelaCadastroAgenciaproduto(props)
             valor: 0,
             juros: 0
         },
-        data_adesao: ''
+        data_contratacao: '',
+        saldo: 0,
+        valor_final: 0
     };
-    const [produtoAgenciaAtual, setProdutoAgenciaAtual] = useState(produtoAgenciaVazio);
+    const [produtoUsuarioAtual, setProdutoUsuarioAtual] = useState(produtoUsuarioVazio);
 
-    // Função para chamar a consulta de agências no Backend
-    async function consultarAgencia()
+    // Função para chamar a consulta de usuários no Backend
+    async function consultarUsuario() 
     {
-        await fetch(urlAgencia+'/ag_codigo:'+termo.codigo, {method: 'GET'})
+        await fetch(urlUsuario+'/usu_codigo:'+termo.codigo, {method: 'GET'})
         .then(resposta => resposta.json())
         .then(retorno => {
-            if (retorno.status)
-            {   
-                const produtoAgenciaSelecionado = {...produtoAgenciaVazio, agencia: retorno.listaAgencias[0]};
-                setProdutoAgenciaAtual(produtoAgenciaSelecionado);
+            if (retorno.status) 
+            {
+                const produtoUsuarioSelecionado = {...produtoUsuarioVazio, usuario: retorno.listaUsuarios[0]};
+                setProdutoUsuarioAtual(produtoUsuarioSelecionado);
             }
-            else
+            else 
                 alert(retorno.mensagem);
         })
         .catch(erro => {
@@ -65,10 +74,10 @@ export default function TelaCadastroAgenciaproduto(props)
         });
     }
 
-    // Função para chamar a consulta de produtos no Backend
+    // Função para chamar a consulta de produtos da agência do usuário no Backend
     async function consultarProduto()
     {
-        await fetch(urlProduto, {method: 'GET'})
+        await fetch(urlAgencia+'/'+termo.codigo, {method: 'GET'})
         .then(resposta => resposta.json())
         .then(retorno => {
             if (retorno.status)
@@ -81,40 +90,40 @@ export default function TelaCadastroAgenciaproduto(props)
         });
     }
 
-    // Função para chamar a consulta dos produtos de uma agência no Backend
-    async function consultarProdutosAgencia()
+    // Função para chamar a consulta de produtos do usuário no Backend
+    async function consultarProdutosUsuario()
     {
-        await fetch(urlAgencia+'/'+termo.codigo, {method: 'GET'})
+        await fetch(urlUsuario+'/'+termo.codigo, {method: 'GET'})
         .then(resposta => resposta.json())
         .then(retorno => {
             if (retorno.status)
-                setListaProdutosAgencia(retorno.listaProdutos);
+                setListaProdutosUsuario(retorno.listaProdutos);
             else
                 alert(retorno.mensagem);
         })
         .catch(erro => {
-            alert('Erro: ' + erro.message);
+            alert('Erro: ' + erro.mensagem);
         });
     }
-    // Função que movimenta a lista de produtos da agência sempre que a variável exibirTabela for alterada
+    // Função que movimenta a lista de produtos do usuário sempre que a variável exibirTabela for alterada
     useEffect(() => {
         if (exibirTabela)
         {
-            consultarAgencia();
+            consultarUsuario();
             consultarProduto();
-            consultarProdutosAgencia();
+            consultarProdutosUsuario();
         }
     }, [exibirTabela]);
-    
-    // Função para chamar a gravação de um produto em uma agência no Backend
-    async function gravarProdutoAgencia(produtoAgencia)
+
+    // Função para chamar a gravação de um produto em um usuário no Backend
+    async function gravarProdutoUsuario(produtoUsuario) 
     {
-        await fetch(urlAgencia+'/'+produtoAgencia.agencia.codigo, {
+        await fetch(urlUsuario+'/'+produtoUsuario.usuario.codigo, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify(produtoAgencia)
+            body: JSON.stringify(produtoUsuario)
         })
         .then(resposta => resposta.json())
         .then(retorno => {
@@ -122,7 +131,7 @@ export default function TelaCadastroAgenciaproduto(props)
             {
                 alert(retorno.mensagem + ' Código do produto: ' + retorno.codigo_gerado);
                 setExibirTabela(true);
-                setProdutoAgenciaAtual(produtoAgenciaVazio);
+                setProdutoUsuarioAtual(produtoUsuarioVazio);
             }
             else
                 alert(retorno.mensagem);
@@ -132,23 +141,23 @@ export default function TelaCadastroAgenciaproduto(props)
         });
     }
 
-    // Função para chamar a alteração de um produto em uma agência no Backend
-    async function alterarProdutoAgencia(produtoAgencia)
+    // Função para chamar a alteração de um produto em um usuário no Backend
+    async function alterarProdutoUsuario(produtoUsuario) 
     {
         if (!atualizando)
         {
             setExibirTabela(false);
             setAtualizando(true);
-            setProdutoAgenciaAtual(produtoAgencia);
+            setProdutoUsuarioAtual(produtoUsuario);
         }
         else
         {
-            await fetch(urlAgencia+'/'+termo.codigo, {
+            await fetch(urlUsuario+'/'+termo.codigo, {
                 method: 'PUT',
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify(produtoAgencia)
+                body: JSON.stringify(produtoUsuario)
             })
             .then(resposta => resposta.json())
             .then(retorno => {
@@ -157,7 +166,7 @@ export default function TelaCadastroAgenciaproduto(props)
                     alert(retorno.mensagem);
                     setAtualizando(false);
                     setExibirTabela(true);
-                    setProdutoAgenciaAtual(produtoAgenciaVazio);
+                    setProdutoUsuarioAtual(produtoUsuarioVazio);
                 }
                 else
                     alert(retorno.mensagem);
@@ -168,17 +177,17 @@ export default function TelaCadastroAgenciaproduto(props)
         }
     }
 
-    // Função para chamar a exclusão de um produto em uma agência no Backend
-    async function excluirProdutoAgencia(produtoAgencia)
+    // Função para chamar a exclusão de um produto em um usuário no Backend
+    async function excluirProdutoUsuario(produtoUsuario) 
     {
-        await fetch(urlAgencia+'/'+termo.codigo, {
+        await fetch(urlUsuario+'/'+termo.codigo, {
             method: 'DELETE',
             headers: {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify({
-                agencia_codigo: produtoAgencia.agencia.codigo,
-                produto_codigo: produtoAgencia.produto.codigo
+                usuario_codigo: produtoUsuario.usuario.codigo,
+                produto_codigo: produtoUsuario.produto.codigo
             })
         })
         .then(resposta => resposta.json())
@@ -191,32 +200,32 @@ export default function TelaCadastroAgenciaproduto(props)
         .catch(erro => {
             alert('Erro: ' + erro.message);
         });
-        consultarProdutosAgencia();
+        consultarProdutosUsuario();
     }
 
-    if (exibirTabela)
+    if (exibirTabela) 
     {
         return (
             <div>
                 <Pagina>
-                    <h1 style={{ marginTop: '10px' }}>Tela de Cadastro de Agências</h1>
+                    <h1 style={{ marginTop: '10px' }}>Tela de Cadastro de Usuários</h1>
                     <br/>
-                    <h2>Lista de Produtos da Agência: {produtoAgenciaAtual.agencia.codigo}</h2>
+                    <h2>Lista de Produtos do Usuário: {produtoUsuarioAtual.usuario.nome}</h2>
                     <Button style={{marginRight: '5px'}} className='mb-3' onClick={() => {
                             setExibirTabela(false);
                         }}>
-                        Aderir Produto
+                        Contratar Produto
                     </Button>
-                    <Link to='/agencia'>
+                    <Link to='/usuario'>
                         <Button className='mb-3' title='Voltar'>
                             <Icone.Voltar/>
                         </Button>
                     </Link>
-                    <TabelaAgenciaProduto
+                    <TabelaUsuarioProduto
                         setExibirTabela={setExibirTabela}
-                        listaProdutosAgencia={listaProdutosAgencia}
-                        alterarProdutoAgencia={alterarProdutoAgencia}
-                        excluirProdutoAgencia={excluirProdutoAgencia}
+                        listaProdutosUsuario={listaProdutosUsuario}
+                        alterarProdutoUsuario={alterarProdutoUsuario}
+                        excluirProdutoUsuario={excluirProdutoUsuario}
                     />
                 </Pagina>
             </div>
@@ -227,19 +236,19 @@ export default function TelaCadastroAgenciaproduto(props)
         return (
             <div>
                 <Pagina>
-                    <h1 style={{ marginTop: '10px' }}>Tela de Cadastro de Agências</h1>
+                    <h1 style={{ marginTop: '10px' }}>Tela de Cadastro de Usuários</h1>
                     <br/>
-                    <FormCadProdutoAgencia
+                    <FormCadProdutoUsuario
                         exibirTabela={exibirTabela}
                         setExibirTabela={setExibirTabela}
                         listaProdutos={listaProdutos}
-                        gravarProdutoAgencia={gravarProdutoAgencia}
-                        alterarProdutoAgencia={alterarProdutoAgencia}
+                        gravarProdutoUsuario={gravarProdutoUsuario}
+                        alterarProdutoUsuario={alterarProdutoUsuario}
                         atualizando={atualizando}
                         setAtualizando={setAtualizando}
-                        produtoAgencia={produtoAgenciaAtual}
-                        setProdutoAgenciaAtual={setProdutoAgenciaAtual}
-                        produtoAgenciaVazio={produtoAgenciaVazio}
+                        produtoUsuario={produtoUsuarioAtual}
+                        setProdutoUsuarioAtual={setProdutoUsuarioAtual}
+                        produtoUsuarioVazio={produtoUsuarioVazio}
                     />
                 </Pagina>
             </div>

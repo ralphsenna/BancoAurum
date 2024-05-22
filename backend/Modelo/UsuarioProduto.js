@@ -1,35 +1,101 @@
+import UsuarioDAO from '../Persistencia/UsuarioDAO.js';
+
 export default class UsuarioProduto
 {
-    #cod_cli;
-    #cod_prod;
+    // Atributos privados da classe UsuarioProduto
+    #usuario
+    #produto
+    #data_contratacao
+    #saldo
+    #valor_final
 
-    constructor(cod_cli, cod_prod) {
-        this.#cod_cli = cod_cli;
-        this.#cod_prod = cod_prod;
+    // Construtor que inicializa os atributos da classe UsuarioProduto
+    constructor(usuario={}, produto={}, data_contratacao='', saldo=0, valor_final=0)
+    {
+        this.#usuario = usuario;
+        this.#produto = produto;
+        this.#data_contratacao = data_contratacao;
+        this.#saldo = saldo;
+        this.#valor_final = valor_final;
     }
 
-    // MÉTODOS PÚBLICOS
-
-    // CÓDIGO DA AGÊNCIA
-    get cod_cli() {
-        return this.#cod_cli;
+    // Métodos publicos (Gets e Sets)
+    get usuario()
+    {
+        return this.#usuario;
     }
-    set cod_cli(novoCod_Cli) {
-        this.#cod_cli = novoCod_Cli;
-    }
-
-    // CÓDIGO DO PRODUTO
-    get cod_prod() {
-        return this.#cod_prod;
-    }
-    set cod_prod(novoCod_Prod) {
-        this.#cod_prod = novoCod_Prod;
+    set usuario(novoUsuario)
+    {
+        this.#usuario = novoUsuario;
     }
 
-    toJSON() {
+    get produto()
+    {
+        return this.#produto;
+    }
+    set produto(novoProduto)
+    {
+        this.#produto = novoProduto;
+    }
+
+    get data_contratacao()
+    {
+        return this.#data_contratacao;
+    }
+    set data_contratacao(novaData)
+    {
+        this.#data_contratacao = novaData;
+    }
+
+    get saldo()
+    {
+        return this.#saldo;
+    }
+    set saldo(novoSaldo)
+    {
+        this.#saldo = novoSaldo;
+    }
+
+    get valor_final()
+    {
+        return this.#valor_final;
+    }
+    set valor_final(novoValor)
+    {
+        this.#valor_final = novoValor;
+    }
+    
+    // Método de conversão de dados para o formato JSON
+    toJSON() 
+    {
         return {
-            cod_cli: this.#cod_cli,
-            cod_prod: this.#cod_prod,
+            usuario: this.#usuario,
+            produto: this.#produto,
+            data_contratacao: this.#data_contratacao,
+            saldo: this.#saldo,
+            valor_final: this.#valor_final
         };
+    }
+
+    
+    // Chama a função de cadastro de produto no usuário diretamente no banco de dados
+    async cadastrar() 
+    {
+        const usuarioDAO = new UsuarioDAO();
+        await usuarioDAO.cadastrarProduto(this);
+    }
+
+    // Chama a função de alteração de produto do usuário diretamente no banco de dados
+    async alterar()
+    {
+        const usuarioDAO = new UsuarioDAO();
+        await usuarioDAO.alterarProduto(this);
+    }
+
+    // Chama a função de exclusão de produto do usuário diretamente no banco de dados
+    async excluir() 
+    {
+        const usuarioDAO = new UsuarioDAO();
+        await usuarioDAO.excluirProduto(this);
     }
 }

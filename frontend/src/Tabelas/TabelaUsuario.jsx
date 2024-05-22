@@ -1,4 +1,5 @@
 import { Button, Table } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Icone from '../Templates/Icones';
 
@@ -67,6 +68,11 @@ export default function TabelaUsuario(props)
                                 <td>{usuario.agencia.numero}</td>
                                 <td>{usuario.agencia.cidade}</td>
                                 <td>
+                                    <Link to={{ pathname: `/usuario/${usuario.codigo}`, state: {usuario} }}>
+                                        <Button title='Listar Produtos' variant='info' style={{marginRight:'5px'}}>
+                                            <Icone.Produtos/>
+                                        </Button>
+                                    </Link>
                                     <Button title='Alterar' variant='primary' style={{marginRight:'5px'}} onClick={() => {props.alterarUsuario(usuario)}}>
                                         <Icone.Alterar/>
                                     </Button>

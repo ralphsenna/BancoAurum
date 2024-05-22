@@ -8,8 +8,12 @@ const usuarioCtrl = new UsuarioCtrl();
 // Define os metodos para a rota usuario
 rotaUsuario
 .post('/', usuarioCtrl.cadastrar)
+.post('/:termo', usuarioCtrl.cadastrarProduto)
 .get('/', usuarioCtrl.consultar)
+.get('/:termo', usuarioCtrl.consultar)
 .put('/', usuarioCtrl.alterar)
-.delete('/', usuarioCtrl.excluir);
+.put('/:termo', usuarioCtrl.alterarProduto)
+.delete('/', usuarioCtrl.excluir)
+.delete('/:termo', usuarioCtrl.excluirProduto);
 
 export default rotaUsuario;

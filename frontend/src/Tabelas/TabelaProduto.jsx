@@ -20,7 +20,6 @@ export default function TabelaProduto(props)
                     <h2 style={{textAlign: 'center'}}>{tipo}</h2>
                     <Table striped bordered hover style={{marginBottom: '50px'}}>
                         <thead>
-                            
                             <tr>
                                 <th>Código</th>
                                 <th>Nome</th>
@@ -36,9 +35,12 @@ export default function TabelaProduto(props)
                                     <tr key={produto.codigo}>
                                         <td>{produto.codigo}</td>
                                         <td>{produto.nome}</td>
-                                        <td>{produto.limite}</td>
-                                        <td>{produto.valor}</td>
-                                        <td>{produto.juros}</td>
+                                        <td>{produto.tipo!=='Cartão de Crédito' ? '--' : produto.limite}</td>
+                                        <td>{produto.tipo==='Cartão de Crédito' ||
+                                             produto.tipo==='Cartão de Débito' ? '--' : produto.valor}</td>
+                                        <td>{produto.tipo==='Cartão de Crédito' || 
+                                             produto.tipo==='Cartão de Débito' || 
+                                             produto.tipo==='Seguro' ? '--' : produto.juros}%</td>
                                         <td>
                                             <Button title='Alterar' variant='primary' style={{marginRight:'5px'}} onClick={() => {props.alterarProduto(produto)}}>
                                                 <Icone.Alterar/>
